@@ -9,7 +9,7 @@ export default function Job({ ...props }) {
     <Link href={`/job/${props.id}`}>
       <div className="grid grid-cols-4 grid-rows-1 border-1 border-gray-300 my-1 w-full max-w-4xl p-5 items-center h-28">
           <div className="w-24">
-              <Image className="rounded-full" src={'/logo.jpg'} width={70} height={70}></Image>
+              <Image className="rounded-full" src={'/logo.jpg'} alt="company_logo" width={70} height={70}></Image>
           </div>
           <div>
               <h1 className="text-base">{props.title}</h1>{/* <h1>{job.job_title}</h1> */}

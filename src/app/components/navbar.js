@@ -10,11 +10,19 @@ const Navbar = () => {
 
     return (  
         <div className="flex p-5 justify-between w-full place-self-center bg-remotify-db text-remotify-lb">
-            <div className="inline-block p-0 m-0">
-                <Link href="/" className=""><Image className="" alt="remotify_logo" src={'/remotify.png'} width={100} height={50} /></Link>
+            <div className=".logo__image">
+                <Link href="/" className=""><Image className="" alt="remotify_logo" src={'/remotify.svg'} width={50} height={115} /></Link>
             </div>
-            <div>
-                <Link href="./newjob">Post a new job</Link>
+            <div className="flex flex-row text-md items-center justify-center ">
+                <div className="px-3">
+                    <Link href="">Categories</Link>
+                </div>
+                <div className="px-3">
+                    <Link href="">Companies</Link>
+                </div>
+                <div className="px-3">
+                    <button  className="hover:bg-remotify-lb border border-1 border-remotify-lb bg-remotify-db text-white hover:text-slate-950 text-remotify-db px-6 rounded-md py-2">Post a Job</button>   
+                </div>
             </div>
             {/*!loading && !session && (<div>
                  <Link href="/api/auth/signin" onClick={e => {

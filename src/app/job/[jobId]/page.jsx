@@ -1,4 +1,7 @@
+import JobHero from '@/app/components/job-hero';
+import JobDetails from '@/app/components/job-details';
 import { PrismaClient } from '@prisma/client';
+import Image from 'next/image';
 
 const prisma = new PrismaClient();
 
@@ -14,15 +17,13 @@ export default async function Page({ params }) {
     <div className='w-full max-w-4xl place-self-center mt-10 px-4'>
        {
         job ?  (
-            <div>
-              <h1 className='text-4xl'>{job?.title}</h1>
-              <h2>{job?.company}</h2>
-              <p>Expiration Date: {job?.expiration_date}</p>
-              <p>Remote From {job.country_job_countryTocountry.name}</p>
-              <p>Department: {job.department_job_departmentTodepartment.name}</p>
-            </div>
+          <>
+            <JobHero job={job}/>
+            <JobDetails job={job}/>
+            <button className='mt-6 border border-1 border-remotify-lb bg-remotify-lb px-6 rounded-md py-2 hover:bg-remotify-db hover:text-white'>Apply</button>
+          </>
             ) : (
-              <p>Loading</p>
+              <Image src={'/loading.svg'} fill={true} alt="loading"/>
             )
        }
     </div>
