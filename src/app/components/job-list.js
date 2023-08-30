@@ -24,7 +24,7 @@ const tags = [
 const JobList = ({ jobs }) => {
 
     return ( 
-        <div className="w-full max-w-4xl place-self-center">
+        <div className="w-full max-w-6xl place-self-center justify-center items-center">
          
             <div className="flex flex-col align-center w-full max-w-4xl h-full ">
                 <h1 className="text-4xl text-center my-2">Latest Remote Jobs</h1>

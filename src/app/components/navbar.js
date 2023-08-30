@@ -21,7 +21,7 @@ const Navbar = () => {
                     <Link href="">Companies</Link>
                 </div>
                 <div className="px-3">
-                    <button  className="hover:bg-remotify-lb border border-1 border-remotify-lb bg-remotify-db text-white hover:text-slate-950 text-remotify-db px-6 rounded-md py-2">Post a Job</button>   
+                    <Link  href="/pricing" className="hover:bg-remotify-lb border border-1 border-remotify-lb bg-remotify-db text-white hover:text-slate-950 text-remotify-db px-6 rounded-md py-2">Post a Job</Link>   
                 </div>
             </div>
             {/*!loading && !session && (<div>
