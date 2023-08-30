@@ -3,6 +3,7 @@ import JobList from './components/job-list';
 import Hero from './components/hero';
 import { PrismaClient } from '@prisma/client';
 
+
 const prisma = new PrismaClient();
 
 async function getJobs(){
