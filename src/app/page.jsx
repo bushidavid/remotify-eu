@@ -36,8 +36,6 @@ export default async function Home() {
 
   const jobs = await Promise.all(jobsData);
 
-  console.log(jobs);
-
   return (
     <>
       <Hero />

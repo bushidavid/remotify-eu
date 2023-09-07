@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
 export default function Page() {
 
@@ -56,13 +56,15 @@ export default function Page() {
                                   </span>
                               </p>
 
-                              <a href="#" class="">
+                              
                                   <p class="w-full py-4 bg-remotify-lb mt-8 rounded-xl text-white">
-                                      <span class="font-medium">
+                                      <Link href="/newjob/basic">
+                                        <span class="font-medium">
                                           Choose Plan
-                                      </span>
+                                        </span>
+                                      </Link>
                                   </p>
-                              </a>
+                              
                           </div>
                       </div>
                       {/* <!-- StartUp Card --> */}
@@ -100,13 +102,13 @@ export default function Page() {
                                   </span>
                               </p>
 
-                              <a href="#" class="">
+                              <Link href='/newjob/pro' >
                                   <p class="w-full py-4 bg-remotify-lb mt-8 rounded-xl text-white">
                                       <span class="font-medium">
                                           Choose Plan
                                       </span>
                                   </p>
-                              </a>
+                              </Link>
                           </div>
                           <div class="absolute top-4 right-4">
                               <p class="bg-remotify-lb font-semibold px-4 py-1 rounded-full uppercase text-xs">Popular</p>
@@ -146,13 +148,13 @@ export default function Page() {
                                   </span>
                               </p>
 
-                              <a href="#" class="">
+                              <Link href='/newjob/custom'>
                                   <p class="w-full py-4 bg-remotify-lb mt-8 rounded-xl text-white">
                                       <span>
                                         Get a Quote
                                       </span>
                                   </p>
-                              </a>
+                              </Link>
                           </div>
                       </div>
                   </div>

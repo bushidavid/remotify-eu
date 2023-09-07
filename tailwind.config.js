@@ -27,7 +27,14 @@ module.exports = {
       colors : {
         'remotify-lb' : '#39D1CC',
         'remotify-db' : '#142C42',
+        // 'remotify-luminance' : '#d3f5f4'
+        'remotify-lum' : '#d8f0ef'
       },
+      gridTemplateRows: {
+        // Simple 8 row grid
+        '12': 'repeat(12, minmax(0, 1fr))',
+        'layout': 'repeat(3, minmax(150px,1fr)) 400px repeat(2, minmax(0,1fr)) 400px 150px 150px'
+      }
     },
   },
   plugins: [nextui()],

@@ -36,7 +36,7 @@ const JobList = ({ jobs }) => {
                 }
             </div>
 
-            <div className="text-center"><button  className="bg-remotify-lb text-remotify-db px-6 rounded-md py-2">Load More Jobs</button></div>
+            <div className="text-center"><button  className="bg-white px-6 rounded-md py-2 hover:bg-remotify-db hover:text-white border border-1 border-remotify-lb">Load More Jobs</button></div>
         </div>
 
 );

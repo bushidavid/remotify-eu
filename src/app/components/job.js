@@ -11,9 +11,9 @@ export default function Job({ ...props }) {
 
   
     <Link href={`/job/${props.id}`}>
-            <Card className='w-full mb-6 hover:bg-slate-100'>
+            <Card className='sm:w-full w-96 mb-6 hover:bg-remotify-lum'>
               <CardBody className=''>
-                <div className='flex flex-row justify-around items-center'>
+                <div className='flex md:flex-row flex-col justify-around items-center'>
                   <div className="">
                       <Image className="rounded-full" src={'/logo.jpg'} alt="company_logo" width={70} height={70}></Image>
                   </div>
@@ -25,7 +25,7 @@ export default function Job({ ...props }) {
                   <div>
                       <h1>Remote from <i>{props.country}</i></h1>
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex md:flex-col flex-row">
                       {props.tags.map(tag => {
                           return <h1 className="bg-remotify-lb text-xs m-1" key={tag.id}>{tag.name + " "}</h1>
                       })}

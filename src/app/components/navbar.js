@@ -15,6 +15,9 @@ const Navbar = () => {
             </div>
             <div className="flex flex-row text-md items-center justify-center ">
                 <div className="px-3">
+                    <Link href="">Featured</Link>
+                </div>
+                <div className="px-3">
                     <Link href="">Categories</Link>
                 </div>
                 <div className="px-3">
