@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.logo__image {
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-}
 
 @layer utilities {
     @variants responsive {

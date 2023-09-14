@@ -9,7 +9,7 @@ export default function PricingCard( { price, nickname, id } ) {
     <div className={`w-84 p-8 my-6 text-center rounded-3xl pr-16 shadow-xl ${nickname === "Pro" ? "bg-remotify-db scale-110" : "bg-white" }`}>
         <h1 className="text-black font-semibold text-2xl">{nickname}</h1>
         <p className="pt-2 tracking-wide">
-            <span className="text-3xl font-semibold">{(price / 100)}</span>
+            <span className={`text-3xl font-semibold ${nickname === "Pro" ? "text-white" : ""}`}>{(price / 100)}</span>
             <span className="text-gray-400 align-top">EUR</span>
         </p>
         <hr className="mt-4 border-1"></hr>

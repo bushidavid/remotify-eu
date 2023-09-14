@@ -41,6 +41,7 @@ model job {
   views                                 Decimal?    @db.Decimal
   worldwide                             Boolean?
   candidate_level                       BigInt?
+  description                           String?
   country_job_countryTocountry          country?    @relation("job_countryTocountry", fields: [country], references: [id], onDelete: NoAction, onUpdate: NoAction)
   department_job_departmentTodepartment department? @relation("job_departmentTodepartment", fields: [department], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
