@@ -2,9 +2,7 @@ import Image from 'next/image';
 import JobList from './components/job-list';
 import Hero from './components/hero';
 import { PrismaClient } from '@prisma/client';
-
-
-const prisma = new PrismaClient();
+import prisma from '../../lib/utils/prisma';
 
 async function getJobs(){
 
@@ -14,6 +12,8 @@ async function getJobs(){
       department_job_departmentTodepartment: true
     }
   });
+
+  console.log(jobs);
 
   const data = jobs.map((job) => {
     const transformBigIntToString = (key, value) => {

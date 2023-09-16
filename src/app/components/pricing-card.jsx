@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function PricingCard( { price, nickname, id } ) {    
 
   return (
-    <div className={`w-84 p-8 my-6 text-center rounded-3xl pr-16 shadow-xl ${nickname === "Pro" ? "bg-remotify-db scale-110" : "bg-white" }`}>
+    <div className={`w-84 p-8 my-6 text-center h-[500px] rounded-3xl pr-16 shadow-xl ${nickname === "Pro" ? "bg-remotify-db scale-110" : "bg-white" }`}>
         <h1 className="text-black font-semibold text-2xl">{nickname}</h1>
         <p className="pt-2 tracking-wide">
             <span className={`text-3xl font-semibold ${nickname === "Pro" ? "text-white" : ""}`}>{(price / 100)}</span>
@@ -39,7 +39,7 @@ export default function PricingCard( { price, nickname, id } ) {
                 </span>
             </p>
 
-            <Link href={`/newjob/${id}`} className="w-full py-4 bg-remotify-lb mt-8 rounded-xl text-white">
+            <Link href={`/newjob/${id}`} className="w-full py-4 bg-remotify-lb mt-10 rounded-xl text-white">
                 <span className="font-medium">
                     Choose Plan
                 </span>

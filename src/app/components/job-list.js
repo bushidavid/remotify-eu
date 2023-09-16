@@ -31,7 +31,7 @@ const JobList = ({ jobs }) => {
 
                 { 
                     jobs.map(job => (
-                        <Job key={job.id} id={job.id} title={job.title} department={job.department} company={job.department_job_departmentTodepartment.name} expiration={job.expiration_date} country={job.country_job_countryTocountry.name} tags={tags}/>
+                        <Job key={job.id} id={job.id} title={job.title} department={job.department} company={job.department_job_departmentTodepartment.name} expiration={job.expiration_date} country={job.country_job_countryTocountry.name} tags={tags} salaryMin={job.salary_range_min} salaryMax={job.salary_range_max}   />
                     ))
                 }
             </div>

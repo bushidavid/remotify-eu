@@ -1,17 +1,30 @@
-import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import prisma from "../../../../lib/utils/prisma";
 
 
-const prisma = new PrismaClient();
-
-export async function GET(req, res){
-
-    console.log("I'm inside the API");
+export async function GET(req){
 
     try {
+
         const data = await prisma.country.findMany();
 
-        res.status(200).json(data);
+        
+
+        const countries = data.map((country) => {
+            const transformBigIntToString = (key, value) => {
+              return typeof value === 'bigint' 
+                ? value.toString() 
+                : value;
+            };
+          
+            // Use JSON.parse and JSON.stringify to apply the transformation
+            return JSON.parse(JSON.stringify(country, transformBigIntToString));
+        })
+
+
+        return  NextResponse.json({ countries: countries }, { status: 200 });
+
+
     } catch (error) {
         return {"message" : "there was an error"}
     }
