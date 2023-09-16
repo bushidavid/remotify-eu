@@ -8,42 +8,43 @@ import { useRouter } from "next/navigation";
 import { department } from '../../../../lib/departments';
 import { Categories } from '../../../../lib/departments';
 import { Levels } from "../../../../lib/levels";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../../lib/utils/prisma";
+import TipTap from "@/app/components/custom-editor/tiptap";
+//import countries from "../../../../lib/countries";
 
 
-export default function NewJob ({ params }) {
+
+export default function Page ({ params }) {
 
     const id = params.slug;
 
-    const [countries, setCountries] = useState([]);
-
-    // *selected status for Worlwide Switch
+    // *selected status for Worldwide Switch
     const [isSelected, setIsSelected] = useState(true);
 
-    const handlePayment = async (e) => {
+    // const handlePayment = async (e) => {
 
-        e.preventDefault();
+    //     e.preventDefault();
 
-        const response  = await fetch('/api/payment' ,{
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                priceId: id
-            })
-        })
+    //     const response  = await fetch('/api/payment' ,{
+    //         method: 'POST',
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             priceId: id
+    //         })
+    //     })
 
-        const data = await response.json();
+    //     const data = await response.json();
         
-        router.push(data.url);
+    //     router.push(data.url);
 
-    }
+    // }
 
 
-    const[form, setForm] = useState({
+    const [form, setForm] = useState({
         jobTitle : "",
-        // jobCountry: "",
+        //jobCountry: "",
         jobDepartment: "",
         // jobDescription: "",
         // compDescription: "",
@@ -66,22 +67,10 @@ export default function NewJob ({ params }) {
         console.log(form);
     };
 
-    // const getCountries = async () => {
-    //     try {
-
-    //         const data = await fetch('http://localhost:3000/api/countries');
-    //         const con = await data.json();
-            
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
 
     //countries.forEach(country => options.push({value: country.country_name, label: country.country_code2}))
 
     const onSubmitForm = async (e) => {
-        
-
         // handlePayment(id[0]);
 
         e.preventDefault();
@@ -100,10 +89,7 @@ export default function NewJob ({ params }) {
         }
     }
 
-    // useEffect(()=> {
-    //     getCountries();
-    // }, []);
-
+    
     // const handleChange = (selectedOptions) => {
     //     setJobCountry(selectedOptions.map(country => country.value));
     // }
@@ -217,6 +203,7 @@ export default function NewJob ({ params }) {
             
             <div className="col-span-full row-start-4">
                 <h3 className="text-2xl mb-2">Tell us more about the role:</h3>
+                <TipTap />
             </div>
 
             {/*  Job Description End */}
