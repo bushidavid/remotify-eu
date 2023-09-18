@@ -1,16 +1,14 @@
 'use client';
 
-import React, {useState, useEffect ,Fragment} from "react";
+import React, {useState} from "react";
 import {Input} from "@nextui-org/input";
-import {Select, SelectSection, SelectItem} from "@nextui-org/select";
+import {Select, SelectItem} from "@nextui-org/select";
 import {Switch} from "@nextui-org/switch";
 import { useRouter } from "next/navigation";
-import { department } from '../../../../lib/departments';
 import { Categories } from '../../../../lib/departments';
 import { Levels } from "../../../../lib/levels";
-import prisma from "../../../../lib/utils/prisma";
-import TipTap from "@/app/components/custom-editor/tiptap";
-//import countries from "../../../../lib/countries";
+import TipTap from "@/app/components/tiptap/tiptap";
+import {Countries} from "../../../../lib/countries";
 
 
 
@@ -19,7 +17,7 @@ export default function Page ({ params }) {
     const id = params.slug;
 
     // *selected status for Worldwide Switch
-    const [isSelected, setIsSelected] = useState(true);
+    const [isSelected, setIsSelected] = useState(false);
 
     // const handlePayment = async (e) => {
 
@@ -59,12 +57,23 @@ export default function Page ({ params }) {
     const options = [];
 
     const [values, setValues] = useState(new Set([]));
+    const [selectedCountry, setSelectedCountry] = useState(new Set([]));
+
+    const handleSelectionChangeCountry = (e) => {
+
+        setSelectedCountry(new Set(e.target.value.split(",")));
+
+        console.log(selectedCountry);
+
+        handleChange(e);
+    };
 
     const handleSelectionChange = (e) => {
         setValues(new Set(e.target.value.split(",")));
 
+        console.log(values);
+
         handleChange(e);
-        console.log(form);
     };
 
 
@@ -95,8 +104,6 @@ export default function Page ({ params }) {
     // }
 
     const handleChange = (e) => {
-
-        console.log(e.target.value);
 
         setForm({
             ...form,
@@ -154,30 +161,34 @@ export default function Page ({ params }) {
             </div>
             {/*  Worldwide  End */}
 
-            {/* <div className="col-start-8 col-span-5 row-start-2">
+            {/* Countries */}
+
+            <div className={`col-start-8 col-span-5 row-start-3 ${isSelected ? "hidden invisible" : ""}`} >
                     <Select label="Countries"
                         selectionMode="multiple"
                         placeholder="Select one or more countries"
                         variant="underlined"
                         className=""
-                        selectedKeys={countries}
-                        onChange={handleSelectionChange}
+                        selectedKeys={selectedCountry}
+                        onChange={handleSelectionChangeCountry}
                         isRequired
-                        name="candidateLevel"
+                        name="countries"
                     >
                         {
-                            countries.map(level => (
-                                <SelectItem key={level.id} value={level.value}>{level.value}</SelectItem>
+                            Countries.map(country => (
+                                <SelectItem key={country.label} value={country.label}>{country.name}</SelectItem>
                             ))
                         }
                     </Select>
-                    <p className="text-small text-default-500">{Array.from(values).join(", ")}</p>
-            </div> */}
+                    <p className="text-small text-default-500">{Array.from(selectedCountry).join(", ")}</p>
+            </div>
+
+            {/* Countries End */}
 
 
             {/*  candidate Level */}
 
-            {/* <div className="col-start-8 col-span-5 row-start-2">
+            <div className="col-start-8 col-span-5 row-start-2">
                     <Select label="Candidate Level"
                         selectionMode="multiple"
                         placeholder="Select a Level"
@@ -190,12 +201,12 @@ export default function Page ({ params }) {
                     >
                         {
                             Levels.map(level => (
-                                <SelectItem key={level.id} value={level.value}>{level.value}</SelectItem>
+                                <SelectItem key={level.id} value={level.id}>{level.value}</SelectItem>
                             ))
                         }
                     </Select>
                     <p className="text-small text-default-500">{Array.from(values).join(", ")}</p>
-            </div> */}
+            </div>
 
             {/*  candidate Level End */}
 
@@ -239,6 +250,7 @@ export default function Page ({ params }) {
             
             <div className="col-start-1 col-span-full row-start-8">
                 <h3 className="text-2xl mb-2">Tell us more about your company:</h3>
+                <TipTap />
             </div>
 
             {/* Company Description End */}    

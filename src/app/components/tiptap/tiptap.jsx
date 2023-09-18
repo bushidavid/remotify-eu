@@ -16,23 +16,22 @@ const Tiptap = () => {
   const editor = useEditor({
     extensions: [
         StarterKit,
-        Document,
-        Paragraph, 
         TextStyle,
-        FontFamily,
-        ListItem,
-        OrderedList,
-        BulletList
+        FontFamily
     ],
-    content: '<p>Hello World! 🌎️</p>',
+    content: '',
+    editorProps :{
+      attributes: {
+        class: "prose prose-sm sm:prose lg:prose-base xl:prose-lg min-h-[300px] min-w-full  "
+      }
+    }
   })
 
   return (
-    <>
+    <div className='border rounded-lg border-slate-700 mt-2 h-full pl-4 w-full min-h-[400px] '>
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} />
-        
-    </>
+      <EditorContent editor={editor} /> 
+    </div>
   )
 }
 
