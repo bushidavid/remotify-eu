@@ -1,3 +1,7 @@
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBold , faItalic, faStrikethrough, faCode, faParagraph, faHeading, faList, faListOl, faRotateLeft, faRotateRight} from "@fortawesome/free-solid-svg-icons";
+
 
 
 export default function MenuBar( { editor } ) {
@@ -17,10 +21,10 @@ export default function MenuBar( { editor } ) {
         }
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('bold') ? 'bg-slate-200' : ''}`}
       >
-        bold
+        <FontAwesomeIcon icon={faBold} style={{color: "#142c42",}} />
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
+        onClick={(e) => {e.preventDefault(); editor.chain().focus().toggleItalic().run()}}
         disabled={
           !editor.can()
             .chain()
@@ -30,10 +34,10 @@ export default function MenuBar( { editor } ) {
         }
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('italic') ? 'is-active' : ''}`}
       >
-        italic
+        <FontAwesomeIcon icon={faItalic} style={{color: "#142c42",}} />
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
+        onClick={(e) => {e.preventDefault();editor.chain().focus().toggleStrike().run()}}
         disabled={
           !editor.can()
             .chain()
@@ -43,10 +47,10 @@ export default function MenuBar( { editor } ) {
         }
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('strike') ? 'is-active' : ''}`}
       >
-        strike
+        <FontAwesomeIcon icon={faStrikethrough} style={{color: "#142c42",}} />
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
+        onClick={(e) => {e.preventDefault(); editor.chain().focus().toggleCode().run()}}
         disabled={
           !editor.can()
             .chain()
@@ -56,96 +60,46 @@ export default function MenuBar( { editor } ) {
         }
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('code') ? 'is-active' : ''}`}
       >
-        code
-      </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}
-        className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg`}
-      >
-        clear marks
-      </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}
-        className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg`}
-      >
-        clear nodes
+        <FontAwesomeIcon icon={faCode} style={{color: "#142c42",}} />
       </button>
       <button
-        onClick={() => editor.chain().focus().setParagraph().run()}
+        onClick={(e) => {e.preventDefault(); editor.chain().focus().setParagraph().run()}}
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('paragraph') ? 'is-active' : ''}`}
       >
-        paragraph
+        <FontAwesomeIcon icon={faParagraph} style={{color: "#142c42",}}/>
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+        onClick={(e) => {e.preventDefault(); editor.chain().focus().toggleHeading({ level: 1 }).run()}}
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}`}
       >
-        h1
+        <FontAwesomeIcon icon={faHeading} style={{color: "#142c42",}} />
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+        onClick={(e) => {e.preventDefault(); editor.chain().focus().toggleHeading({ level: 2 }).run()}}
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}`}
       >
         h2
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+        onClick={(e) => {e.preventDefault(); editor.chain().focus().toggleHeading({ level: 3 }).run()}}
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}`}
       >
         h3
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}`}
-      >
-        h4
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}`}
-      >
-        h5
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}`}
-      >
-        h6
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        onClick={(e) => {e.preventDefault();editor.chain().focus().toggleBulletList().run()}}
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('bulletList') ? 'is-active' : ''}`}
       >
-        bullet list
+        <FontAwesomeIcon icon={faList} style={{color: "#142c42",}} />
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        onClick={(e) => {e.preventDefault();editor.chain().focus().toggleOrderedList().run()}}
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('orderedList') ? 'is-active' : ''}`}
       >
-        ordered list
+        <FontAwesomeIcon icon={faListOl} style={{color: "#142c42",}} />
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('codeBlock') ? 'is-active' : ''}`}
-      >
-        code block
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg ${editor.isActive('blockquote') ? 'is-active' : ''}`}
-      >
-        blockquote
-      </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}
-        className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg`}
-      >
-        horizontal rule
-      </button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}
-        className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg`}
-      >
-        hard break
-      </button>
-      <button
-        onClick={() => editor.chain().focus().undo().run()}
+        onClick={(e) => {e.preventDefault(); editor.chain().focus().undo().run()}}
         disabled={
           !editor.can()
             .chain()
@@ -155,10 +109,10 @@ export default function MenuBar( { editor } ) {
         }
         className="className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg`}"
       >
-        undo
+        <FontAwesomeIcon icon={faRotateLeft} style={{color: "#142c42",}} />
       </button>
       <button
-        onClick={() => editor.chain().focus().redo().run()}
+        onClick={(e) => {e.preventDefault(); editor.chain().focus().redo().run()}}
         disabled={
           !editor.can()
             .chain()
@@ -168,7 +122,7 @@ export default function MenuBar( { editor } ) {
         }
         className={`mr-1 py-2 px-2 bg-slate-100 text-sm font-sans rounded-lg`}
       >
-        redo
+        <FontAwesomeIcon icon={faRotateRight} style={{color: "#142c42",}} />
       </button>
     </>
 
