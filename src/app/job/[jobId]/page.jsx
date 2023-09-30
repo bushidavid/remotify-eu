@@ -11,10 +11,8 @@ export default async function Page({ params }) {
 
   const job = await getJobDetails(params.jobId)
 
-  console.log(job);
-
   return (
-    <div className='w-full max-w-4xl place-self-center mt-10 px-4'>
+    <div className='w-full max-w-4xl  mt-10 px-4'>
        {
         job ?  (
           <>
@@ -54,8 +52,6 @@ export async function getJobDetails(jobId){
       // Use JSON.parse and JSON.stringify to apply the transformation
     const data = JSON.parse(JSON.stringify(job, transformBigIntToString));
     
-      console.log("inside jobId page");
-      console.log(data)
     return data
 
   } catch (error) {

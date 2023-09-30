@@ -11,8 +11,9 @@ import MenuBar from './menu-bar';
 import BulletList from '@tiptap/extension-bullet-list';
 import ListItem from '@tiptap/extension-list-item';
 import OrderedList from '@tiptap/extension-ordered-list';
+import '../../style.css'
 
-const Tiptap = () => {
+const TipTap = ({ setDescription }) => {
 
   const [editorContent, setEditorContent ] = useState("Write the description here");
 
@@ -25,25 +26,25 @@ const Tiptap = () => {
     content: editorContent,
     editorProps :{
       attributes: {
-        class: "prose prose-sm sm:prose lg:prose-base xl:prose-lg min-h-[300px] min-w-full  "
+        class: "prose prose-sm sm:prose lg:prose-base xl:prose-lg h-[400px] min-w-full overflow-y-scroll border border-slate-300 rounded-lg focus:outline-none "
       }
     },
 
     onUpdate ({editor}) {
       setEditorContent(editor.getHTML())
-      console.log(editorContent);
+      setDescription(editorContent);
     }
 
   })
 
-  onUpdate: {}
-
   return (
-    <div className='border rounded-lg border-slate-700 mt-2 h-full pl-4 w-full min-h-[400px] '>
+    // <div className='border rounded-lg border-slate-700 mt-2 h-full pl-4 w-full min-h-[400px] overflow-y-scroll'>
+    <>
       <MenuBar editor={editor} />
       <EditorContent editor={editor} /> 
-    </div>
+    </>
+    // </div>
   )
 }
 
-export default Tiptap;
+export default TipTap;

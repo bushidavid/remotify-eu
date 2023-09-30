@@ -11,34 +11,41 @@ export async function POST(req, res) {
         const {
             jobTitle,
             jobDepartment,
+            jobDescription,
+            companyName,
+            compDescription,
+            worldwide,
+            salaryMin,
+            salaryMax,
+            salaryCur,
+            logo
+        } = await req.json();
+    
+/*         console.log({
+            jobTitle,
+            jobDepartment,
+            jobDescription,
+            compDescription,
             companyName,
             worldwide,
             salaryMin,
             salaryMax,
-        } = await req.json();
-    
-        // console.log({
-        //     jobTitle,
-        //     jobDepartment,
-        //     companyName,
-        //     worldwide,
-        //     salaryMin,
-        //     salaryMax,
-        // });
+        }); */
     
     
         const result = await prisma.job.create({
             data: {
                 title : jobTitle,
-                department: 1,
                 company: 1,
+                department: jobDepartment,
                 worldwide,
                 expired: false,
                 salary_range_min: salaryMin,
                 salary_range_max: salaryMax,
                 views: 0, 
                 clicks: 0,
-                description: '',
+                description: jobDescription,
+                company_description: compDescription,
             }
         })
     

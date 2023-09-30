@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Input} from "@nextui-org/input";
 import {Select, SelectItem} from "@nextui-org/select";
 import {Switch} from "@nextui-org/switch";
@@ -9,6 +9,7 @@ import { Categories } from '../../../../lib/departments';
 import { Levels } from "../../../../lib/levels";
 import TipTap from "@/app/components/tiptap/tiptap";
 import {Countries} from "../../../../lib/countries";
+import GetLogo from "@/app/components/get-logo";
 
 
 
@@ -17,7 +18,10 @@ export default function Page ({ params }) {
     const id = params.slug;
 
     // *selected status for Worldwide Switch
-    const [isSelected, setIsSelected] = useState(false);
+    const [ isSelected, setIsSelected] = useState(false);
+    const [ compDescription, setCompDescription ] = useState("");
+    const [ jobDescription, setJobDescription ] = useState("");
+    const [file, setFile] = useState([]);
 
     // const handlePayment = async (e) => {
 
@@ -42,16 +46,17 @@ export default function Page ({ params }) {
 
     const [form, setForm] = useState({
         jobTitle : "",
-        //jobCountry: "",
+        jobCountry: "",
         jobDepartment: "",
-        // jobDescription: "",
-        // compDescription: "",
+        jobDescription: "",
+        compDescription: "",
         companyName: "",
         worldwide: true,
         salaryMin: "",
         salaryMax: "",
         // candidateLevel: [],
         salaryCur: "",
+        logo: []
     })
     
     const options = [];
@@ -62,8 +67,6 @@ export default function Page ({ params }) {
     const handleSelectionChangeCountry = (e) => {
 
         setSelectedCountry(new Set(e.target.value.split(",")));
-
-        console.log(selectedCountry);
 
         handleChange(e);
     };
@@ -76,6 +79,23 @@ export default function Page ({ params }) {
         handleChange(e);
     };
 
+    const updateJobDescription = (description) => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            jobDescription: description,
+        }))
+
+        console.log(form);
+    }
+
+    const updateCompDescription = (description) => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            compDescription: description,
+        }))
+
+        console.log(form);
+    }
 
     //countries.forEach(country => options.push({value: country.country_name, label: country.country_code2}))
 
@@ -121,6 +141,17 @@ export default function Page ({ params }) {
             ...form,
             "worldwide": isSelected,
         });
+
+        console.log(form);
+    }
+
+
+    const handleLogo = (e) => {
+
+        setForm({
+            ...form,
+            logo: e.target.files[0]
+        })
 
         console.log(form);
     }
@@ -214,15 +245,15 @@ export default function Page ({ params }) {
             
             <div className="col-span-full row-start-4">
                 <h3 className="text-2xl mb-2">Tell us more about the role:</h3>
-                <TipTap />
+                <TipTap setDescription={updateJobDescription} />
             </div>
 
             {/*  Job Description End */}
 
             {/*  Company Name*/}
             
-            <div className="col-start-1 col-span-full row-start-5 row-span-1 mt-20">
-                <h1 className="text-4xl">Tell us about your Company</h1>
+            <div className="col-start-1 col-span-full row-start-5 row-span-1 mt-20 mb-20">
+                <h1 className="text-4xl mb-10">Tell us about your Company</h1>
                 <Input className="" type="text" variant="underlined" label="Company Name" name="companyName" isRequired onChange={handleChange}/>  
             </div>
 
@@ -230,34 +261,28 @@ export default function Page ({ params }) {
 
             {/* Company Logo */}
             
-            <div className="col-start-1 col-span-full row-start-6 items-center place-self-center">
-                <h3 className="mb-6">Upload the logo of your Company</h3>
-                <label htmlFor="photo" className="border border-1 border-remotify-lb hover:bg-remotify-lb py-4 px-6 rounded-lg place-self-center">Upload an image
-                <input 
-                    type="file"
-                    id="photo" 
-                    name="filename"
-                    accept="image/*"
-                    style={{opacity: "0", zIndex: "-1", position: "absolute"}} 
-                />
-
-                </label>
+            <div className="flex flex-col justify-center col-start-1 col-span-full bg-white w-full h-full row-start-6 items-center place-self-center border-1 border-dashed border-zinc-700 rounded-lg">
+            
+                <label htmlFor='logo'>Upload an image</label>
+                <input type='file' name="logo" onChange={(e) => (handleLogo(e))}></input>
+        
             </div>        
 
             {/* Company Logo End */}
 
             {/* Company Description */}          
             
-            <div className="col-start-1 col-span-full row-start-8">
-                <h3 className="text-2xl mb-2">Tell us more about your company:</h3>
-                <TipTap />
+            <div className="col-start-1 col-span-full row-start-8 ">
+                <h3 className="text-2xl">Tell us more about your company:</h3>
+                <TipTap setDescription={updateCompDescription}/>
+                <div dangerouslySetInnerHTML={{ __html: compDescription }} />
             </div>
 
             {/* Company Description End */}    
 
             {/* Salary */} 
             
-            <div className="w-96 row-start-[9]">
+            <div className="w-96 row-start-[8]">
                 <label className='' htmlFor="salary-min">Salary Range</label>
                 <div className="flex flex-row justify-between gap-4 w-full">
                    <Input className="" type="text" name="salaryMin" variant="underlined" label="Salary Min" onChange={handleChange} />  
@@ -268,7 +293,7 @@ export default function Page ({ params }) {
 
             {/* Salary End */} 
 
-            <button type="submit" className="col-start-5 col-span-3 row-start-[10] row-span-1 w-96 px-3 py-2 my-12 border-2 rounded-lg shadow-sm border-remotify-lb hover:bg-remotify-lb focus:ring-1 focus:ring-indigo-500">Submit</button>
+            <button type="submit" className="col-start-5 col-span-3 row-start-[9] row-span-1 w-96 px-3 py-2 my-12 border-2 rounded-lg shadow-sm border-remotify-lb hover:bg-remotify-lb focus:ring-1 focus:ring-indigo-500">Submit</button>
         </form>
         </>
     );
