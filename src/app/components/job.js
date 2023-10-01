@@ -15,7 +15,7 @@ export default function Job({ ...props }) {
                 <CardBody className=''>
                   <div className='flex md:flex-row flex-col justify-around items-center'>
                     <div className="">
-                        <Image className="rounded-full" src={'/logo.jpg'} alt="company_logo" width={70} height={70}></Image>
+                        <Image className="rounded-full" src={props.jobLogoUrl ? props.jobLogoUrl : "/Logo.jpg"} alt="company_logo" width={70} height={70}></Image>
                     </div>
                     <div>
                         <h1 className="text-base">{props.title}</h1>{/* <h1>{job.job_title}</h1> */}
