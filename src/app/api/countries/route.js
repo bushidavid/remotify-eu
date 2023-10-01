@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import prisma from "../../../../lib/utils/prisma";
+import supabase from "../../../../lib/config/supabaseClient";
 
 
 export async function GET(req){
 
     try {
 
-        const data = await prisma.country.findMany();
+        const data = await supabase.from('country').select();
 
         
 

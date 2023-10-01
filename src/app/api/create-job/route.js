@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../lib/utils/prisma";
+import supabase from "../../../../lib/config/supabaseClient";
 
 export async function POST(req, res) {
 
@@ -18,7 +18,7 @@ export async function POST(req, res) {
             salaryMin,
             salaryMax,
             salaryCur,
-            logo
+            logoUrl
         } = await req.json();
     
 /*         console.log({
@@ -32,12 +32,13 @@ export async function POST(req, res) {
             salaryMax,
         }); */
     
-    
-        const result = await prisma.job.create({
-            data: {
+
+        const { error } = await supabase
+            .from('job')
+            .insert({
                 title : jobTitle,
                 company: 1,
-                department: jobDepartment,
+                department: 1,
                 worldwide,
                 expired: false,
                 salary_range_min: salaryMin,
@@ -46,15 +47,15 @@ export async function POST(req, res) {
                 clicks: 0,
                 description: jobDescription,
                 company_description: compDescription,
-            }
-        })
+                salary_currency: salaryCur,
+                logo_url: logoUrl,
+            })
+    
     
         return NextResponse.json({message: "new job created successfully"}, {status: 200})
         
     } catch (error) {
         console.error('Error:', error);
         return NextResponse.error({ message: 'Internal server error' }, { status: 500 });
-    }
-
-    
+    } 
 }

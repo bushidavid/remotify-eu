@@ -9,7 +9,8 @@ import { Categories } from '../../../../lib/departments';
 import { Levels } from "../../../../lib/levels";
 import TipTap from "@/app/components/tiptap/tiptap";
 import {Countries} from "../../../../lib/countries";
-import GetLogo from "@/app/components/get-logo";
+import supabase from "../../../../lib/config/supabaseClient";
+
 
 
 
@@ -21,7 +22,7 @@ export default function Page ({ params }) {
     const [ isSelected, setIsSelected] = useState(false);
     const [ compDescription, setCompDescription ] = useState("");
     const [ jobDescription, setJobDescription ] = useState("");
-    const [file, setFile] = useState([]);
+    const [logo, setLogo] = useState([]);
 
     // const handlePayment = async (e) => {
 
@@ -56,7 +57,7 @@ export default function Page ({ params }) {
         salaryMax: "",
         // candidateLevel: [],
         salaryCur: "",
-        logo: []
+        logoUrl: "",
     })
     
     const options = [];
@@ -74,8 +75,6 @@ export default function Page ({ params }) {
     const handleSelectionChange = (e) => {
         setValues(new Set(e.target.value.split(",")));
 
-        console.log(values);
-
         handleChange(e);
     };
 
@@ -85,7 +84,7 @@ export default function Page ({ params }) {
             jobDescription: description,
         }))
 
-        console.log(form);
+        
     }
 
     const updateCompDescription = (description) => {
@@ -94,7 +93,7 @@ export default function Page ({ params }) {
             compDescription: description,
         }))
 
-        console.log(form);
+        
     }
 
     //countries.forEach(country => options.push({value: country.country_name, label: country.country_code2}))
@@ -105,16 +104,47 @@ export default function Page ({ params }) {
         e.preventDefault();
 
         try {
-           const result = await fetch('/api/create-job', {
-                method: 'POST',
-                headers: {   
-                        ContentType: 'application/json',
-                    },
-                body: JSON.stringify(form)
-           });
+
+            const { data, error } = await supabase
+            .storage
+            .from('RemotifyLogoImages')
+            .upload(`logos/${logo.name}`, logo, {
+                cacheControl: '3600',
+                upsert: false
+            });
+
+            console.log("upload of image finished");
+
+            const { data: publicURL } = await supabase.storage.from('RemotifyLogoImages').getPublicUrl(`logos/${logo.name}`);
+
+            // if(logoError){
+            //     console.log('Logo URL error retrieval:', logoError);
+            //     return;
+            // }
+
+
+            const logoUrl = publicURL.publicUrl;
+
+            setForm((prevForm) => ({
+                ...prevForm,
+                logoUrl: logoUrl
+            }));
+
+            console.log("printing the form: \n");
+            console.log(form);
+            
+
+            const result = await fetch('/api/create-job', {
+                    method: 'POST',
+                    headers: {   
+                            ContentType: 'application/json',
+                        },
+                    body: JSON.stringify(form)
+            });
+
 
         } catch (err) {
-            console.log(err.message);
+            console.log("printing error message: \n", err.message);
         }
     }
 
@@ -139,21 +169,22 @@ export default function Page ({ params }) {
 
         setForm({
             ...form,
-            "worldwide": isSelected,
+            worldwide: isSelected,
         });
+
+        if(isSelected){
+            setForm({
+                ...form,
+                jobCountry: ""
+            })
+        }
 
         console.log(form);
     }
 
 
     const handleLogo = (e) => {
-
-        setForm({
-            ...form,
-            logo: e.target.files[0]
-        })
-
-        console.log(form);
+        setLogo(e.target.files[0]);
     }
 
     
@@ -202,7 +233,7 @@ export default function Page ({ params }) {
                         className=""
                         selectedKeys={selectedCountry}
                         onChange={handleSelectionChangeCountry}
-                        isRequired
+                        isRequired={!isSelected}
                         name="countries"
                     >
                         {

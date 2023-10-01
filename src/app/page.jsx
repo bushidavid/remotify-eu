@@ -1,21 +1,22 @@
 import Image from 'next/image';
 import JobList from './components/job-list';
 import Hero from './components/hero';
-import { PrismaClient } from '@prisma/client';
-import prisma from '../../lib/utils/prisma';
+import supabase from '../../lib/config/supabaseClient';
 
 async function getJobs(){
 
-  const jobs = await prisma.job.findMany({
-    include: {
-      country_job_countryTocountry: true,
-      department_job_departmentTodepartment: true
-    }
-  });
 
-  console.log(jobs);
+  const {data, error} = await supabase
+      .from('job')
+      .select(`
+        *,
+        department(*)
+        country(*)
+      `);
 
-  const data = jobs.map((job) => {
+
+
+  const result = data.map((job) => {
     const transformBigIntToString = (key, value) => {
       return typeof value === 'bigint' 
         ? value.toString() 
@@ -26,15 +27,13 @@ async function getJobs(){
     return JSON.parse(JSON.stringify(job, transformBigIntToString));
   });
 
-  return data;
+  return result;
 }
 
 
 export default async function Home() {
 
-  const jobsData = await getJobs();
-
-  const jobs = await Promise.all(jobsData);
+  const jobs = await getJobs();
 
   return (
     <section className='w-screen flex flex-col justify-center items-center'>

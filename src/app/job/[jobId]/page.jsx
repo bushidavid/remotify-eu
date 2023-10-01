@@ -1,13 +1,10 @@
 import JobHero from '@/app/components/job-hero';
 import JobDetails from '@/app/components/job-details';
-import { PrismaClient } from '@prisma/client';
 import Image from 'next/image';
+import supabase from '../../../../lib/config/supabaseClient';
 
-const prisma = new PrismaClient();
 
 export default async function Page({ params }) {
-
-  console.log(params.jobId);
 
   const job = await getJobDetails(params.jobId)
 
@@ -30,17 +27,18 @@ export default async function Page({ params }) {
 
 
 export async function getJobDetails(jobId){
-
   try {
-    const job = await prisma.job.findUnique({
-      where: {
-        id : jobId
-      },
-      include: {
-        country_job_countryTocountry: true,
-        department_job_departmentTodepartment: true
-      }
-    });
+
+    const {data: job, error} = await supabase
+      .from('job')
+      .select(`
+        *,
+        country(*),
+        department(*)
+      `)
+      .eq('id', jobId)
+
+      console.log(job);
 
     
     const transformBigIntToString = (key, value) => {
@@ -52,7 +50,7 @@ export async function getJobDetails(jobId){
       // Use JSON.parse and JSON.stringify to apply the transformation
     const data = JSON.parse(JSON.stringify(job, transformBigIntToString));
     
-    return data
+    return data[0];
 
   } catch (error) {
     console.log(error);
