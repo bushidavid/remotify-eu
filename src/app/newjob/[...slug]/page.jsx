@@ -10,6 +10,7 @@ import { Levels } from "../../../../lib/levels";
 import TipTap from "@/app/components/tiptap/tiptap";
 import {Countries} from "../../../../lib/countries";
 import supabase from "../../../../lib/config/supabaseClient";
+import { Tags } from "../../../../lib/tags";
 
 
 
@@ -23,6 +24,13 @@ export default function Page ({ params }) {
     const [ compDescription, setCompDescription ] = useState("");
     const [ jobDescription, setJobDescription ] = useState("");
     const [logo, setLogo] = useState([]);
+    const options = [];
+
+    const [values, setValues] = useState(new Set([]));
+    const [selectedCountry, setSelectedCountry] = useState(new Set([]));
+    const [selectedTags, setSelectedTags] = useState([]);
+
+    let countryIDs = [];
 
     // const handlePayment = async (e) => {
 
@@ -55,21 +63,22 @@ export default function Page ({ params }) {
         worldwide: true,
         salaryMin: "",
         salaryMax: "",
-        // candidateLevel: [],
+        candidateLevel: "",
         salaryCur: "",
         logoUrl: "",
+        tags: []
     })
     
-    const options = [];
-
-    const [values, setValues] = useState(new Set([]));
-    const [selectedCountry, setSelectedCountry] = useState(new Set([]));
+    
 
     const handleSelectionChangeCountry = (e) => {
 
         setSelectedCountry(new Set(e.target.value.split(",")));
 
+        console.log(selectedCountry);
+
         handleChange(e);
+        
     };
 
     const handleSelectionChange = (e) => {
@@ -96,7 +105,6 @@ export default function Page ({ params }) {
         
     }
 
-    //countries.forEach(country => options.push({value: country.country_name, label: country.country_code2}))
 
     const onSubmitForm = async (e) => {
         // handlePayment(id[0]);
@@ -129,17 +137,14 @@ export default function Page ({ params }) {
                 ...prevForm,
                 logoUrl: logoUrl
             }));
-
-            console.log("printing the form: \n");
-            console.log(form);
             
 
             const result = await fetch('/api/create-job', {
-                    method: 'POST',
-                    headers: {   
-                            ContentType: 'application/json',
-                        },
-                    body: JSON.stringify(form)
+                method: 'POST',
+                headers: {   
+                        ContentType: 'application/json',
+                    },
+                body: JSON.stringify(form)
             });
 
 
@@ -186,6 +191,14 @@ export default function Page ({ params }) {
     const handleLogo = (e) => {
         setLogo(e.target.files[0]);
     }
+
+    const handleSelectionChangeTag = (e) => {
+
+        setSelectedTags(new Set(e.target.value.split(",")));
+
+        handleChange(e);
+    };
+
 
     
     return (
@@ -234,18 +247,45 @@ export default function Page ({ params }) {
                         selectedKeys={selectedCountry}
                         onChange={handleSelectionChangeCountry}
                         isRequired={!isSelected}
-                        name="countries"
+                        name="jobCountry"
                     >
                         {
                             Countries.map(country => (
-                                <SelectItem key={country.label} value={country.label}>{country.name}</SelectItem>
+                                <SelectItem key={country.id} value={country.label}>{country.name}</SelectItem>
                             ))
                         }
                     </Select>
-                    <p className="text-small text-default-500">{Array.from(selectedCountry).join(", ")}</p>
             </div>
 
             {/* Countries End */}
+
+            {/* Select Tags */}
+            
+            <div className="col-start-1 col-span-full row-start-4 row-span-1">
+                <div>
+                    <Select 
+                        label="Tags" variant="underlined" 
+                        className="w-full" id="job-department" 
+                        name="tags" 
+                        isRequired 
+                        onChange={handleSelectionChangeTag}
+                        selectionMode="multiple"
+                        selectedKeys={selectedTags}
+                        >
+                            
+                        {
+                            Tags.map(tags => (
+                                <SelectItem key={tags.id} value={tags.id} >
+                                    {tags.value}
+                                </SelectItem> 
+                            ))
+                        }
+                    </Select>
+                    <p className="text-small text-default-500">{Array.from(selectedTags).join(", ")}</p>
+                </div>
+            </div> 
+
+            {/* End Select Tags */}
 
 
             {/*  candidate Level */}
@@ -267,14 +307,13 @@ export default function Page ({ params }) {
                             ))
                         }
                     </Select>
-                    <p className="text-small text-default-500">{Array.from(values).join(", ")}</p>
             </div>
 
             {/*  candidate Level End */}
 
             {/*  Job Description */}
             
-            <div className="col-span-full row-start-4">
+            <div className="col-span-full row-start-5">
                 <h3 className="text-2xl mb-2">Tell us more about the role:</h3>
                 <TipTap setDescription={updateJobDescription} />
             </div>
@@ -283,7 +322,7 @@ export default function Page ({ params }) {
 
             {/*  Company Name*/}
             
-            <div className="col-start-1 col-span-full row-start-5 row-span-1 mt-20 mb-20">
+            <div className="col-start-1 col-span-full row-start-6 row-span-1 mt-20 mb-20">
                 <h1 className="text-4xl mb-10">Tell us about your Company</h1>
                 <Input className="" type="text" variant="underlined" label="Company Name" name="companyName" isRequired onChange={handleChange}/>  
             </div>
@@ -292,7 +331,7 @@ export default function Page ({ params }) {
 
             {/* Company Logo */}
             
-            <div className="flex flex-col justify-center col-start-1 col-span-full bg-white w-full h-full row-start-6 items-center place-self-center border-1 border-dashed border-zinc-700 rounded-lg">
+            <div className="flex flex-col justify-center col-start-1 col-span-full bg-white w-full h-full row-start-7 items-center place-self-center border-1 border-dashed border-zinc-700 rounded-lg">
             
                 <label htmlFor='logo'>Upload an image</label>
                 <input type='file' name="logo" onChange={(e) => (handleLogo(e))}></input>
@@ -303,7 +342,7 @@ export default function Page ({ params }) {
 
             {/* Company Description */}          
             
-            <div className="col-start-1 col-span-full row-start-8 ">
+            <div className="col-start-1 col-span-full row-start-9 ">
                 <h3 className="text-2xl">Tell us more about your company:</h3>
                 <TipTap setDescription={updateCompDescription}/>
                 <div dangerouslySetInnerHTML={{ __html: compDescription }} />
@@ -313,7 +352,7 @@ export default function Page ({ params }) {
 
             {/* Salary */} 
             
-            <div className="w-96 row-start-[8]">
+            <div className="w-96 row-start-[10]">
                 <label className='' htmlFor="salary-min">Salary Range</label>
                 <div className="flex flex-row justify-between gap-4 w-full">
                    <Input className="" type="text" name="salaryMin" variant="underlined" label="Salary Min" onChange={handleChange} />  

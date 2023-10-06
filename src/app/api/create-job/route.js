@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import supabase from "../../../../lib/config/supabaseClient";
 
-export async function POST(req, res) {
+const REGEX = /\[|\]/g; //REGEX to remove square brackets
 
-    // console.log("I'm inside the API");
-    // return NextResponse.json({message: "Hello World"}, {status: 200})
+export async function POST(req, res) {
     
     try {
 
@@ -12,28 +11,19 @@ export async function POST(req, res) {
             jobTitle,
             jobDepartment,
             jobDescription,
+            jobCountry,
             companyName,
             compDescription,
+            candidateLevel,
             worldwide,
             salaryMin,
             salaryMax,
             salaryCur,
-            logoUrl
+            logoUrl,
         } = await req.json();
     
-/*         console.log({
-            jobTitle,
-            jobDepartment,
-            jobDescription,
-            compDescription,
-            companyName,
-            worldwide,
-            salaryMin,
-            salaryMax,
-        }); */
-    
 
-        const { error } = await supabase
+        const { data, error } = await supabase
             .from('job')
             .insert({
                 title : jobTitle,
@@ -49,8 +39,35 @@ export async function POST(req, res) {
                 company_description: compDescription,
                 salary_currency: salaryCur,
                 logo_url: logoUrl,
+
             })
-    
+            .select();
+
+        if(error) {
+            return NextResponse.json({message: error.message}, {status: 400})
+        }
+
+        //inserting data into job_experience table
+        const { data: experienceData, error: experienceError } = await supabase
+            .rpc('populate_job_experience_table', { levels: candidateLevel, job_id: data[0].id });
+
+        if(experienceError){
+            console.log(experienceError);
+            return NextResponse.json({message: experienceError.message}, {status: 400})
+        }
+
+        //inserting data into job_country table
+        if(!worldwide){
+            const countries = jobCountry.replace('REGEX', ' ');
+        
+        
+            const { data: countryData, error: countryError } = await supabase
+                .rpc('populate_job_country_table', { countries: countries, job_id: data[0].id });
+
+            if(countryError) {
+                return NextResponse.json({message: countryError.message}, {status: 400})
+            }
+        }
     
         return NextResponse.json({message: "new job created successfully"}, {status: 200})
         
