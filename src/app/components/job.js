@@ -23,7 +23,7 @@ export default function Job({ ...props }) {
                         <h3 className='text-sm'>{props.salaryMin +" to " + props.salaryMax}</h3>
                     </div>
                     <div>
-                        <h1>Remote from <i>{props.country}</i></h1>
+                        <h1> <i>{props.worldwide ? "Worlwide" : `Remote from ${props.country}`}</i></h1>
                     </div>
                     <div className="flex md:flex-col flex-row">
                         {props.tags.map(tag => {

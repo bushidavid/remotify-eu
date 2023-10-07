@@ -32,9 +32,7 @@ export async function getJobDetails(jobId){
     const {data: job, error} = await supabase
       .from('job')
       .select(`
-        *,
-        country(*),
-        department(*)
+        *
       `)
       .eq('id', jobId)
 

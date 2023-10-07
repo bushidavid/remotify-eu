@@ -60,13 +60,13 @@ export default function Page ({ params }) {
         jobDescription: "",
         compDescription: "",
         companyName: "",
-        worldwide: true,
+        worldwide: "",
         salaryMin: "",
         salaryMax: "",
         candidateLevel: "",
         salaryCur: "",
         logoUrl: "",
-        tags: []
+        tags: ""
     })
     
     
@@ -123,7 +123,9 @@ export default function Page ({ params }) {
 
             console.log("upload of image finished");
 
-            const { data: publicURL } = await supabase.storage.from('RemotifyLogoImages').getPublicUrl(`logos/${logo.name}`);
+            const { data: publicURL } = await supabase
+                .storage.from('RemotifyLogoImages')
+                .getPublicUrl(`logos/${logo.name}`);
 
             // if(logoError){
             //     console.log('Logo URL error retrieval:', logoError);
@@ -168,7 +170,7 @@ export default function Page ({ params }) {
         console.log(form);
     }
 
-    const handleSwitchChange = (e) => {
+    const handleSwitchChange = () => {
 
         setIsSelected(prev => !prev);
 
@@ -231,7 +233,7 @@ export default function Page ({ params }) {
             {/*  Worldwide */}
             <div className="col-start-1 col-span-4 row-start-3 row-span-1 flex flex-row justify-around">
                 <p>Is this a worldwide position?</p>
-                <Switch name="worldwide" isSelected={isSelected} onValueChange={handleSwitchChange}>
+                <Switch name="worldwide" isSelected={isSelected} onChange={handleSwitchChange}>
                 </Switch>
             </div>
             {/*  Worldwide  End */}
@@ -281,7 +283,6 @@ export default function Page ({ params }) {
                             ))
                         }
                     </Select>
-                    <p className="text-small text-default-500">{Array.from(selectedTags).join(", ")}</p>
                 </div>
             </div> 
 

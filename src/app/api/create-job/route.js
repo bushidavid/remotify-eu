@@ -12,7 +12,7 @@ export async function POST(req, res) {
             jobDepartment,
             jobDescription,
             jobCountry,
-            companyName,
+            tags,
             compDescription,
             candidateLevel,
             worldwide,
@@ -22,7 +22,7 @@ export async function POST(req, res) {
             logoUrl,
         } = await req.json();
     
-
+        //creating new job
         const { data, error } = await supabase
             .from('job')
             .insert({
@@ -67,6 +67,17 @@ export async function POST(req, res) {
             if(countryError) {
                 return NextResponse.json({message: countryError.message}, {status: 400})
             }
+        }
+
+
+        //inserting data into job_tags table
+        const tagArray = tags.replace('REGEX', ' ');
+
+        const { data: tagsData, error: tagsError } = await supabase
+        .rpc('job_tags', { tags: tagArray, job_id: data[0].id });
+
+        if(tagsError){
+            return NextResponse.json({message: tagsError.message}, {status: 400})
         }
     
         return NextResponse.json({message: "new job created successfully"}, {status: 200})

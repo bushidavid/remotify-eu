@@ -3,18 +3,12 @@ import JobList from './components/job-list';
 import Hero from './components/hero';
 import supabase from '../../lib/config/supabaseClient';
 
+
 async function getJobs(){
 
+  const { data } = await supabase.rpc('get_jobs');
 
-  const {data, error} = await supabase
-      .from('job')
-      .select(`
-        *,
-        department(*)
-        country(*)
-      `);
-
-
+  console.log(data);
 
   const result = data.map((job) => {
     const transformBigIntToString = (key, value) => {
