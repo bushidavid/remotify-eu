@@ -10,7 +10,7 @@ export default function CategoriesMenu() {
         { 
                 Categories.map(category => {
                     return (
-                        <Link href="/" key={category.id} className=" px-2 text-remotify-db hover:bg-slate-200 hover:rounded-lg">{category.value}</Link>
+                        <Link href={`/jobs/${category.value}`} key={category.id} className=" px-2 text-remotify-db hover:rounded-lg hover:bg-remotify-lum">{category.value}</Link>
                     )
                 })
             }

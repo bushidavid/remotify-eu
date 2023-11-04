@@ -34,6 +34,9 @@ module.exports = {
         // Simple 8 row grid
         '12': 'repeat(12, minmax(0, 1fr))',
         'layout': 'repeat(4, minmax(150px,1fr)) 600px 200px 200px 600px 150px 150px'
+      },
+      maxWidth: {
+        '2/6': '33.333333%'
       }
     },
   },

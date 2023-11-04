@@ -1,18 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import supabase from "../../../../lib/config/supabaseClient";
+import { Wire_One } from "next/font/google";
 
 const REGEX = /\[|\]/g; //REGEX to remove square brackets
+
+const OFFSET = 50 * 24 * 60 * 60 * 1000;
+
+const today = new Date();
+today.setTime(today.getTime() + OFFSET);
+
+
+export const revalidate = 0;
 
 export async function POST(req, res) {
     
     try {
 
-        const {
+        let {
             jobTitle,
             jobDepartment,
             jobDescription,
             jobCountry,
             tags,
+            companyName,
             compDescription,
             candidateLevel,
             worldwide,
@@ -21,14 +31,19 @@ export async function POST(req, res) {
             salaryCur,
             logoUrl,
         } = await req.json();
+
+
+        if(worldwide){
+            jobCountry = ""
+        }
     
         //creating new job
         const { data, error } = await supabase
             .from('job')
             .insert({
                 title : jobTitle,
-                company: 1,
-                department: 1,
+                company_name: companyName,
+                category_id: jobDepartment,
                 worldwide,
                 expired: false,
                 salary_range_min: salaryMin,
@@ -39,7 +54,7 @@ export async function POST(req, res) {
                 company_description: compDescription,
                 salary_currency: salaryCur,
                 logo_url: logoUrl,
-
+                expiration_date: today.toISOString().toLocaleString('de-DE'),
             })
             .select();
 

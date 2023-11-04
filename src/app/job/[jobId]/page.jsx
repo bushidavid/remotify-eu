@@ -3,6 +3,7 @@ import JobDetails from '@/app/components/job-details';
 import Image from 'next/image';
 import supabase from '../../../../lib/config/supabaseClient';
 
+export const revalidate = 0;
 
 export default async function Page({ params }) {
 
@@ -29,15 +30,9 @@ export default async function Page({ params }) {
 export async function getJobDetails(jobId){
   try {
 
-    const {data: job, error} = await supabase
-      .from('job')
-      .select(`
-        *
-      `)
-      .eq('id', jobId)
+    const {data: job, error} = await supabase.rpc('get_job_details', { jobid: jobId });
 
-      console.log(job);
-
+    console.log(error);
     
     const transformBigIntToString = (key, value) => {
         return typeof value === 'bigint' 

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function JobDetails({ job }) {
 
-  const description = { __html: job.description };
+  const description = { __html: job.job_description };
   const companyDescription = { __html: job.company_description};
 
   return (

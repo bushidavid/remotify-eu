@@ -14,53 +14,51 @@ import { Tags } from "../../../../lib/tags";
 
 
 
-
 export default function Page ({ params }) {
+
+
+    const router = useRouter();
 
     const id = params.slug;
 
     // *selected status for Worldwide Switch
-    const [ isSelected, setIsSelected] = useState(false);
     const [ compDescription, setCompDescription ] = useState("");
     const [ jobDescription, setJobDescription ] = useState("");
     const [logo, setLogo] = useState([]);
-    const options = [];
 
     const [values, setValues] = useState(new Set([]));
     const [selectedCountry, setSelectedCountry] = useState(new Set([]));
     const [selectedTags, setSelectedTags] = useState([]);
 
-    let countryIDs = [];
+    const handlePayment = async (e) => {
 
-    // const handlePayment = async (e) => {
+        const response  = await fetch('/api/payment' ,{
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                priceId: id
+            })
+        })
 
-    //     e.preventDefault();
-
-    //     const response  = await fetch('/api/payment' ,{
-    //         method: 'POST',
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             priceId: id
-    //         })
-    //     })
-
-    //     const data = await response.json();
+        const data = await response.json();
         
-    //     router.push(data.url);
+        router.push(data.url);
 
-    // }
+        return;
+
+    }
 
 
     const [form, setForm] = useState({
         jobTitle : "",
-        jobCountry: "",
+        jobCountry: null,
+        worldwide: false,
         jobDepartment: "",
         jobDescription: "",
         compDescription: "",
         companyName: "",
-        worldwide: "",
         salaryMin: "",
         salaryMax: "",
         candidateLevel: "",
@@ -74,8 +72,6 @@ export default function Page ({ params }) {
     const handleSelectionChangeCountry = (e) => {
 
         setSelectedCountry(new Set(e.target.value.split(",")));
-
-        console.log(selectedCountry);
 
         handleChange(e);
         
@@ -92,8 +88,6 @@ export default function Page ({ params }) {
             ...prevForm,
             jobDescription: description,
         }))
-
-        
     }
 
     const updateCompDescription = (description) => {
@@ -101,15 +95,14 @@ export default function Page ({ params }) {
             ...prevForm,
             compDescription: description,
         }))
-
-        
     }
 
 
     const onSubmitForm = async (e) => {
-        // handlePayment(id[0]);
-
+       
         e.preventDefault();
+        
+        //handlePayment(id[0]);
 
         try {
 
@@ -120,8 +113,6 @@ export default function Page ({ params }) {
                 cacheControl: '3600',
                 upsert: false
             });
-
-            console.log("upload of image finished");
 
             const { data: publicURL } = await supabase
                 .storage.from('RemotifyLogoImages')
@@ -155,11 +146,6 @@ export default function Page ({ params }) {
         }
     }
 
-    
-    // const handleChange = (selectedOptions) => {
-    //     setJobCountry(selectedOptions.map(country => country.value));
-    // }
-
     const handleChange = (e) => {
 
         setForm({
@@ -168,25 +154,16 @@ export default function Page ({ params }) {
         });
 
         console.log(form);
+
     }
 
-    const handleSwitchChange = () => {
-
-        setIsSelected(prev => !prev);
+    const handleSwitchChange = (e) => {
 
         setForm({
             ...form,
-            worldwide: isSelected,
+            [e.target.name]: e.target.checked,
         });
 
-        if(isSelected){
-            setForm({
-                ...form,
-                jobCountry: ""
-            })
-        }
-
-        console.log(form);
     }
 
 
@@ -233,14 +210,14 @@ export default function Page ({ params }) {
             {/*  Worldwide */}
             <div className="col-start-1 col-span-4 row-start-3 row-span-1 flex flex-row justify-around">
                 <p>Is this a worldwide position?</p>
-                <Switch name="worldwide" isSelected={isSelected} onChange={handleSwitchChange}>
+                <Switch name="worldwide" isSelected={form.worldwide} onChange={e => handleSwitchChange(e)}>
                 </Switch>
             </div>
             {/*  Worldwide  End */}
 
             {/* Countries */}
 
-            <div className={`col-start-8 col-span-5 row-start-3 ${isSelected ? "hidden invisible" : ""}`} >
+            <div className={`col-start-8 col-span-5 row-start-3 ${form.worldwide ? "hidden invisible" : ""}`} >
                     <Select label="Countries"
                         selectionMode="multiple"
                         placeholder="Select one or more countries"
@@ -248,12 +225,12 @@ export default function Page ({ params }) {
                         className=""
                         selectedKeys={selectedCountry}
                         onChange={handleSelectionChangeCountry}
-                        isRequired={!isSelected}
+                        isRequired={!form.worldwide}
                         name="jobCountry"
                     >
                         {
                             Countries.map(country => (
-                                <SelectItem key={country.id} value={country.label}>{country.name}</SelectItem>
+                                <SelectItem key={country.id} value={country.id}>{country.name}</SelectItem>
                             ))
                         }
                     </Select>
