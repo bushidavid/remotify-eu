@@ -14,6 +14,7 @@ import { Tags } from "../../../../lib/tags";
 
 
 
+
 export default function Page ({ params }) {
 
 
@@ -30,7 +31,9 @@ export default function Page ({ params }) {
     const [selectedCountry, setSelectedCountry] = useState(new Set([]));
     const [selectedTags, setSelectedTags] = useState([]);
 
-    const handlePayment = async (e) => {
+
+
+    const handlePayment = async (newJobId) => {
 
         const response  = await fetch('/api/payment' ,{
             method: 'POST',
@@ -38,7 +41,8 @@ export default function Page ({ params }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                priceId: id
+                priceId: id,
+                newJobId
             })
         })
 
@@ -102,17 +106,17 @@ export default function Page ({ params }) {
        
         e.preventDefault();
         
-        //handlePayment(id[0]);
+        let newJobId = "";
 
         try {
 
             const { data, error } = await supabase
-            .storage
-            .from('RemotifyLogoImages')
-            .upload(`logos/${logo.name}`, logo, {
-                cacheControl: '3600',
-                upsert: false
-            });
+                .storage
+                .from('RemotifyLogoImages')
+                .upload(`logos/${logo.name}`, logo, {
+                    cacheControl: '3600',
+                    upsert: false
+                });
 
             const { data: publicURL } = await supabase
                 .storage.from('RemotifyLogoImages')
@@ -138,12 +142,16 @@ export default function Page ({ params }) {
                         ContentType: 'application/json',
                     },
                 body: JSON.stringify(form)
-            });
+            }).then(data => data.json()).then(data => newJobId = data.message);
 
 
         } catch (err) {
             console.log("printing error message: \n", err.message);
         }
+
+        console.log(newJobId);
+
+        handlePayment(newJobId);
     }
 
     const handleChange = (e) => {

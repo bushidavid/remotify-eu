@@ -95,7 +95,7 @@ export async function POST(req, res) {
             return NextResponse.json({message: tagsError.message}, {status: 400})
         }
     
-        return NextResponse.json({message: "new job created successfully"}, {status: 200})
+        return NextResponse.json({message: data[0].id}, {status: 200})
         
     } catch (error) {
         console.error('Error:', error);

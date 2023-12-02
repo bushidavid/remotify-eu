@@ -6,7 +6,10 @@ export async function POST (NextRequest) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const data  = await NextRequest.json();
 
+    console.log(data);
+
     const priceId = data.priceId[0];
+    const newJobId = data.newJobId;
 
     const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -18,6 +21,14 @@ export async function POST (NextRequest) {
         mode: "payment",
         success_url: 'http://localhost:3000',
         cancel_url: 'http://localhost:3000',
+        metadata: {
+            newJobId,
+        },
+        payment_intent_data: {
+            metadata: {
+                newJobId
+            }
+        },
     })
 
     return NextResponse.json({"url": session.url});

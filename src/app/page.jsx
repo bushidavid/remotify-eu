@@ -28,8 +28,6 @@ export default async function Home() {
 
   const jobs = await getJobs();
 
-  console.log(jobs);
-
   return (
     <section className='w-screen flex flex-col justify-center items-center'>
       <Hero />
