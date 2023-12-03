@@ -1,16 +1,12 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import FontFamily from '@tiptap/extension-font-family';
-import Document from '@tiptap/extension-document';
-import Paragraph from '@tiptap/extension-paragraph';
 import TextStyle from '@tiptap/extension-text-style';
 import MenuBar from './menu-bar';
-import BulletList from '@tiptap/extension-bullet-list';
-import ListItem from '@tiptap/extension-list-item';
-import OrderedList from '@tiptap/extension-ordered-list';
+
 import '../../style.css'
 
 const TipTap = ({ setDescription }) => {
@@ -29,6 +25,7 @@ const TipTap = ({ setDescription }) => {
         class: "prose prose-sm sm:prose lg:prose-base xl:prose-lg h-[400px] min-w-full overflow-y-scroll border border-slate-300 rounded-lg focus:outline-none "
       }
     },
+
 
     onUpdate ({editor}) {
       setEditorContent(editor.getHTML())
