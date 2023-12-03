@@ -2,36 +2,43 @@ import Image from 'next/image';
 import JobList from './components/job-list';
 import Hero from './components/hero';
 import supabase from '../../lib/config/supabaseClient';
+import { fetchJobs } from './actions/actions';
+import InfiniteScrollJobs from './components/infinite-scroll-jobs';
+
 
 export const revalidate = 0;
 
-async function getJobs(){
+// async function getJobs(){
 
-  const { data, error } = await supabase.rpc('get_jobs');
+//   const { data, error } = await supabase.rpc('get_jobs');
 
-  const result = data.map((job) => {
-    const transformBigIntToString = (key, value) => {
-      return typeof value === 'bigint' 
-        ? value.toString() 
-        : value;
-    };
+//   console.log(error);
+
+//   const result = data.map((job) => {
+//     const transformBigIntToString = (key, value) => {
+//       return typeof value === 'bigint' 
+//         ? value.toString() 
+//         : value;
+//     };
   
-    // Use JSON.parse and JSON.stringify to apply the transformation
-    return JSON.parse(JSON.stringify(job, transformBigIntToString));
-  });
+//     // Use JSON.parse and JSON.stringify to apply the transformation
+//     return JSON.parse(JSON.stringify(job, transformBigIntToString));
+//   });
 
-  return result;
-}
+//   return result;
+// }
 
 
 export default async function Home() {
 
-  const jobs = await getJobs();
+  const jobs = await fetchJobs(); 
+
+  console.log(jobs);
 
   return (
     <section className='w-screen flex flex-col justify-center items-center'>
       <Hero />
-      <JobList jobs={jobs} title="Latest Remote Jobs" />
+      <InfiniteScrollJobs initialJobs={jobs} />
     </section>
   )
 }

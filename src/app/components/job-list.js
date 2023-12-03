@@ -6,7 +6,7 @@ const JobList = ({ jobs, title }) => {
         <div className="flex flex-col w-full place-self-center justify-center items-center">
          
             <div className="flex flex-col align-center w-full max-w-6xl h-full ">
-                <h1 className="text-4xl text-center mt-6 mb-2">{title}</h1>
+                {title && <h1 className="text-4xl text-center mt-6 mb-2">{title}</h1>}
 
                 { 
                     jobs.map(job => (
@@ -29,7 +29,7 @@ const JobList = ({ jobs, title }) => {
                 }
             </div>
 
-            <div className="text-center"><button  className="bg-white px-6 rounded-md py-2 hover:bg-remotify-db hover:text-white border-1 border-remotify-lb">Load More Jobs</button></div>
+            
         </div>
 
 );

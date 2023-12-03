@@ -1,12 +1,13 @@
 import JobList from "@/app/components/job-list";
 import supabase from "../../../../lib/config/supabaseClient";
+import InfiniteScrollJobs from "@/app/components/infinite-scroll-jobs";
 
 export const revalidate = 0;
 
 
 async function getJobByCategory(search) {
     const {data: jobs, error} = await supabase
-    .rpc('get_jobs');
+    .rpc('get_jobs', {loadlimit: 10});
 
     if(error){
         console.log(error);
@@ -40,7 +41,7 @@ export default async function Page({ params }) {
 
   return (
     <section className='w-screen flex flex-col justify-center items-center'>
-        <JobList jobs={jobs} title={`Jobs in ${category}`} />
+       <InfiniteScrollJobs initialJobs={jobs} />
     </section>
   )
 }

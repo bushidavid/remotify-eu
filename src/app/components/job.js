@@ -10,7 +10,7 @@ export default function Job({ ...props }) {
 
     <div>
       <Link href={`/job/${props.id}`}>
-              <Card className={`sm:w-full w-96 mb-6 hover:bg-remotify-lum ${props.featured ? 'bg-[#f0e7c7]' : ''}`}>
+              <Card className={`sm:w-full w-96 mb-6 hover:bg-remotify-lum ${props.featured ? 'bg-[#f7f1de]' : ''}`}>
                 <CardBody className=''>
                   <div className='flex md:flex-row flex-col justify-start items-center w-full'>
                     <div className="w-[8%] max-w-[8%]">

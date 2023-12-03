@@ -7,7 +7,7 @@ export const revalidate = 0;
 
 export default async function Page({ params }) {
 
-  const job = await getJobDetails(params.jobId)
+  const job = await getJobDetails(params.jobId)  
 
   return (
     <div className='w-full max-w-4xl  mt-10 px-4'>
@@ -31,8 +31,8 @@ export async function getJobDetails(jobId){
   try {
 
     const {data: job, error} = await supabase.rpc('get_job_details', { jobid: jobId });
-
-    console.log(error);
+   
+    console.log("printing job", job);
     
     const transformBigIntToString = (key, value) => {
         return typeof value === 'bigint' 

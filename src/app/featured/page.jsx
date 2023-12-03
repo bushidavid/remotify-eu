@@ -5,7 +5,7 @@ export const revalidate = 0;
 
 async function getFeaturedJobs() {
   const {data: jobs, error} = await supabase
-  .rpc('get_jobs');
+  .rpc('get_jobs', {loadlimit : 10});
 
   if(error){
       console.log(error);
