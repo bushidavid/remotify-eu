@@ -68,7 +68,9 @@ export default function Page ({ params }) {
         candidateLevel: "",
         salaryCur: "",
         logoUrl: "",
-        tags: ""
+        tags: "",
+        jobLink: "",
+        companyWebsite: ""
     })
     
     
@@ -273,6 +275,12 @@ export default function Page ({ params }) {
 
             {/* End Select Tags */}
 
+            {/*  Job link */}
+            <div className="col-start-1 col-span-full row-start-5 row-span-1">
+                <Input className="" type="text" variant="underlined" label="Link to the job post" isRequired name="jobLink" onChange={handleChange}/>  
+            </div>
+            {/*  Job Link End */}
+
 
             {/*  candidate Level */}
 
@@ -299,7 +307,7 @@ export default function Page ({ params }) {
 
             {/*  Job Description */}
             
-            <div className="col-span-full row-start-5">
+            <div className="col-span-full row-start-6">
                 <h3 className="text-2xl mb-2">Tell us more about the role:</h3>
                 <TipTap setDescription={updateJobDescription} />
             </div>
@@ -308,16 +316,24 @@ export default function Page ({ params }) {
 
             {/*  Company Name*/}
             
-            <div className="col-start-1 col-span-full row-start-6 row-span-1 mt-20 mb-20">
+            <div className="col-start-1 col-span-full row-start-7 row-span-1 mt-20 mb-20">
                 <h1 className="text-4xl mb-10">Tell us about your Company</h1>
                 <Input className="" type="text" variant="underlined" label="Company Name" name="companyName" isRequired onChange={handleChange}/>  
             </div>
 
             {/* Company Name End */}
 
+             {/*  Company Website*/}
+            
+             <div className="col-start-1 col-span-full row-start-8 row-span-1 mt-20 mb-20">
+                <Input className="" type="text" variant="underlined" label="Company Website" name="companyWebsite" isRequired onChange={handleChange}/>  
+            </div>
+
+            {/* Company Website End */}
+
             {/* Company Logo */}
             
-            <div className="flex flex-col justify-center col-start-1 col-span-full bg-white w-full h-full row-start-7 items-center place-self-center border-1 border-dashed border-zinc-700 rounded-lg">
+            <div className="flex flex-col justify-center col-start-1 col-span-full bg-white w-full h-full row-start-9 items-center place-self-center border-1 border-dashed border-zinc-700 rounded-lg">
             
                 <label htmlFor='logo'>Upload an image</label>
                 <input type='file' name="logo" onChange={(e) => (handleLogo(e))}></input>
@@ -328,7 +344,7 @@ export default function Page ({ params }) {
 
             {/* Company Description */}          
             
-            <div className="col-start-1 col-span-full row-start-9 ">
+            <div className="col-start-1 col-span-full row-start-10 ">
                 <h3 className="text-2xl">Tell us more about your company:</h3>
                 <TipTap setDescription={updateCompDescription}/>
                 <div dangerouslySetInnerHTML={{ __html: compDescription }} />
@@ -338,7 +354,7 @@ export default function Page ({ params }) {
 
             {/* Salary */} 
             
-            <div className="w-96 row-start-[10]">
+            <div className="w-96 row-start-[11]">
                 <label className='' htmlFor="salary-min">Salary Range</label>
                 <div className="flex flex-row justify-between gap-4 w-full">
                    <Input className="" type="text" name="salaryMin" variant="underlined" label="Salary Min" onChange={handleChange} />  
@@ -349,7 +365,7 @@ export default function Page ({ params }) {
 
             {/* Salary End */} 
 
-            <button type="submit" className="col-start-5 col-span-3 row-start-[9] row-span-1 w-96 px-3 py-2 my-12 border-2 rounded-lg shadow-sm border-remotify-lb hover:bg-remotify-lb focus:ring-1 focus:ring-indigo-500">Submit</button>
+            <button type="submit" className="col-start-5 col-span-3 row-start-[12] row-span-1 w-96 px-3 py-2 my-12 border-2 rounded-lg shadow-sm border-remotify-lb hover:bg-remotify-lb focus:ring-1 focus:ring-indigo-500">Submit</button>
         </form>
         </>
     );
