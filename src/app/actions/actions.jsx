@@ -5,9 +5,13 @@ import supabase from "../../../lib/config/supabaseClient";
 var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
 var currentTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
 
-export async function fetchJobs(limit = 24, lastLoadedTime = currentTime){
+export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, search = ""){
 
-    const { data, error } = await supabase.rpc('get_jobs_v2', {loadlimit: limit, lastloadedtime: lastLoadedTime});
+    console.log("printing the search parameter", search);
+
+    const { data, error } = await supabase.rpc('get_jobs_v3', {loadlimit: limit, lastloadedtime: lastLoadedTime, p_category: search});
+
+    console.log(error);
 
     const result = data.map((job) => {
         const transformBigIntToString = (key, value) => {

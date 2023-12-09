@@ -1,6 +1,7 @@
 import JobList from "@/app/components/job-list";
 import supabase from "../../../../lib/config/supabaseClient";
 import InfiniteScrollJobs from "@/app/components/infinite-scroll-jobs";
+import { fetchJobs } from "@/app/actions/actions";
 
 export const revalidate = 0;
 
@@ -27,21 +28,19 @@ async function getJobByCategory(search) {
     const filteredJobs = result.filter((job) => job.category.toLowerCase().includes(search.toLowerCase()));
 
     return filteredJobs;
-
 }
 
 
 
 export default async function Page({ params }) {
 
-    const category = params.category.replace('%20', ' ');
-    console.log(category);
+    const search = params.category.replace('%20', ' ');
 
-    const jobs = await getJobByCategory(category);
+    const jobs = await fetchJobs(undefined, undefined, search);
 
   return (
     <section className='w-screen flex flex-col justify-center items-center'>
-       <InfiniteScrollJobs initialJobs={jobs} />
+       <InfiniteScrollJobs initialJobs={jobs} search={search} />
     </section>
   )
 }

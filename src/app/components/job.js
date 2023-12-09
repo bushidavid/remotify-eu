@@ -9,8 +9,8 @@ export default function Job({ ...props }) {
   return (
 
     <div>
-      <Link href={`/job/${props.id}`}>
-              <Card className={`sm:w-full w-96 mb-6 hover:bg-remotify-lum ${props.featured ? 'bg-[#f7f1de]' : ''}`}>
+      <Link className="relative flex flex-row items-center mb-4" href={`/job/${props.id}`}>
+              <Card className={`sm:w-full w-96 hover:bg-remotify-lum `}> {/* ${props.featured ? 'bg-[#f7f1de]' : '' } */}
                 <CardBody className=''>
                   <div className='flex md:flex-row flex-col justify-start items-center w-full'>
                     <div className="w-[8%] max-w-[8%]">
@@ -29,9 +29,11 @@ export default function Job({ ...props }) {
                           <h1 className="border-1 border-remotify-db rounded-md bg-remotify-lb text-xs m-1 p-1" key={tag}>{tag}</h1>
                         ))}
                     </div>
-                </div>
+                    
+                  </div>
                 </CardBody >
               </Card>
+              <div className={`absolute -right-11 rotate-90 bg-green-300 rounded-md p-2 ${!props.featured ? "hidden" : ""}`}>Featured</div>
       </Link>
     </div>   
   )

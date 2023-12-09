@@ -9,7 +9,7 @@ import Image from "next/image";
 const revalidate = 0;
 
 
-export default function InfiniteScrollJobs({ initialJobs }) {
+export default function InfiniteScrollJobs({ initialJobs, search }) {
 
     const [jobs, setJobs] = useState(initialJobs);
     const [limit, setLimit] = useState(24);
@@ -24,7 +24,7 @@ export default function InfiniteScrollJobs({ initialJobs }) {
         console.log(timeOfLastJob);
 
         const newLimit = limit + 24;
-        const newJobs = await fetchJobs(newLimit, timeOfLastJob);
+        const newJobs = await fetchJobs(newLimit, timeOfLastJob, search ? search : "");
 
         console.log("printing newly fetched jobs", newJobs);
 
