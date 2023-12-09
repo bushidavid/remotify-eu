@@ -25,7 +25,7 @@ const Navbar = () => {
     return (  
         <div className="flex p-5 justify-between w-full place-self-center bg-remotify-db text-remotify-lb font-sans">
             <div className=".logo__image">
-                <Link href="/" className=""><Image className="" alt="remotify_logo" src={'/remotify.svg'} width={50} height={115} /></Link>
+                <Link href="/" className=""><Image className="h-auto" alt="remotify_logo" src={'/remotify.svg'} width={50} height={115} /></Link>
             </div>
             <div className="flex flex-row text-md items-center justify-center ">
                 <div className="px-3">

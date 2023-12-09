@@ -30,6 +30,8 @@ export async function POST(req, res) {
             salaryMax,
             salaryCur,
             logoUrl,
+            companyWebsite, 
+            jobLink
         } = await req.json();
 
 
@@ -55,6 +57,8 @@ export async function POST(req, res) {
                 salary_currency: salaryCur,
                 logo_url: logoUrl,
                 expiration_date: today.toISOString().toLocaleString('de-DE'),
+                company_website: companyWebsite, 
+                job_link: jobLink
             })
             .select();
 
