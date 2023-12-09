@@ -1,10 +1,13 @@
 'use server'
 
-import supabase from "../../../lib/config/supabaseClient"
+import supabase from "../../../lib/config/supabaseClient";
 
-export async function fetchJobs(limit = 10){
+var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+var currentTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
 
-    const { data, error } = await supabase.rpc('get_jobs', {loadlimit: limit});
+export async function fetchJobs(limit = 24, lastLoadedTime = currentTime){
+
+    const { data, error } = await supabase.rpc('get_jobs_v2', {loadlimit: limit, lastloadedtime: lastLoadedTime});
 
     const result = data.map((job) => {
         const transformBigIntToString = (key, value) => {
@@ -17,6 +20,8 @@ export async function fetchJobs(limit = 10){
         // Use JSON.parse and JSON.stringify to apply the transformation
         return JSON.parse(JSON.stringify(job, transformBigIntToString));
     })
+
+
 
     return result;
 }

@@ -6,27 +6,38 @@ import JobList from "./job-list";
 import { fetchJobs } from "../actions/actions";
 import Image from "next/image";
 
+const revalidate = 0;
+
 
 export default function InfiniteScrollJobs({ initialJobs }) {
 
     const [jobs, setJobs] = useState(initialJobs);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(24);
     const [ref, inView] = useInView();
     const [showSpinner, setShowSpinner] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     const loadMoreJobs = async () => {
-        const newLimit = limit + 10;
-        console.log(newLimit);
-        const newJobs = await fetchJobs(newLimit);
 
-        console.log("printing more jobs", newJobs);
+        const timeOfLastJob = jobs[jobs.length - 1].created_at; 
+
+        console.log(timeOfLastJob);
+
+        const newLimit = limit + 24;
+        const newJobs = await fetchJobs(newLimit, timeOfLastJob);
+
+        console.log("printing newly fetched jobs", newJobs);
 
         if(newJobs?.length) {
             setLimit(newLimit);
             setJobs((prev) => [
+                ...(prev?.length ? prev : []),
                 ...newJobs
                 ]
             )
+            console.log("printing jobs after state change", jobs);
+        } else {
+            setIsLoading(false);
         }
 
     }
@@ -52,7 +63,7 @@ export default function InfiniteScrollJobs({ initialJobs }) {
             <div
                 ref={ref}
             >
-                <Image src={'/loading.svg'} height={100} width={100} alt="loading"/> 
+                {isLoading && <Image src={'/loading.svg'} height={100} width={100} alt="loading"/> }
             </div>
         </section>
     )
