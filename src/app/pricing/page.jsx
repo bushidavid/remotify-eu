@@ -5,7 +5,7 @@ import PricingCard from '../components/pricing-card';
 
 const getPrices = async () => {
 
-    let res = await fetch('http://localhost:3000/api/get-products');
+    let res = await fetch(process.env.API_URL + '/api/get-products');
     return res.json();
 }
 
