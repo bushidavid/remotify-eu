@@ -19,8 +19,8 @@ export async function POST (NextRequest) {
             }
         ],
         mode: "payment",
-        success_url: process.env.API_URL,
-        cancel_url: process.env.API_URL,
+        success_url: process.env.NEXT_PUBLIC_BASE_URL,
+        cancel_url: process.env.NEXT_PUBLIC_BASE_URL,
         metadata: {
             newJobId,
         },
