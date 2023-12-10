@@ -19,8 +19,8 @@ export async function POST (NextRequest) {
             }
         ],
         mode: "payment",
-        success_url: 'http://localhost:3000',
-        cancel_url: 'http://localhost:3000',
+        success_url: process.env.API_URL,
+        cancel_url: process.env.API_URL,
         metadata: {
             newJobId,
         },
