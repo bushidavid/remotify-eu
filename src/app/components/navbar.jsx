@@ -38,6 +38,9 @@ const Navbar = () => {
                     { isDropdownVisible && <CategoriesMenu />}
                 </div>
                 <div className="px-3">
+                    <p>Job Seekers</p>
+                </div>
+                <div className="px-3">
                     <Link href="" >Companies</Link>
                 </div>
                 <div className="px-3">

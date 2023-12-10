@@ -7,11 +7,11 @@ var currentTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
 
 export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, search = ""){
 
-    console.log("printing the search parameter", search);
-
     const { data, error } = await supabase.rpc('get_jobs_v3', {loadlimit: limit, lastloadedtime: lastLoadedTime, p_category: search});
 
-    console.log(error);
+    if(error){
+        console.log(error);
+    }
 
     const result = data.map((job) => {
         const transformBigIntToString = (key, value) => {

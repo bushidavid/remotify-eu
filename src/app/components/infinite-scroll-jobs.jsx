@@ -8,7 +8,6 @@ import Image from "next/image";
 
 const revalidate = 0;
 
-
 export default function InfiniteScrollJobs({ initialJobs, search }) {
 
     const [jobs, setJobs] = useState(initialJobs);
@@ -21,12 +20,8 @@ export default function InfiniteScrollJobs({ initialJobs, search }) {
 
         const timeOfLastJob = jobs[jobs.length - 1].created_at; 
 
-        console.log(timeOfLastJob);
-
         const newLimit = limit + 24;
         const newJobs = await fetchJobs(newLimit, timeOfLastJob, search ? search : "");
-
-        console.log("printing newly fetched jobs", newJobs);
 
         if(newJobs?.length) {
             setLimit(newLimit);
@@ -35,7 +30,6 @@ export default function InfiniteScrollJobs({ initialJobs, search }) {
                 ...newJobs
                 ]
             )
-            console.log("printing jobs after state change", jobs);
         } else {
             setIsLoading(false);
         }

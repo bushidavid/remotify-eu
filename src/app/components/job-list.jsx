@@ -24,6 +24,7 @@ const JobList = ({ jobs, title }) => {
                             featured={job.featured}
                             companyName={job.company_name}
                             tags={job.tags}
+                            created_at={job.created_at}
                         />
                     ))
                 }

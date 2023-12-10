@@ -1,7 +1,4 @@
-import Image from 'next/image';
-import JobList from './components/job-list';
 import Hero from './components/hero';
-import supabase from '../../lib/config/supabaseClient';
 import { fetchJobs } from './actions/actions';
 import InfiniteScrollJobs from './components/infinite-scroll-jobs';
 
