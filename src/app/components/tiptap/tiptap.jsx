@@ -29,7 +29,7 @@ const TipTap = ({ setDescription }) => {
 
     onUpdate ({editor}) {
       setEditorContent(editor.getHTML())
-      setDescription(editorContent);
+      setDescription(editor.getHTML());
     }
 
   })
