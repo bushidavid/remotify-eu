@@ -1,28 +1,14 @@
 import JobList from "../components/job-list";
 import supabase from "../../../lib/config/supabaseClient";
+import { fetchJobs } from "../actions/actions";
 
 export const revalidate = 0;
 
 async function getFeaturedJobs() {
-  const {data: jobs, error} = await supabase
-  .rpc('get_jobs', {loadlimit : 10});
 
-  if(error){
-      console.log(error);
-      return;
-  }
+  const jobs = await fetchJobs();
 
-  const result = jobs.map((job) => {
-      const transformBigIntToString = (key, value) => {
-      return typeof value === 'bigint' 
-          ? value.toString() 
-          : value;
-      };
-
-      return JSON.parse(JSON.stringify(job, transformBigIntToString));
-  })
-
-  const filteredJobs = result.filter((job) => job.featured);
+  const filteredJobs = jobs.filter((job) => job.featured);
 
   return filteredJobs;
 

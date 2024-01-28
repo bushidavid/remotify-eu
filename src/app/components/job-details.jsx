@@ -6,7 +6,7 @@ export default function JobDetails({ job }) {
   const companyDescription = { __html: job.company_description};
 
   return (
-    <>
+    <section className='w-full min-h-screen'>
       <div className='prose flex flex-col mt-4' dangerouslySetInnerHTML={companyDescription}>
 
       </div>
@@ -14,6 +14,6 @@ export default function JobDetails({ job }) {
       <div className='prose flex flex-col mt-4' dangerouslySetInnerHTML={description}>
 
       </div>
-    </>
+    </section>
   )
 }

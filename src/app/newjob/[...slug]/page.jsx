@@ -21,6 +21,7 @@ export default function Page ({ params }) {
     const router = useRouter();
 
     const id = params.slug;
+    var newJobId = "";
 
     // *selected status for Worldwide Switch
     const [ compDescription, setCompDescription ] = useState("");
@@ -30,6 +31,8 @@ export default function Page ({ params }) {
     const [values, setValues] = useState(new Set([]));
     const [selectedCountry, setSelectedCountry] = useState(new Set([]));
     const [selectedTags, setSelectedTags] = useState([]);
+
+    const [logoURL, setLogoURL] = useState(null);
 
 
 
@@ -108,35 +111,8 @@ export default function Page ({ params }) {
        
         e.preventDefault();
         
-        let newJobId = "";
 
         try {
-
-            const { data, error } = await supabase
-                .storage
-                .from('RemotifyLogoImages')
-                .upload(`logos/${logo.name}`, logo, {
-                    cacheControl: '3600',
-                    upsert: false
-                });
-
-            const { data: publicURL } = await supabase
-                .storage.from('RemotifyLogoImages')
-                .getPublicUrl(`logos/${logo.name}`);
-
-            // if(logoError){
-            //     console.log('Logo URL error retrieval:', logoError);
-            //     return;
-            // }
-
-
-            const logoUrl = publicURL.publicUrl;
-
-            setForm((prevForm) => ({
-                ...prevForm,
-                logoUrl: logoUrl
-            }));
-            
 
             const result = await fetch('/api/create-job', {
                 method: 'POST',
@@ -176,9 +152,32 @@ export default function Page ({ params }) {
 
     }
 
+    useEffect(() => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            logoUrl: logoURL
+        }));
+    }, [logoURL])
 
-    const handleLogo = (e) => {
+
+    const handleLogo = async (e) => {
         setLogo(e.target.files[0]);
+
+        const { data, error } = await supabase
+        .storage
+        .from('RemotifyLogoImages')
+        .upload(`logos/${e.target.files[0].name}`, e.target.files[0], {
+            cacheControl: '3600',
+            upsert: false
+        });
+
+        const { data: publicURL } = await supabase
+                .storage.from('RemotifyLogoImages')
+                .getPublicUrl(`logos/${e.target.files[0].name}`);
+
+
+        setLogoURL(publicURL.publicUrl);
+
     }
 
     const handleSelectionChangeTag = (e) => {

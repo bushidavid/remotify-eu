@@ -18,7 +18,7 @@ export default async function Page() {
     const prices = await getPrices();
 
   return (
-    <>
+    <section className='w-full min-h-screen min-w-full'>
       <Link rel="preconnect" href="https://fonts.gstatic.com" /> 
       <Link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       <Link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -44,6 +44,6 @@ export default async function Page() {
               </div>
           </div>
       </div>
-    </>
+    </section>
   )
 }

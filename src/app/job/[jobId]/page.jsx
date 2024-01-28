@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 
-export const revalidate = 0;
+export const revalidate = 1000;
 
 export default async function Page({ params }) {
 
@@ -30,13 +30,13 @@ export default async function Page({ params }) {
   });
 
   return (
-    <div className='w-full max-w-4xl  mt-10 px-4'>
+    <>
        {
         job ?  (
-          <section className=''>
+          <section className='w-full min-w-max mt-10 px-4'>
             
               <JobHero job={job} postedDate={postedFormatted}/>
-            <section className='flex flex-row justify-between relative'>
+            <section className='flex flex-row justify-between relative w-full min-w-full'>
               <div className='sticky top-0'>
                 <JobDetails job={job}/>
                 <Link href={job.job_link ? job.job_link : '/'} className='mt-6 border-1 border-remotify-lb bg-remotify-lb px-6 rounded-md py-2 hover:bg-remotify-db hover:text-white'>Apply</Link>
@@ -61,7 +61,7 @@ export default async function Page({ params }) {
               <Image src={'/loading.svg'} fill={true} alt="loading"/>
             )
        }
-    </div>
+    </>
   )
 }
 

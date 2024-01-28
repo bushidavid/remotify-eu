@@ -7,7 +7,7 @@ export default function JobHero({job, postedDate}) {
   console.log(job);
   
   return (
-    <div className='border-b-1 pb-3 border-slate-300'>
+    <div className='border-b-1 pb-3 border-slate-300 w-full'>
         <div className='flex items-center flex-col text-center'>
               <h1 className='text-4xl'>{job?.job_title}</h1>
               <h2 className='px-3 text-lg'>Remotify Europe</h2>

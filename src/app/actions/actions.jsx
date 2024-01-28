@@ -1,9 +1,13 @@
 'use server'
 
+import { revalidatePath } from "next/cache";
+
 import supabase from "../../../lib/config/supabaseClient";
 
 var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
 var currentTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+
+console.log(currentTime);
 
 export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, search = ""){
 
@@ -25,7 +29,7 @@ export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, search
         return JSON.parse(JSON.stringify(job, transformBigIntToString));
     })
 
-
+    revalidatePath("/");
 
     return result;
 }

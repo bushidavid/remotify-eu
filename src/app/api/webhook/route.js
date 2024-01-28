@@ -20,6 +20,8 @@ export async function POST (req) {
 
     const newJobId = event.data.object.metadata["newJobId"];
 
+    console.log(event.type);
+
     switch (event.type) {
         case 'payment_intent.succeeded':
           try {

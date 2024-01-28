@@ -3,8 +3,6 @@ import { fetchJobs } from './actions/actions';
 import InfiniteScrollJobs from './components/infinite-scroll-jobs';
 
 
-export const revalidate = 0;
-
 // async function getJobs(){
 
 //   const { data, error } = await supabase.rpc('get_jobs');
@@ -29,6 +27,8 @@ export const revalidate = 0;
 export default async function Home() {
 
   const jobs = await fetchJobs(); 
+
+  console.log(jobs);
 
   return (
     <section className='w-screen flex flex-col justify-center items-center'>

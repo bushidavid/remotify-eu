@@ -8,6 +8,16 @@ import Image from "next/image";
 
 const revalidate = 0;
 
+const today = new Date(Date.now());
+
+  const todayFormatted = today.toLocaleString('lu-LU', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+
+  console.log(today);
+
 export default function InfiniteScrollJobs({ initialJobs, search }) {
 
     const [jobs, setJobs] = useState(initialJobs);
@@ -18,7 +28,7 @@ export default function InfiniteScrollJobs({ initialJobs, search }) {
 
     const loadMoreJobs = async () => {
 
-        const timeOfLastJob = jobs[jobs.length - 1].created_at; 
+        const timeOfLastJob = jobs.length > 0 ? jobs[jobs.length - 1].created_at : today; 
 
         const newLimit = limit + 24;
         const newJobs = await fetchJobs(newLimit, timeOfLastJob, search ? search : "");
@@ -49,16 +59,25 @@ export default function InfiniteScrollJobs({ initialJobs, search }) {
 
 
     return (
-        <section className='w-screen flex flex-col justify-center items-center'>
-            <JobList key={Math.random()} jobs={featuredJobs} title={"Latest Remote Jobs"} />
-            <JobList key={Math.random()} jobs={notFeaturedJobs} />
 
-            {/* loading spinner */}
-            <div
-                ref={ref}
-            >
-                {isLoading && <Image src={'/loading.svg'} height={100} width={100} alt="loading"/> }
-            </div>
-        </section>
+         jobs.length > 0 ? 
+            ( 
+            <section className='w-screen flex flex-col justify-center items-center'>
+                    <JobList key={Math.random()} jobs={featuredJobs} title={"Latest Remote Jobs"} />
+                    <JobList key={Math.random()} jobs={notFeaturedJobs} />
+
+                    {/* loading spinner */}
+                    <div
+                        ref={ref}
+                    >
+                        {isLoading && <Image src={'/loading.svg'} height={100} width={100} alt="loading"/> }
+                    </div>
+                </section> 
+           ) : (
+            <section className='w-screen h-screen flex flex-col justify-center items-center'>
+                <h1 className="text-4xl pt-10">No jobs jound in this category</h1>
+            </section> 
+           )
+        
     )
 }

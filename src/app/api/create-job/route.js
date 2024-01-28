@@ -34,6 +34,7 @@ export async function POST(req, res) {
             jobLink
         } = await req.json();
 
+        console.log("printing logo url from API:", logoUrl);
 
         if(worldwide){
             jobCountry = ""
