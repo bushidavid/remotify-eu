@@ -32,7 +32,6 @@ export default async function Home() {
 
   return (
     <section className='w-screen flex flex-col justify-center items-center'>
-      <Hero />
       <InfiniteScrollJobs initialJobs={jobs} />
     </section>
   )

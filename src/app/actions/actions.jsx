@@ -11,6 +11,8 @@ console.log(currentTime);
 
 export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, search = ""){
 
+    console.log(search);
+
     const { data, error } = await supabase.rpc('get_jobs_v3', {loadlimit: limit, lastloadedtime: lastLoadedTime, p_category: search});
 
     if(error){

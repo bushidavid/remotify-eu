@@ -10,14 +10,6 @@ const revalidate = 0;
 
 const today = new Date(Date.now());
 
-  const todayFormatted = today.toLocaleString('lu-LU', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-
-  console.log(today);
-
 export default function InfiniteScrollJobs({ initialJobs, search }) {
 
     const [jobs, setJobs] = useState(initialJobs);
@@ -54,13 +46,13 @@ export default function InfiniteScrollJobs({ initialJobs, search }) {
     
 
 
-    const featuredJobs = jobs.filter(job => job.featured);
-    const notFeaturedJobs = jobs.filter(job => job.featured === false);
+    const featuredJobs = jobs?.filter(job => job.featured);
+    const notFeaturedJobs = jobs?.filter(job => job.featured === false);
 
 
     return (
 
-         jobs.length > 0 ? 
+         jobs?.length > 0 ? 
             ( 
             <section className='w-screen flex flex-col justify-center items-center'>
                     <JobList key={Math.random()} jobs={featuredJobs} title={"Latest Remote Jobs"} />
