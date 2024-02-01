@@ -127,8 +127,6 @@ export default function Page ({ params }) {
             console.log("printing error message: \n", err.message);
         }
 
-        console.log(newJobId);
-
         handlePayment(newJobId);
     }
 

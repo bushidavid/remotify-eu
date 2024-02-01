@@ -10,7 +10,7 @@ const revalidate = 0;
 
 const today = new Date(Date.now());
 
-export default function InfiniteScrollJobs({ initialJobs, search }) {
+export default function InfiniteScrollJobs({ initialJobs, search, filter }) {
 
     const [jobs, setJobs] = useState(initialJobs);
     const [limit, setLimit] = useState(24);
@@ -23,7 +23,7 @@ export default function InfiniteScrollJobs({ initialJobs, search }) {
         const timeOfLastJob = jobs.length > 0 ? jobs[jobs.length - 1].created_at : today; 
 
         const newLimit = limit + 24;
-        const newJobs = await fetchJobs(newLimit, timeOfLastJob, search ? search : "");
+        const newJobs = await fetchJobs(newLimit, timeOfLastJob, search ? search : "", filter);
 
         if(newJobs?.length) {
             setLimit(newLimit);

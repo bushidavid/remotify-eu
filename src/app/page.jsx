@@ -28,8 +28,6 @@ export default async function Home() {
 
   const jobs = await fetchJobs(); 
 
-  console.log(jobs);
-
   return (
     <section className='w-screen flex flex-col justify-center items-center'>
       <InfiniteScrollJobs initialJobs={jobs} />

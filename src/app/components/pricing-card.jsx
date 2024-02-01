@@ -56,7 +56,7 @@ export default function PricingCard( { price, nickname, id } ) {
             </div>
             <div className="mb-10">
                 <Link href={`/newjob/${id}`} className="w-full py-4 px-4 bg-remotify-lb rounded-xl mt-10 text-white">
-                    <span className="font-medium text-black" >
+                    <span className="font-medium text-white" >
                         Choose Plan
                     </span>
                 </Link>

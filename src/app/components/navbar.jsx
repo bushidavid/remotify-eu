@@ -28,7 +28,7 @@ const Navbar = () => {
 
 
     return (  
-        <div className="flex flex-col bg-cover w-full justify-between items-center bg-[linear-gradient(to_top_left,rgba(57,209,204,0.90),rgba(20,40,66,0.99)),url('/ben-everett-unsplash.jpg')]">
+        <div className="flex flex-col bg-cover w-full justify-between items-center bg-[linear-gradient(to_top_left,rgba(57,209,204,0.90),rgba(20,40,66,1)),url('/ben-everett-unsplash.jpg')]">
             <div className="flex p-5 justify-between w-full place-self-center  text-white font-sans">
                 <div className=".logo__image">
                     <Link href="/" className=""><Image className="h-auto" alt="remotify_logo" src={'/remotify.svg'} width={50} height={115} /></Link>

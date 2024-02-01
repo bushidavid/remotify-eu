@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faCalendarDays, faBriefcase, faPersonCane } from '@fortawesome/free-solid-svg-icons';
 
 export default function JobHero({job, postedDate}) {
-
-  console.log(job);
   
   return (
     <div className='border-b-1 pb-3 border-slate-300 w-full'>

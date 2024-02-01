@@ -6,8 +6,6 @@ export async function POST (NextRequest) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const data  = await NextRequest.json();
 
-    console.log(data);
-
     const priceId = data.priceId[0];
     const newJobId = data.newJobId;
 
