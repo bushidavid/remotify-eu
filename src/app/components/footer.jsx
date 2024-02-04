@@ -14,7 +14,7 @@ export default function Footer() {
               <Link href="/" className="text-slate-400 text-sm">About RemotifyEurope</Link>
               <Link href="/" className="text-slate-400 text-sm">Careers</Link>
               <Link href="/" className="text-slate-400 text-sm">Support</Link>
-              <Link href="/" className="text-slate-400 text-sm">Contact Us</Link>
+              <Link href="/contact-us" className="text-slate-400 text-sm">Contact Us</Link>
           </div>
           <div className="flex flex-col col-start-3 col-span-2">
             <p className="font-bold text-slate-300">For candidates</p>

@@ -4,64 +4,46 @@ import React from 'react';
 import { useRouter } from "next/navigation";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CiCircleCheck } from "react-icons/ci";
+import { BsCurrencyEuro } from "react-icons/bs";
 
-export default function PricingCard( { price, nickname, id } ) {    
+export default function PricingCard( { price, nickname, id, features, description} ) {    
 
   return (
-    <div className={`w-80 h-[450px] flex flex-col mx-2 items-center justify-around border-1 border-slate-200 rounded-3xl shadow-xl`}>
-        <div className="pt-5 w-10/12 text-center">
+    <div className={`w-80 flex flex-col py-4 px-10 ${nickname === 'Enterprise' ? "bg-gray-100 rounded-lg" : ""}`}>
+        <div className="w-full ">
+            <div className={`w-fit rounded-lg bg-remotify-lb text-white py-1 px-2 mb-1 text-sm ${nickname == 'Enterprise' ? "" : "invisible"}`}><p>Best Deal</p></div>
             <h1 className="text-black font-semibold text-2xl">{nickname}</h1>
-            <p className="pt-2 tracking-wide">
-                <span className={`text-3xl font-semibold `}>{(price / 100)}</span>
-                <span className="text-gray-400 align-top pl-1">EUR</span>
-            </p>
-            <hr className="mt-4 border-1 w-full"></hr>
+            <h2 className="text-slate-600 text-sm">{description}</h2>
+            {nickname == "Custom" ? ( <p className={` mb-4 mt-10 text-3xl`}>Contact Us</p>) : ( <p className={` mb-4 mt-10 text-3xl`}>EUR {(price / 100)}</p>)}
+
         </div>
-        <div className="pt-8 h-full flex flex-col items-start w-10/12">
-        <div className="">
-                <p className="font-semibold text-left">
-                    <span className="pl-2">
-                        <FontAwesomeIcon icon={faCheck} style={{color: "#142c42",}} />
-                        <span className="pl-2">
-                           One Job post
-                        </span>
-                    </span>
-                </p>
-            </div>
-            <div>
-                <p className="font-semibold text-left pt-5">
-                   
-                </p>
-            </div>
-            <div>
-                <p className="font-semibold text-left">
-                    <span className="pl-2">
-                        <FontAwesomeIcon icon={faCheck} style={{color: "#142c42",}} />
-                        <span className="pl-2">
-                            Social media post sharing
-                        </span>
-                    </span>
-                </p>
-            </div>
-            <div>
-                <p className="font-semibold text-left pt-5">
-                    <span className="pl-2">
-                        <FontAwesomeIcon icon={faCheck} style={{color: "#142c42",}} />
-                        <span className="pl-2">
-                            Featured Post
-                        </span>
-                    </span>
-                </p>
-            </div>
-            </div>
-            <div className="mb-10">
-                <Link href={`/newjob/${id}`} className="w-full py-4 px-4 bg-remotify-lb rounded-xl mt-10 text-white">
-                    <span className="font-medium text-white" >
+        <div className="w-full">
+            {nickname == "Custom" ?
+                (
+                    <Link href={`/contact-us`} className="py-4 px-4 my-6 bg-remotify-db rounded-lg text-white">
+                            Ask For a Quote
+                    </Link>
+                ) 
+                : (
+                    <Link href={`/newjob/${id}`} className="py-4 px-4 my-6 bg-remotify-db rounded-lg text-white">
                         Choose Plan
-                    </span>
-                </Link>
+                    </Link>
+                )
+            }
+        </div>
+        { nickname != "Custom" && 
+            <div className="pt-8 h-full flex flex-col items-start w-full">
+                <h1 className="text-sm font-medium">This includes:</h1>
+                {features?.map(feature => {
+                    return (
+                    <div key={Math.random()} className="flex flex-row mt-2 mb-2">
+                        <CiCircleCheck />
+                        <p className="text-sm ml-2" key={Math.random()}>{feature.name}</p>
+                    </div>)
+                })}   
             </div>
-        
+        }   
     </div>
   )
 }

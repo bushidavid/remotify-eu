@@ -18,7 +18,6 @@ export default function RootLayout({ children }) {
       <body className='flex flex-col w-screen items-center no-scrollbar min-h-screen'>
         <Navbar />
           <Providers >
-            
             { children }
           </Providers>
         <Footer />
