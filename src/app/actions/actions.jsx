@@ -32,4 +32,27 @@ export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, search
     revalidatePath("/");
 
     return result;
+};
+
+
+import { sendgridClient } from "../../../lib/email";
+
+
+export async function sendEmail(form){
+
+    const msg = {
+        to: form.customerEmail, // Change to your recipient
+        from: 'david.bushi@remotifyeurope.com', // Change to your verified sender
+        subject: form.customerSubject,
+        text: `${form.customerName}, your contact request was sent`,
+        html: form.customerMessage,
+    }
+
+    sendgridClient.send(msg)
+        .then(() => {
+            console.log('Email sent')
+        })
+        .catch((error) => {
+            console.error(error)
+        })
 }

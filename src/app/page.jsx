@@ -1,6 +1,7 @@
 import Hero from './components/hero';
 import { fetchJobs } from './actions/actions';
 import InfiniteScrollJobs from './components/infinite-scroll-jobs';
+import {sgMail} from '../../lib/email.js'
 
 
 // async function getJobs(){
