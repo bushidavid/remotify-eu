@@ -16,7 +16,11 @@ export default function ContactForm() {
     })
 
     const onSubmitForm = () => {
-        sendEmail(form);
+        const success = sendEmail(form);
+
+        if(!success){
+            alert('Error sending the email');
+        }
     }
 
     const handleChange = (e) => {

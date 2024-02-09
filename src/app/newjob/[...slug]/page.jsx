@@ -13,8 +13,6 @@ import supabase from "../../../../lib/config/supabaseClient";
 import { Tags } from "../../../../lib/tags";
 
 
-
-
 export default function Page ({ params }) {
 
 

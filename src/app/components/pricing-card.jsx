@@ -15,7 +15,7 @@ export default function PricingCard( { price, nickname, id, features, descriptio
             <div className={`w-fit rounded-lg bg-remotify-lb text-white py-1 px-2 mb-1 text-sm ${nickname == 'Enterprise' ? "" : "invisible"}`}><p>Best Deal</p></div>
             <h1 className="text-black font-semibold text-2xl">{nickname}</h1>
             <h2 className="text-slate-600 text-sm">{description}</h2>
-            {nickname == "Custom" ? ( <p className={` mb-4 mt-10 text-3xl`}>Contact Us</p>) : ( <p className={` mb-4 mt-10 text-3xl`}>EUR {(price / 100)}</p>)}
+            {nickname == "Custom" ? ( <p className={` mb-4 mt-10 text-3xl`}>Contact Us</p>) : ( <p className={` mb-4 mt-10 text-3xl`}>€ {(price / 100)}</p>)}
 
         </div>
         <div className="w-full">

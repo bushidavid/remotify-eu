@@ -40,7 +40,7 @@ import { sendgridClient } from "../../../lib/email";
 
 export async function sendEmail(form){
 
-    const msg = {
+    const msgToProspect = {
         to: form.customerEmail, // Change to your recipient
         from: 'david.bushi@remotifyeurope.com', // Change to your verified sender
         subject: form.customerSubject,
@@ -48,11 +48,29 @@ export async function sendEmail(form){
         html: form.customerMessage,
     }
 
+    const msg = {
+        to: 'sales@remotifyeurope.com', // Change to your recipient
+        from: 'david.bushi@remotifyeurope.com', // Change to your verified sender
+        subject: form.customerSubject,
+        text: `${form.customerName}, your contact request was sent`,
+        html: `You have a new message from ${form.customerEmail}`
+    }
+
     sendgridClient.send(msg)
         .then(() => {
-            console.log('Email sent')
+            return true;
         })
         .catch((error) => {
-            console.error(error)
+            console.error(error);
+            return false;
+        })
+
+    sendgridClient.send(msgToProspect)
+        .then(() => {
+            return true;
+        })
+        .catch((error) => {
+            console.error(error);
+            return false;
         })
 }

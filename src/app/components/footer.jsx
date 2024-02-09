@@ -15,6 +15,7 @@ export default function Footer() {
               <Link href="/" className="text-slate-400 text-sm">Careers</Link>
               <Link href="/" className="text-slate-400 text-sm">Support</Link>
               <Link href="/contact-us" className="text-slate-400 text-sm">Contact Us</Link>
+              <Link href="/contact-us" className="text-slate-400 text-sm">Submit Feedback</Link>
           </div>
           <div className="flex flex-col col-start-3 col-span-2">
             <p className="font-bold text-slate-300">For candidates</p>
@@ -29,7 +30,8 @@ export default function Footer() {
           <div className="col-start-7 flex flex-row col-span-2 h-10 w-40 text-slate-300 gap-4">
             <Link href="/" ><FaInstagram size={28}></FaInstagram></Link>
             <Link href="https://www.linkedin.com/company/92876524/admin/feed/posts/?feedType=following" ><FaLinkedinIn size={28}/></Link>
-            <Link href="https://twitter.com/Remotify_Europe" ><FaXTwitter size={28} /></Link>          
+            <Link href="https://twitter.com/Remotify_Europe" ><FaXTwitter size={28} /></Link>
+                
           </div>
       </div>
       <div className="text-slate-400">&copy; 2024 RemotifyEurope - All Rights Reserved</div>

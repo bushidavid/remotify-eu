@@ -33,7 +33,7 @@ export default async function Page({ params }) {
     <>
        {
         job ?  (
-          <section className='w-full min-w-max mt-10 px-4'>
+          <section className='w-10-12 mt-10 px-4'>
             
               <JobHero job={job} postedDate={postedFormatted}/>
             <section className='flex flex-row justify-between relative w-full min-w-full'>
