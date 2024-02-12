@@ -74,3 +74,19 @@ export async function sendEmail(form){
             return false;
         })
 }
+
+async function getCompanyData(companyId) {
+    
+    const {data, error} = await supabase
+        .from('company')
+        .select('id')
+        .eq(companyId)
+
+    console.log(data);
+
+    if(error) {
+        console.log("error fetching data from DB");
+    }
+
+    return data;
+}

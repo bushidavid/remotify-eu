@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import supabase from "../../../../lib/config/supabaseClient";
-import { Wire_One } from "next/font/google";
+
 
 const REGEX = /\[|\]/g; //REGEX to remove square brackets
 
