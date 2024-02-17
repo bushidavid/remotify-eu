@@ -188,7 +188,7 @@ export default function Page ({ params }) {
     return (
         <>
         <h1 className="text-4xl mt-20">Tell us about the position</h1>
-        <form className="grid grid-cols-12 grid-rows-layout justify-center items-center place-self-center max-w-4xl w-full h-full" onSubmit={onSubmitForm}>
+        <form className="grid grid-cols-12 grid-rows-layout justify-center items-center max-w-4xl w-full h-full" onSubmit={onSubmitForm}>
 
             {/*  Job Title */}
             <div className="col-start-1 col-span-full row-start-1 row-span-1">

@@ -36,6 +36,10 @@ module.exports = {
       },
       maxWidth: {
         '2/6': '33.333333%'
+      },
+      fontFamily: {
+        'montserrat': ['Montserrat'],
+        'inter' : ['Inter']
       }
     },
   },

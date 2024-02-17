@@ -1,11 +1,11 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Roboto_Condensed, Inter, Ubuntu_Mono, Montserrat } from 'next/font/google';
 import Navbar from './components/navbar'
+import SessProvider from './components/session-provider'
 import Providers from './providers'
 import Footer from './components/footer'
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'RemotifyEurope',
@@ -15,12 +15,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen'>
-        <Navbar />
-        <Providers>
-          { children }
-        </Providers>
-        <Footer />
+      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-inter'>
+        <SessProvider>
+          <Navbar />
+            <Providers>
+              { children }
+            </Providers>
+          <Footer />
+        </SessProvider>
         </body>
     </html>
   )
