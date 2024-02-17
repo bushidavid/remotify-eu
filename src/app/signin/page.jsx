@@ -5,6 +5,7 @@ import { Input } from '@nextui-org/react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
+import Link from 'next/link'
 
 export default function Page() {
 
@@ -28,16 +29,16 @@ export default function Page() {
           ...signInForm,
           redirect: false,
         });
-        router.push('company/abc')
+        router.push('company/abc/dashboard')
     }
 
     
   return (
     <>
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex min-h-full min-w-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            SignIn
+          <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-500">
+            Company Sign In
           </h2>
         </div>
 
@@ -55,13 +56,17 @@ export default function Page() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-md bg-remotify-lb px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-remotify-db focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
               </button>
             </div>
           </form>
+          
         </div>
+        <div className='flex flex-row gap-5 text-sm justify-center mt-2'>
+            <p>Not a member?</p> <Link href={'/register'} className='text-remotify-lb hover:text-gray-900'>Register</Link>
+          </div>
       </div>
     </>
   )
