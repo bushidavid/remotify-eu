@@ -9,9 +9,9 @@ import MenuBar from './menu-bar';
 
 import '../../style.css'
 
-const TipTap = ({ setDescription }) => {
+const TipTap = ({ setDescription, content }) => {
 
-  const [editorContent, setEditorContent ] = useState("Write the description here");
+  const [editorContent, setEditorContent ] = useState(content);
 
   const editor = useEditor({
     extensions: [

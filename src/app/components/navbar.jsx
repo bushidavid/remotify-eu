@@ -62,7 +62,7 @@ const Navbar = () => {
                             </div>
                         <div className="px-3 flex flex-col cursor-pointer relative items-center" onMouseEnter={companyImageHandleMouseEnter} onMouseLeave={companyImageHandleMouseLeave}>
                             <CompanyImage profImage={session.user.image} name={session.user.name} />
-                            { isCompanyImageDropVisible && <CompanyImageDropdown />}
+                            { isCompanyImageDropVisible && <CompanyImageDropdown  companyId={session.user.id} />}
                             
                         </div>
                      </div>
