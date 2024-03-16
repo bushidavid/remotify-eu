@@ -44,7 +44,7 @@ export default async function Page({ params }) {
                 </div>
               </div>
               <div className='w-[30%] flex flex-col h-fit items-center mt-4 sticky top-10 z-50'>
-                <Image src={job.logo_url ? job.logo_url : '/Logo.jpg'} width={200} height={200} alt="company_logo"></Image>
+                <Image className='rounded-md' src={job.logo_url ? job.logo_url : '/Logo.jpg'} width={200} height={200} alt="company_logo"></Image>
                 <div className='flex flex-row mt-1'>
                   <FontAwesomeIcon icon={faLink} /><Link className="hover:underline ml-2" href={job.company_website ? job.company_website : '/'}>{job.company_name}</Link>
                 </div>

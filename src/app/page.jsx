@@ -1,7 +1,8 @@
 import Hero from './components/hero';
 import { fetchJobs } from './actions/actions';
-import InfiniteScrollJobs from './components/infinite-scroll-jobs';
+import InfiniteScrollJobs from './components/job-scroll';
 import {sgMail} from '../../lib/email.js'
+import JobScroll from './components/job-scroll';
 
 
 // async function getJobs(){
@@ -31,7 +32,7 @@ export default async function Home() {
 
   return (
     <section className='w-screen flex flex-col justify-center items-center'>
-      <InfiniteScrollJobs initialJobs={jobs} />
+      <JobScroll initialJobs={jobs} />
     </section>
   )
 }
