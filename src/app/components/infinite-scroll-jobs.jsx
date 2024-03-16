@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { fetchJobs } from "../actions/actions";
 import Image from "next/image";
-import JobListEdit from "./job-list-edit";
+import JobList from "./job-list";
 
 const revalidate = 0;
 
@@ -56,8 +56,8 @@ export default function InfiniteScrollJobs({ initialJobs, search, filter }) {
          jobs?.length > 0 ? 
             ( 
             <section className='w-screen flex flex-col justify-center items-center'>
-                    <JobListEdit key={Math.random()} jobs={featuredJobs} title={"Latest Remote Jobs"} />
-                    <JobListEdit key={Math.random()} jobs={notFeaturedJobs} />
+                    <JobList key={Math.random()} jobs={featuredJobs} title={"Latest Remote Jobs"} />
+                    <JobList key={Math.random()} jobs={notFeaturedJobs} />
 
                     {/* loading spinner */}
                     <div
@@ -68,7 +68,7 @@ export default function InfiniteScrollJobs({ initialJobs, search, filter }) {
                 </section> 
            ) : (
             <section className='w-screen h-screen flex flex-col justify-center items-center'>
-                <h1 className="text-4xl pt-10">No jobs jound in this category</h1>
+                <h1 className="text-4xl pt-10">No jobs <form action="" method="get"></form>ound in this category</h1>
             </section> 
            )
         

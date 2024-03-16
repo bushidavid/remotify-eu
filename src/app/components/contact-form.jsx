@@ -5,6 +5,7 @@ import {Textarea} from "@nextui-org/react";
 import {Input} from "@nextui-org/input";
 import {Select, SelectItem} from "@nextui-org/select";
 import { sendEmail } from "../actions/actions";
+import Image from "next/image";
 
 export default function ContactForm() {
 
@@ -35,6 +36,10 @@ export default function ContactForm() {
         <form className="flex flex-col justify-center max-w-4xl w-full h-full my-10" onSubmit={onSubmitForm}>
             <div className="my-10 min-w-4/12">
                 <h1 className="text-4xl mb-4">Contact Us</h1>
+                <div className="flex flex-row items-center">
+                    <h2 className="text-md">Fill in the form below or contact us at: </h2>
+                    <Image alt="sales_email" src={'/sales_email.png'} width={210} height={100}/>
+                </div>
                 <Input className="w-full" type="text" variant="underlined" label="Your Name" name="customerName" isRequired onChange={e => handleChange(e)}/>  
             </div>
             <div className="mb-10">

@@ -7,7 +7,7 @@ import { FaXTwitter } from "react-icons/fa6";
 export default function Footer() {
 
   return (
-    <div className="flex flex-col w-full bg-remotify-complementary text-white items-center text-xs">
+    <div className="flex flex-col w-full bg-complementary text-white items-center text-xs">
       <div className=" w-8/12 h-48 grid grid-cols-8 mt-20 relative bottom-0 justify-around text-xs">
           <div className="flex flex-col col-start-1 col-span-2 grid-span ">
               <p className="font-bold text-slate-300">Company</p>
