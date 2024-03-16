@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import FontFamily from '@tiptap/extension-font-family';
@@ -9,11 +9,13 @@ import MenuBar from './menu-bar';
 
 import '../../style.css'
 
-const TipTap = ({ setDescription }) => {
+const TipTap = ({ setDescription, content, setEdit, edit}) => {
 
-  const [editorContent, setEditorContent ] = useState("Write the description here");
+  const [editorContent, setEditorContent ] = useState(content);
+  const [editable, setEditable] = useState(edit);
 
   const editor = useEditor({
+    editable,
     extensions: [
         StarterKit,
         TextStyle,
@@ -23,7 +25,8 @@ const TipTap = ({ setDescription }) => {
     editorProps :{
       attributes: {
         class: "prose prose-sm sm:prose lg:prose-base xl:prose-lg h-[400px] min-w-full overflow-y-scroll border border-slate-300 rounded-lg focus:outline-none "
-      }
+      },
+     
     },
 
 
@@ -31,6 +34,8 @@ const TipTap = ({ setDescription }) => {
       setEditorContent(editor.getHTML())
       setDescription(editor.getHTML());
     }
+
+    
 
   })
 

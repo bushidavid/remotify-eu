@@ -27,6 +27,7 @@ module.exports = {
       colors : {
         'remotify-lb' : '#39D1CC',
         'remotify-db' : '#142C42',
+        'complementary': '#422A14',
         // 'remotify-luminance' : '#d3f5f4'
         'remotify-lum' : '#d8f0ef'
       },
@@ -39,7 +40,9 @@ module.exports = {
       },
       fontFamily: {
         'montserrat': ['Montserrat'],
-        'inter' : ['Inter']
+        'inter' : ['Inter'],
+        'roboto' : ['Roboto'],
+        'poppins' : ['Poppins']
       }
     },
   },

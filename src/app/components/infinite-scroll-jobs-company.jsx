@@ -2,8 +2,8 @@
 
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
-
-import { fetchJobs } from "../actions/actions";
+import JobList from "./job-list";
+import { getCompanyJobs } from "../actions/actions";
 import Image from "next/image";
 import JobListEdit from "./job-list-edit";
 
@@ -11,7 +11,9 @@ const revalidate = 0;
 
 const today = new Date(Date.now());
 
-export default function InfiniteScrollJobs({ initialJobs, search, filter }) {
+export default function InfiniteScrollJobsCompany({ initialJobs, companyId }) {
+
+    console.log(companyId)
 
     const [jobs, setJobs] = useState(initialJobs);
     const [limit, setLimit] = useState(24);
@@ -24,7 +26,7 @@ export default function InfiniteScrollJobs({ initialJobs, search, filter }) {
         const timeOfLastJob = jobs.length > 0 ? jobs[jobs.length - 1].created_at : today; 
 
         const newLimit = limit + 24;
-        const newJobs = await fetchJobs(newLimit, timeOfLastJob, search ? search : "", filter);
+        const newJobs = await getCompanyJobs(newLimit, timeOfLastJob, companyId);
 
         if(newJobs?.length) {
             setLimit(newLimit);
@@ -55,9 +57,9 @@ export default function InfiniteScrollJobs({ initialJobs, search, filter }) {
 
          jobs?.length > 0 ? 
             ( 
-            <section className='w-screen flex flex-col justify-center items-center'>
-                    <JobListEdit key={Math.random()} jobs={featuredJobs} title={"Latest Remote Jobs"} />
-                    <JobListEdit key={Math.random()} jobs={notFeaturedJobs} />
+            <section className='w-full flex flex-col justify-center items-center'>
+                    <JobListEdit key={Math.random()} jobs={featuredJobs} title={"Your Latest Posted Jobs"} companyId={companyId}/>
+                    <JobListEdit key={Math.random()} jobs={notFeaturedJobs} companyId={companyId}/>
 
                     {/* loading spinner */}
                     <div
@@ -68,7 +70,7 @@ export default function InfiniteScrollJobs({ initialJobs, search, filter }) {
                 </section> 
            ) : (
             <section className='w-screen h-screen flex flex-col justify-center items-center'>
-                <h1 className="text-4xl pt-10">No jobs jound in this category</h1>
+                <h1 className="text-4xl pt-10">You have not posted any jobs yet</h1>
             </section> 
            )
         

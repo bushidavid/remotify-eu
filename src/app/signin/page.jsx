@@ -6,10 +6,13 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
 
 export default function Page() {
 
     const router = useRouter();
+    const {data: session, status} = useSession();
 
   const [signInForm, setSignInForm] = useState({
     email: "",
@@ -29,8 +32,14 @@ export default function Page() {
           ...signInForm,
           redirect: false,
         });
-        router.push('company/abc/dashboard')
     }
+
+    //redirect to company page
+    useEffect(() => {
+      if (session) {
+        router.push(`/company/${session.user.id}/dashboard`);
+      }
+    }, [session, router])
 
     
   return (

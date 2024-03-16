@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from "next/cache";
+import { NextResponse } from "next/server";
 
 import supabase from "../../../lib/config/supabaseClient";
 
@@ -89,4 +90,42 @@ async function getCompanyData(companyId) {
     }
 
     return data;
+}
+
+export async function getCompanyJobs(limit = 24, lastLoadedTime = currentTime, companyId) {
+    
+    const {data, error} = await supabase.rpc('get_company_jobs_v1', {loadlimit: limit, lastloadedtime: lastLoadedTime, p_companyid: companyId})
+
+
+    if(error) {
+        console.log("error fetching data from DB", error);
+        return {};
+    }
+
+    return data;
+}
+
+
+// fetch job details from database
+export async function getJobDetails(jobId){
+    try {
+  
+      const {data: job, error} = await supabase.rpc('get_jobs_details_v3', { jobid: jobId });
+    
+      
+    //   const transformBigIntToString = (key, value) => {
+    //       return typeof value === 'bigint' 
+    //         ? value.toString() 
+    //         : value;
+    //     }
+      
+    //     // Use JSON.parse and JSON.stringify to apply the transformation
+    //   const data = JSON.parse(JSON.stringify(job, transformBigIntToString));
+      
+      return job[0];
+  
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
 }

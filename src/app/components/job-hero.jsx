@@ -11,8 +11,8 @@ export default function JobHero({job, postedDate}) {
             <div className='flex mt-4'>
               {/*<h2 className='px-3 md:border-r-1 border-slate-300'><FontAwesomeIcon icon={faCalendarDays} /> 31/12/2023 {job?.expiration_date}</h2> */}
               <h2 className='px-3 md:border-r-1 border-slate-300'><FontAwesomeIcon icon={faCalendarDays} />{postedDate}</h2>
-              <p className='px-3 md:border-r-1 border-slate-300'><FontAwesomeIcon icon={faLocationDot} /> {job.worldwide ? 'Anywhere' : job.countries}</p>
-              <p className='px-3 md:border-r-1 border-slate-300'><FontAwesomeIcon icon={faPersonCane} />{job.experience}</p>
+              <p className='px-3 md:border-r-1 border-slate-300'><FontAwesomeIcon icon={faLocationDot} /> {job.worldwide ? 'Anywhere' : job.country_names}</p>
+              <p className='px-3 md:border-r-1 border-slate-300'><FontAwesomeIcon icon={faPersonCane} />{job.exp_names}</p>
               <p className='px-3'> <FontAwesomeIcon icon={faBriefcase} />{job.category}</p>
             </div>
         </div>

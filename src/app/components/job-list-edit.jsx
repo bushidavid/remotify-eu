@@ -1,6 +1,6 @@
-import Job from './job';
+import JobEdit from './job-edit';
 
-const JobList = ({ jobs, title,  companyId }) => {
+const JobListEdit = ({ jobs, title }) => {
 
     return ( 
         <div className="flex flex-col w-full justify-center items-center">
@@ -10,7 +10,7 @@ const JobList = ({ jobs, title,  companyId }) => {
 
                 { 
                     jobs.map(job => (
-                        <Job key={job.id} 
+                        <JobEdit key={job.id} 
                             id={job.id} 
                             jobLogoUrl={job.logo_url} 
                             title={job.job_title}  
@@ -25,7 +25,9 @@ const JobList = ({ jobs, title,  companyId }) => {
                             companyName={job.company_name}
                             tags={job.tags}
                             created_at={job.created_at}
-                            companyId={companyId}
+                            compDescription={job.company_description}
+                            jobDescription={job.job_description}
+                            companyId={job.company_id}
                         />
                     ))
                 }
@@ -37,4 +39,4 @@ const JobList = ({ jobs, title,  companyId }) => {
 );
 }
  
-export default JobList;
+export default JobListEdit;
