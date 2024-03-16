@@ -1,5 +1,5 @@
 import supabase from "../../../../lib/config/supabaseClient";
-import InfiniteScrollJobs from "@/app/components/infinite-scroll-jobs";
+import InfiniteScrollJobs from "@/app/components/job-scroll";
 import { fetchJobs } from "@/app/actions/actions";
 
 export const revalidate = 0;

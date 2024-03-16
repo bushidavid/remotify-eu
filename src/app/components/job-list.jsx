@@ -1,9 +1,9 @@
 import Job from './job';
 
-const JobList = ({ jobs, title }) => {
+const JobList = ({ jobs, title,  companyId }) => {
 
     return ( 
-        <div className="flex flex-col w-full place-self-center justify-center items-center">
+        <div className="flex flex-col w-full justify-center items-center">
          
             <div className="flex flex-col align-center w-full max-w-6xl h-full ">
                 {title && <h1 className="text-4xl text-center mt-6 mb-2">{title}</h1>}
@@ -25,6 +25,7 @@ const JobList = ({ jobs, title }) => {
                             companyName={job.company_name}
                             tags={job.tags}
                             created_at={job.created_at}
+                            companyId={companyId}
                         />
                     ))
                 }

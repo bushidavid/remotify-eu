@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 
-export const revalidate = 0;
+export const revalidate = 1000;
 
 export default async function Page({ params }) {
 
@@ -30,19 +30,21 @@ export default async function Page({ params }) {
   });
 
   return (
-    <div className='w-full max-w-4xl  mt-10 px-4'>
+    <>
        {
         job ?  (
-          <section className=''>
+          <section className='w-8/12 mt-10 px-4'>
             
               <JobHero job={job} postedDate={postedFormatted}/>
-            <section className='flex flex-row justify-between relative'>
-              <div className='sticky top-0'>
+            <section className='flex flex-row relative w-full min-w-full'>
+              <div className='sticky top-0 w-[70%]'>
                 <JobDetails job={job}/>
-                <Link href={job.job_link ? job.job_link : '/'} className='mt-6 border-1 border-remotify-lb bg-remotify-lb px-6 rounded-md py-2 hover:bg-remotify-db hover:text-white'>Apply</Link>
+                <div className='mt-6'>
+                  <Link href={job.job_link ? job.job_link : '/'} className='border-1 border-remotify-lb bg-remotify-lb px-6 rounded-md py-2 hover:bg-remotify-db hover:text-white'>Apply</Link>
+                </div>
               </div>
-              <div className='flex flex-col h-fit items-center mt-4 sticky top-10 z-50'>
-                <Image src={job.logo_url ? job.logo_url : '/Logo.jpg'} width={200} height={200} alt="company_logo"></Image>
+              <div className='w-[30%] flex flex-col h-fit items-center mt-4 sticky top-10 z-50'>
+                <Image className='rounded-md' src={job.logo_url ? job.logo_url : '/Logo.jpg'} width={200} height={200} alt="company_logo"></Image>
                 <div className='flex flex-row mt-1'>
                   <FontAwesomeIcon icon={faLink} /><Link className="hover:underline ml-2" href={job.company_website ? job.company_website : '/'}>{job.company_name}</Link>
                 </div>
@@ -61,7 +63,7 @@ export default async function Page({ params }) {
               <Image src={'/loading.svg'} fill={true} alt="loading"/>
             )
        }
-    </div>
+    </>
   )
 }
 
