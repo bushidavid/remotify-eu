@@ -31,7 +31,7 @@ export default function CompanyDashboard({ companyJobs, companyId}) {
                 
             </div>
           </div>
-          <InfiniteScrollJobsCompany initialJobs={companyJobs} companyId={session.user.id} />
+          <InfiniteScrollJobsCompany initialJobs={companyJobs} />
         </div>
       }
     </>

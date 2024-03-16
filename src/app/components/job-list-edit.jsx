@@ -27,7 +27,7 @@ const JobListEdit = ({ jobs, title }) => {
                             created_at={job.created_at}
                             compDescription={job.company_description}
                             jobDescription={job.job_description}
-                            // companyId={job.job_company_id}
+                            companyId={job.company_id}
                         />
                     ))
                 }

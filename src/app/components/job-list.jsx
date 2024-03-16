@@ -1,4 +1,4 @@
-import JobEdit from './job-edit';
+import Job from './job';
 
 const JobList = ({ jobs, title,  companyId }) => {
 
@@ -10,7 +10,7 @@ const JobList = ({ jobs, title,  companyId }) => {
 
                 { 
                     jobs.map(job => (
-                        <JobEdit key={job.id} 
+                        <Job key={job.id} 
                             id={job.id} 
                             jobLogoUrl={job.logo_url} 
                             title={job.job_title}  

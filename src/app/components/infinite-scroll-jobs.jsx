@@ -2,9 +2,10 @@
 
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
-import JobList from "./job-list";
+
 import { fetchJobs } from "../actions/actions";
 import Image from "next/image";
+import JobListEdit from "./job-list-edit";
 
 const revalidate = 0;
 
@@ -55,8 +56,8 @@ export default function InfiniteScrollJobs({ initialJobs, search, filter }) {
          jobs?.length > 0 ? 
             ( 
             <section className='w-screen flex flex-col justify-center items-center'>
-                    <JobList key={Math.random()} jobs={featuredJobs} title={"Latest Remote Jobs"} />
-                    <JobList key={Math.random()} jobs={notFeaturedJobs} />
+                    <JobListEdit key={Math.random()} jobs={featuredJobs} title={"Latest Remote Jobs"} />
+                    <JobListEdit key={Math.random()} jobs={notFeaturedJobs} />
 
                     {/* loading spinner */}
                     <div

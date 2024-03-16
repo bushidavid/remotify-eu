@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-poppins'>
+      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-inter'>
         <SessProvider>
           <Navbar />
             <Providers>

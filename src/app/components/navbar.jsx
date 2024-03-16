@@ -52,9 +52,9 @@ const Navbar = () => {
         {
             session ? 
             (
-                <div className="flex p-5 justify-between w-full place-self-center  text-white font-sans text-sm">
-                    <div className=".logo__image">
-                        <Link href="/" className=""><Image className="h-auto" alt="remotify_logo" src={'/remotify.svg'} width={50} height={115} /></Link>
+                <div className="flex p-5 justify-between w-full place-self-center text-white font-sans text-sm">
+                    <div>
+                        <Image className="" alt="remotify_logo" src={'/remotify_original.svg'} width={2000} height={2000} />
                     </div>
                     <div className="flex flex-row items-center mr-5">
                         <div className="px-3">
@@ -70,9 +70,9 @@ const Navbar = () => {
             ) : (
                 
                 <div className="flex p-5 justify-between w-full place-self-center  text-white font-sans text-sm">
-                    <div className=".logo__image">
-                        <Link href="/" className=""><Image className="h-auto" alt="remotify_logo" src={'/remotify.svg'} width={50} height={115} /></Link>
-                    </div>
+                    
+                    <Link href={'/'}><Image className="" alt="remotify_logo" src={'/remotify.png'} width={100} height={100} /></Link>
+                    
                     <div className="flex flex-row text-md items-center justify-center ">
                         <div className="px-3">
                             <Link href="/featured">Featured</Link>
@@ -102,6 +102,7 @@ const Navbar = () => {
         
         }
         {currentPage == '/' && <Hero /> }
+        
     </div>
     );
 }
