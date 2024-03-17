@@ -6,6 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import CategoriesMenu from "./categories-menu";
 import Hero from "./hero";
+import { RxHamburgerMenu } from "react-icons/rx";
+import HamburgerMenu from "./hamburger-menu";
 
 
 const Navbar = () => {
@@ -14,6 +16,7 @@ const Navbar = () => {
     const currentPage = usePathname();
 
     const [ isDropdownVisible, setIsDropdownVisible ] = useState(false);
+    const [ toggleOpen, setToggleOpen ] = useState(false);
 
     const handleMouseEnter = () => {
         setIsDropdownVisible(true);
@@ -25,9 +28,10 @@ const Navbar = () => {
 
 
 
-    return (  
-        <div className="flex flex-col bg-cover w-full justify-between items-center bg-[linear-gradient(to_top_left,rgba(57,209,204,0.90),rgba(20,40,66,1)),url('/ben-everett-unsplash.jpg')]">
-                <div className="flex p-5 justify-between w-full place-self-center  text-white font-sans text-sm">
+    return (
+        <>
+        <div className="hidden md:visible md:flex flex-col bg-cover w-full justify-between items-center bg-[linear-gradient(to_top_left,rgba(57,209,204,0.90),rgba(20,40,66,1)),url('/ben-everett-unsplash.jpg')]">
+                <div className="flex p-5 justify-between w-full place-self-center text-white font-sans text-sm">
                     
                     <Link href={'/'}><Image className="" alt="remotify_logo" src={'/remotify.png'} width={100} height={100} /></Link>
                     
@@ -52,6 +56,14 @@ const Navbar = () => {
         {currentPage == '/' && <Hero /> }
         
     </div>
+    <div className="md:hidden flex flex-row text-md bg-cover w-full justify-between items-center bg-[linear-gradient(to_top_left,rgba(57,209,204,0.90),rgba(20,40,66,1)),url('/ben-everett-unsplash.jpg')]">
+        <Link href={'/'}><Image className="" alt="remotify_logo" src={'/remotify.png'} width={70} height={70} /></Link>
+        <button onClick={() => setToggleOpen(prev => !prev)}><RxHamburgerMenu size={56} color="gray" /></button>
+        {toggleOpen && <HamburgerMenu />}
+
+    </div>             
+    </>
+    
     );
 }
  
