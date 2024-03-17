@@ -42,13 +42,14 @@ const Navbar = () => {
                         <div className="px-3">
                             <Link href="/featured">Featured</Link>
                         </div>
-                        <div className="px-3 flex flex-col cursor-pointer relative items-center" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
-                            <p className="">Categories
+                        <div className="px-3 flex flex-col cursor-pointer relative items-center"  > 
+                            <CategoriesMenu />
+                            {/* <p className="">Categories
                             </p>
-                            { isDropdownVisible && <CategoriesMenu />}
+                            { isDropdownVisible && <CategoriesMenu />} */}
                         </div>
                         <div className="px-3">
-                            <Link href={'/contact-us'} className="bg-post-button hover:bg-red-700 text-white text-remotify-db px-6 rounded-md py-2">Post a Job</Link>   
+                            <Link href={'/contact-us'} className="bg-orange-600 hover:bg-orange-700 px-6 rounded-md py-2">Post a Job</Link>   
                         </div>
 
                     </div>                
