@@ -3,8 +3,7 @@ import JobDetails from '@/app/components/job-details';
 import Image from 'next/image';
 import supabase from '../../../../lib/config/supabaseClient';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink } from '@fortawesome/free-solid-svg-icons';
+import { FaLink } from "react-icons/fa6";
 
 export const revalidate = 1000;
 
@@ -33,20 +32,37 @@ export default async function Page({ params }) {
     <>
        {
         job ?  (
-          <section className='w-8/12 mt-10 px-4'>
+          <section className='w-11/12 md:w-10/12 lg:w-8/12 mt-10'>
             
               <JobHero job={job} postedDate={postedFormatted}/>
             <section className='flex flex-row relative w-full min-w-full'>
-              <div className='sticky top-0 w-[70%]'>
+              <div className='w-full md:w-[70%]'>
+              <div className='w-full md:hidden flex flex-row justify-around mt-4'>
+                  <div className='flex flex-col w-fit'>
+                    <Image className='rounded-md w-fit' src={job.logo_url ? job.logo_url : '/Logo.jpg'} width={80} height={80} alt="company_logo"></Image>
+                    <div className='flex flex-row justify-center items-center mt-1'>
+                      <FaLink /><Link className="hover:underline ml-2" href={job.company_website ? job.company_website : '/'}>{job.company_name}</Link>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap">
+                          {job.tags.split(',').map(tag => (
+                            <p className={`text-xs font-medium rounded-xl bg-teal-50 px-2 pt-0.5 mx-1 my-0.5 h-fit`} key={tag}>{tag}</p>
+                      ))}
+                  </div>
+                  
+              </div>
+                <div>
+                      <p className='text-sm'>Valid Until: {expirationFormatted}</p>
+                    </div>
                 <JobDetails job={job}/>
                 <div className='mt-6'>
                   <Link href={job.job_link ? job.job_link : '/'} className='border-1 border-remotify-lb bg-remotify-lb px-6 rounded-md py-2 hover:bg-remotify-db hover:text-white'>Apply</Link>
                 </div>
               </div>
-              <div className='w-[30%] flex flex-col h-fit items-center mt-4 sticky top-10 z-50'>
+              <div className='w-[30%] md:flex flex-col h-fit items-center mt-4 sticky top-10 z-50 hidden'>
                 <Image className='rounded-md' src={job.logo_url ? job.logo_url : '/Logo.jpg'} width={200} height={200} alt="company_logo"></Image>
-                <div className='flex flex-row mt-1'>
-                  <FontAwesomeIcon icon={faLink} /><Link className="hover:underline ml-2" href={job.company_website ? job.company_website : '/'}>{job.company_name}</Link>
+                <div className='flex flex-row justify-center items-center mt-1 hover:underline'>
+                  <FaLink /><Link className="hover:underline ml-2" href={job.company_website ? job.company_website : '/'}>{job.company_name}</Link>
                 </div>
                 <div className="flex flex-row flex-wrap justify-center">
                         {job.tags.split(',').map(tag => (
@@ -54,7 +70,7 @@ export default async function Page({ params }) {
                     ))}
                 </div>
                 <div>
-                  <p>Valid Until: {expirationFormatted}</p>
+                  <p className='text-sm'>Valid Until: {expirationFormatted}</p>
                 </div>
               </div>
             </section>

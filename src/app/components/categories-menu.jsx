@@ -9,12 +9,13 @@ import { useRouter } from "next/navigation";
     const router = useRouter();
 
     return (
-    <Dropdown>
-      <DropdownTrigger>
+    <Dropdown className="mx-0">
+      <DropdownTrigger className="px-0">
         <Button 
+          disableRipple
           color={"default"}
           variant={"light"}
-          className="text-white px-0"
+          className="p-0  data-[hover=true]:bg-transparent"
         >
           Categories
         </Button>
