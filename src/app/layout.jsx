@@ -1,9 +1,10 @@
 import './globals.css'
 import { Roboto, Inter, Ubuntu_Mono, Montserrat } from 'next/font/google';
-import Navbar from './components/navbar'
-import SessProvider from './components/session-provider'
-import Providers from './providers'
 import Footer from './components/footer'
+import Providers from './providers';
+import NavbarComp from './components/navbar';
+import {ContextProvider} from './context/store';
+import Navbar2 from './components/navbar';
 
 
 export const metadata = {
@@ -14,14 +15,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-inter'>
-        <SessProvider>
-          <Navbar />
+      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-roboto'>
+          <Navbar2 />
             <Providers>
-              { children }
+              <ContextProvider >
+                { children }
+              </ContextProvider>
             </Providers>
           <Footer />
-        </SessProvider>
         </body>
     </html>
   )

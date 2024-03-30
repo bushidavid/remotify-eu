@@ -29,7 +29,9 @@ module.exports = {
         'remotify-db' : '#142C42',
         'complementary': '#422A14',
         // 'remotify-luminance' : '#d3f5f4'
-        'remotify-lum' : '#d8f0ef'
+        'post-button': '#D1393E',
+        'remotify-lum' : '#d8f0ef',
+        'remotify-contrast' : '#9000f2'
       },
       gridTemplateRows: {
         '12': 'repeat(12, minmax(0, 1fr))',
@@ -39,9 +41,6 @@ module.exports = {
         '2/6': '33.333333%'
       },
       fontFamily: {
-        'montserrat': ['Montserrat'],
-        'inter' : ['Inter'],
-        'roboto' : ['Roboto'],
         'poppins' : ['Poppins']
       }
     },
