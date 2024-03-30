@@ -11,7 +11,7 @@ export default function Navbar2() {
 
 
   return (
-    <nav className="bg-remotify-db w-full ">
+    <nav className="bg-remotify-db w-full sticky top-0 z-50 backdrop-blur-lg">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -135,12 +135,12 @@ export default function Navbar2() {
                 </div>
                 </div>
             </div>
-            <div>
+            <div className="hidden md:block">
                 <Link
                     href={'/contact-us'}
-                    className="font-poppins bg-remotify-lb text-remotify-db font-poppins rounded-md p-2"
+                    className="font-poppins bg-remotify-lb text-remotify-db rounded-md p-2 font-semibold"
                 >
-                    + New Job
+                    Post New Job
                 </Link>
             </div>
             </div>
@@ -156,7 +156,12 @@ export default function Navbar2() {
             >
                 Featured
             </Link>
-           
+            <Link
+                href={'/contact-us'}
+                className="font-poppins bg-remotify-lb text-remotify-db rounded-md p-2 mx-2 font-semibold"
+                >
+                Post New Job
+            </Link>
             
             </div>
         </div>
