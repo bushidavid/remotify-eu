@@ -46,27 +46,27 @@ export default async function Page({ params }) {
                   </div>
                   <div className="flex flex-wrap">
                           {job.tags.split(',').map(tag => (
-                            <p className={`text-xs font-medium rounded-xl bg-teal-50 px-2 pt-0.5 mx-1 my-0.5 h-fit`} key={tag}>{tag}</p>
+                            <p className={`border-1 border-remotify-db text-xs font-medium rounded-full px-2 pt-0.5 mx-1 my-0.5 h-fit`} key={tag}>{tag}</p>
                       ))}
                   </div>
                   
               </div>
-                <div>
-                      <p className='text-sm'>Valid Until: {expirationFormatted}</p>
-                    </div>
+                <div className='m-2'>
+                    <p className='text-sm text-center'>Valid Until: {expirationFormatted}</p>
+                </div>
                 <JobDetails job={job}/>
-                <div className='mt-6'>
-                  <Link href={job.job_link ? job.job_link : '/'} className='border-1 border-remotify-lb bg-remotify-lb px-6 rounded-md py-2 hover:bg-remotify-db hover:text-white'>Apply</Link>
+                <div className='my-6'>
+                  <Link href={job.job_link ? job.job_link : '/'} className='px-6 rounded-md py-2 bg-remotify-db text-white'>Apply</Link>
                 </div>
               </div>
-              <div className='w-[30%] md:flex flex-col h-fit items-center mt-4 sticky top-10 z-50 hidden'>
+              <div className='w-[30%] md:flex flex-col h-fit items-center mt-4 sticky top-20 z-50 hidden'>
                 <Image className='rounded-md' src={job.logo_url ? job.logo_url : '/Logo.jpg'} width={200} height={200} alt="company_logo"></Image>
                 <div className='flex flex-row justify-center items-center mt-1 hover:underline'>
                   <FaLink /><Link className="hover:underline ml-2" href={job.company_website ? job.company_website : '/'}>{job.company_name}</Link>
                 </div>
                 <div className="flex flex-row flex-wrap justify-center">
                         {job.tags.split(',').map(tag => (
-                          <p className={`border-1 border-remotify-db rounded-md text-[14px] font-medium m-1 p-1`} key={tag}>{tag}</p>
+                          <p className={`border-1 border-remotify-db rounded-full text-[14px] font-medium m-1 p-1`} key={tag}>{tag}</p>
                     ))}
                 </div>
                 <div>
