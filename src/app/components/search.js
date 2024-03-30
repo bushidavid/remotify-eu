@@ -1,29 +1,52 @@
 'use client';
 
-import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import supabase from "../../../lib/config/supabaseClient";
+import {CheckboxGroup, Checkbox} from "@nextui-org/react";
+import { useEffect } from "react";
+import { FilterContext } from "../context/store";
+import { useContext } from 'react';
 
 
 export default function Search() {
-    const [searchText, setSearchText] = useState();
-
-    const router = useRouter();
     
-
-    const handleSearchSubmit = async (e) => {
-        e.preventDefault();
-
-        router.push(`/${searchText}/jobs`);
-
-        return;
-    }
+  const context = useContext(FilterContext);
 
   return (
     <>
-        <form onSubmit={(e) => handleSearchSubmit(e)} className="absolute flex flex-row w-8/12 justify-center align-center bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-            <input placeholder="Search for a job" className="border-1 border-remotify-db w-10/12 rounded-lg py-2 px-2 my-2 outline-none" value={searchText} onChange={e => setSearchText(e.target.value)}></input>
-            <button type="submit" className="w-16 bg-remotify-db border-1 border-remotify-lb rounded-lg my-2 ml-10 text-white hover:bg-remotify-lb hover:text-black">Search</button>
+        <form className="flex flex-col w-11/12 md:w-8/12 justify-around align-center border border-slate-200 rounded-2xl px-4 py-5 my-5">
+          <div className="flex flex-grow flex-row w-full">
+              <input placeholder="Search for a job" className="border-1 border-remotify-db w-10/12 rounded-lg py-2 px-2 my-2 outline-none" value={context.title} onChange={e => context.setTitle(e.target.value)}></input>
+              <CheckboxGroup
+                orientation="horizontal"
+                color="primary"
+                classNames={{
+                  base: "w-6/12 mx-2 flex justify-center items-center text-xs"
+                }}
+                
+                onValueChange={context.setFilter}
+              >
+                  <Checkbox value="full_time" name='fullTime'>Full Time</Checkbox>
+                  <Checkbox value="part_time" name='partTime'>Part Time</Checkbox>
+              </CheckboxGroup>
+            </div>
+            {/* <div className="flex flex-grow flex-wrap justify-center items-center mt-3 border-t-1 pt-5 border-slate-100">
+              <CheckboxGroup
+                orientation="horizontal"
+                color="primary"
+                classNames={{
+                  base: "w-8/12 mx-2 flex"
+                }}
+                
+                onValueChange={context.setFilter}
+              >
+                  <Checkbox value="programming" name='programming'>Programming</Checkbox>
+                  <Checkbox value="design" name='design'>Design</Checkbox>
+                  <Checkbox value="fullyRemote" name='fullyRemote'>Fully Remote</Checkbox>
+                  <Checkbox value="hybrid" name='hybrid'>Hybrid</Checkbox>
+                  <Checkbox value="stipend" name='stipend'>Stipend</Checkbox>
+              </CheckboxGroup>
+            </div> */}
         </form>
     </>
   )

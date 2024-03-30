@@ -3,7 +3,7 @@
 import StatsTile from "./stats-tile";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import InfiniteScrollJobsCompany from "./infinite-scroll-jobs";
+import InfiniteScrollJobsCompany from "./job-scroll";
 
 
 export default function CompanyDashboard({ companyJobs, companyId}) {

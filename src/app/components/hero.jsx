@@ -1,14 +1,22 @@
 import Image from "next/image";
 import Search from "./search";
+import Link from "next/link";
 
 export default function Hero() {
   return ( 
-    <div className="place-self-center flex justify-center items-center flex-col mb-100 w-screen relative h-[300px] ">
-        <div className="text-center">
-          <h1 className="text-6xl text-orange-400">The Best Remote Job Platform in Europe</h1>
-          <h2 className="text-xl pt-1 text-orange-300">Search for the best remote jobs in Europe and in European time zones</h2>
-        </div>
-        <Search />
+    <div className="flex flex-col text-center justify-center gap-4 items-center mb-100 w-full relative h-[400px] md:h-[633px] bg-remotify-db">
+        
+          <h1 className="text-white text-5xl w-full md:text-8xl md:w-8/12 font-medium">Find your Dream Job with Us!</h1>
+          <p className="text:md md:text-lg pt-1 md:w-6/12 w-8/12 text-gray-300">Navigate the World of Opportunities with Our Comprehensive Job Portal, Connecting Talented Individuals with their Dream Careers. Start Searching Now!</p>
+          <div className="block md:hidden">
+                <Link
+                    href={'/contact-us'}
+                    className="font-poppins bg-remotify-lb text-remotify-db rounded-md p-2 font-semibold"
+                >
+                    Post New Job
+                </Link>
+            </div>
+       
     </div>
   )
 }
