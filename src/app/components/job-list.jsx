@@ -1,15 +1,12 @@
-'use client';
-
-import { FilterContext } from '../context/store';
 import Job from './job';
-import { useContext } from 'react';
-
 
 const JobList = ({ jobs, title,  companyId }) => {
 
     return ( 
-        <div className="flex flex-col w-full justify-center items-center motion-reduce">
-            <div className="flex flex-col align-center w-full h-full ">
+        <div className="flex flex-col w-full justify-center items-center">
+         
+            <div className="flex flex-col align-center w-full max-w-6xl h-full ">
+                {title && <h1 className="text-4xl text-center mt-6 mb-2">{title}</h1>}
 
                 { 
                     jobs.map(job => (
@@ -33,6 +30,8 @@ const JobList = ({ jobs, title,  companyId }) => {
                     ))
                 }
             </div>
+
+            
         </div>
 
 );

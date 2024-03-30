@@ -20,7 +20,7 @@ export default async function Page() {
   const jobs = await getFeaturedJobs();
 
   return (
-    <section className='w-screen flex flex-col justify-center items-center mt-4'>
+    <section className='w-screen flex flex-col justify-center items-center'>
         <JobList jobs={jobs} title="Featured Jobs" />
     </section>
   )
