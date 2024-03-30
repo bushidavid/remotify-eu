@@ -73,15 +73,15 @@ export default function Navbar2() {
                 <div className="flex items-center justify-center space-x-4">
                     {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
                     
-                    <Link
+                    {/* <Link
                     href="#"
-                    className="font-poppins text-md text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium font-poppins"
+                    className="font-poppins text-md text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium "
                     >
                         Companies
-                    </Link>
+                    </Link> */}
                     <Link
                     href="/featured"
-                    className="font-poppins text-md text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium font-poppins"
+                    className="font-poppins text-md text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium "
                     >
                         Featured
                     </Link>
@@ -91,7 +91,7 @@ export default function Navbar2() {
                 <div>
                     <button
                     type="button"
-                    className="font-poppins text-md relative flex rounded-md hover:bg-gray-700 p-2 focus:outline-none text-gray-300 hover:text-white font-poppins"
+                    className="font-poppins text-md relative flex rounded-md hover:bg-gray-700 p-2 focus:outline-none text-gray-300 hover:text-white font-medium"
                     id="user-menu-button"
                     aria-expanded="false"
                     aria-haspopup="true"
@@ -113,7 +113,7 @@ export default function Navbar2() {
                 To: "transform opacity-0 scale-95"
             */}
                 {open && <div
-                    className="font-poppins absolute flex flex-col p-4 right-0 z-10 mt-2 w-fit h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="font-poppins absolute flex flex-col p-4 gap-1 right-0 z-10 mt-2 w-fit h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
@@ -124,7 +124,7 @@ export default function Navbar2() {
                         Categories.map(category => {
                             return (
                                 // <Link href={`/jobs/${category.value}`}  className=" px-2 text-remotify-db hover:rounded-lg hover:bg-remotify-lum"></Link>
-                                    <Link href={`/jobs/${category.value}`} key={category.id} onClick={() => setOpen(prev => !prev)} >{category.value}</Link>
+                                    <Link className="hover:bg-slate-200 py-1 px-2 rounded-md" href={`/jobs/${category.value}`} key={category.id} onClick={() => setOpen(prev => !prev)} >{category.value}</Link>
                             )
                         })
                     }
