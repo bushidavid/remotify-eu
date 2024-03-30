@@ -1,21 +1,40 @@
-import Link from "next/link"
 import { Categories } from "../../../lib/departments"
-import { handleClientScriptLoad } from "next/script"
+import React from "react";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+ 
 
-export default function CategoriesMenu() {
-  return (
-   <>
-        <div className={`w-40 flex absolute top-8 z-50 flex-col bg-white rounded-lg  shadow-2xl`}>
-            <div className="bg-white my-2 absolute rotate-45 w-4 h-4 transform origin-center -top-[16px] place-self-center -z-50">
-            </div>
-        { 
-                Categories.map(category => {
-                    return (
-                        <Link href={`/jobs/${category.value}`} key={category.id} className=" px-2 text-remotify-db hover:rounded-lg hover:bg-remotify-lum">{category.value}</Link>
-                    )
-                })
-            }
-        </div>
-    </>
-  )
-}
+  export default function CategoriesMenu () {
+
+    const router = useRouter();
+
+    return (
+    <Dropdown className="mx-0">
+      <DropdownTrigger className="px-0">
+        <Button 
+          disableRipple
+          color={"default"}
+          variant={"light"}
+          className="p-0  data-[hover=true]:bg-transparent"
+        >
+          Categories
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu 
+        aria-label="Dropdown Variants"
+        color={"default"} 
+        variant={"light"}
+      >
+        {
+            Categories.map(category => {
+                return (
+                    // <Link href={`/jobs/${category.value}`}  className=" px-2 text-remotify-db hover:rounded-lg hover:bg-remotify-lum"></Link>
+                        <DropdownItem onPress={e => router.push(`/jobs/${category.value}`)} key={category.id}>{category.value}</DropdownItem>
+                )
+            })
+        }
+      </DropdownMenu>
+    </Dropdown>
+    )
+  }
+
