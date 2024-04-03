@@ -43,7 +43,7 @@ export async function sendEmail(form){
 
     const msgToProspect = {
         to: form.customerEmail, // Change to your recipient
-        from: 'sales@remotifyeurope.com', // Change to your verified sender
+        from: 'david.bushi@remotifyeurope.com', // Change to your verified sender
         subject: form.customerSubject,
         text: `${form.customerName}, your contact request was sent`,
         html: form.customerMessage,
@@ -51,7 +51,7 @@ export async function sendEmail(form){
 
     const msg = {
         to: 'sales@remotifyeurope.com', // Change to your recipient
-        from: 'sales@remotifyeurope.com', // Change to your verified sender
+        from: 'david.bushi@remotifyeurope.com', // Change to your verified sender
         subject: form.customerSubject,
         text: `${form.customerName}, your contact request was sent`,
         html: `You have a new message from ${form.customerEmail}`

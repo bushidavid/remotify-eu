@@ -24,7 +24,7 @@ const TipTap = ({ setDescription, content, setEdit, edit}) => {
     content: editorContent,
     editorProps :{
       attributes: {
-        class: "prose prose-base prose-ul:my-2 prose-li:my-1.5 prose-p:my-1.5 sm:prose lg:prose-base xl:prose-lg h-[400px] min-w-full overflow-y-scroll border border-slate-300 rounded-lg focus:outline-none "
+        class: "prose prose-sm sm:prose lg:prose-base xl:prose-lg h-[400px] min-w-full overflow-y-scroll border border-slate-300 rounded-lg focus:outline-none "
       },
      
     },

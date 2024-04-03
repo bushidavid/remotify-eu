@@ -8,10 +8,10 @@ export function ContextProvider({ children }) {
     
     const [filter, setFilter] = useState({});
     const [title, setTitle] = useState("");
-    const [jobs, setJobs] = useState(null);
+
   
     return (
-      <FilterContext.Provider value={{ filter, setFilter, title, setTitle, jobs, setJobs }}>
+      <FilterContext.Provider value={{ filter, setFilter, title, setTitle }}>
         {children}
       </FilterContext.Provider>
     );
