@@ -40,6 +40,12 @@ export default function Footer() {
           </div>
       </div>
       <div className="text-slate-400">&copy; 2024 RemotifyEurope - All Rights Reserved</div>
+      <div className="text-slate-400 flex flex-row">
+        <p className="pb-1">
+          <Link href={'https://app.enty.io/doc_preview?fileId=5da38960-5f64-4cc0-be5f-861138b47262'} className="hover:underline">Terms of Service - </Link>
+          <Link href={'https://rzghwrcqyzeuluqxwale.supabase.co/storage/v1/object/public/RemotifyLogoImages/PDFs/Privacy%20Policy%20RemotifyEurope.pdf?t=2024-04-03T09%3A42%3A09.828Z'} className="hover:underline">Privacy Policy</Link>
+        </p>
+      </div>
     </div>
   )
 }

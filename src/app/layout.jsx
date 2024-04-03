@@ -4,7 +4,9 @@ import Footer from './components/footer'
 import Providers from './providers';
 import NavbarComp from './components/navbar';
 import {ContextProvider} from './context/store';
-import Navbar2 from './components/navbar';
+import Navbar from './components/navbar';
+import SessProvider from './components/session-provider';
+import SubscribeModal from './components/subscribe-modal';
 
 
 export const metadata = {
@@ -15,14 +17,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-roboto'>
-          <Navbar2 />
+      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-poppins'>
+        <SubscribeModal />
+        <SessProvider >
+          <Navbar />
             <Providers>
               <ContextProvider >
                 { children }
               </ContextProvider>
             </Providers>
-          <Footer />
+            <Footer />
+          </SessProvider>
         </body>
     </html>
   )

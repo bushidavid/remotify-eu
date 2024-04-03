@@ -4,10 +4,15 @@ import Image from "next/image"
 import Link from "next/link"
 import { Categories } from "../../../lib/departments"
 import { useState } from "react"
+import { signIn, signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-export default function Navbar2() {
+export default function Navbar() {
 
     const [ open, setOpen ] = useState(false);
+    // const { data: session, status } = useSession({
+    //     onUnauthenticated() {redirect('/')}
+    // })
 
 
   return (
@@ -135,7 +140,7 @@ export default function Navbar2() {
                 </div>
                 </div>
             </div>
-            <div className="hidden md:block">
+            <div className="hidden md:block mx-2">
                 <Link
                     href={'/contact-us'}
                     className="font-poppins bg-remotify-lb text-remotify-db rounded-md p-2 font-semibold"
@@ -143,7 +148,46 @@ export default function Navbar2() {
                     Post New Job
                 </Link>
             </div>
+                {/* {session ? (
+                    <div className="hidden md:block">
+                    <button onClick={signOut}
+                        className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
+                    >
+                    Sign Out
+                    </button>
+                    </div>
+                ) :
+                (
+                    <div className="hidden md:block">
+                        <button onClick={signIn}
+                            className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
+                        >
+                        Sign In
+                        </button>
+                    </div>
+                )
+            }
+            {session ? (
+                    <div className="md:hidden">
+                    <button onClick={signOut}
+                        className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
+                    >
+                    Sign Out
+                    </button>
+                    </div>
+                ) :
+                (
+                    <div className="md:hidden ">
+                        <button onClick={signIn}
+                            className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
+                        >
+                        Sign In
+                        </button>
+                    </div>
+                )
+            } */}
             </div>
+            
         </div>
         {/* Mobile menu, show/hide based on menu state. */}
         {open && <div className="sm:hidden" id="mobile-menu">
@@ -166,6 +210,7 @@ export default function Navbar2() {
             </div>
         </div>
         }
+        
     </nav>
 
 

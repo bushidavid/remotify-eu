@@ -65,7 +65,7 @@ export default function Page() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-remotify-lb px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-remotify-db focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-md bg-remotify-db px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-remotify-db focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
               </button>
@@ -74,7 +74,7 @@ export default function Page() {
           
         </div>
         <div className='flex flex-row gap-5 text-sm justify-center mt-2'>
-            <p>Not a member?</p> <Link href={'/register'} className='text-remotify-lb hover:text-gray-900'>Register</Link>
+            <p>Not a member?</p> <Link href={'/register'} className='text-remotify-db hover:underline'>Register</Link>
           </div>
       </div>
     </>

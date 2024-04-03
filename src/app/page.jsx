@@ -6,6 +6,7 @@ import JobScroll from './components/job-scroll';
 import Search from './components/search';
 
 
+
 // async function getJobs(){
 
 //   const { data, error } = await supabase.rpc('get_jobs');
