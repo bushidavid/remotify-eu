@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 
+import { sendgridClient } from "../../../../lib/email";
+
 export async function PUT( req ) {
 
     const body = await req.json();
 
     const email = body.email;
 
-    console.log(email);
     const url = `https://api.sendgrid.com/v3/marketing/contacts`;
     
   
@@ -26,9 +27,33 @@ export async function PUT( req ) {
       body: JSON.stringify(data),
     };
 
+    const message = {
+      from: {
+        email: 'david.bushi@remotifyeurope.com',
+        name: 'RemotifyEurope Newsletter'
+      },
+      personalizations: [
+        {
+          to: [
+            {
+              email: email,
+            },
+          ],
+        },
+      ],
+      "template_id":"d-ddbedfaf8be14c1997b0ca6bc915c61b", 
+    }
+
     try {
         const response = await fetch(url, options);
         const json = await response.json();
+
+        sendgridClient
+        .send(message)
+        .then(() => console.log('Mail sent successfully'))
+        .catch(error => {
+          console.error(error);
+        });
 
         return NextResponse.json({message: "Your email has been succesfully added to the mailing list. Welcome 👋" , status: 200, ok: true, jobId: json.job_id})
     } catch (error) {
