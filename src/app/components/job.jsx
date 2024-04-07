@@ -1,13 +1,21 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image';
-import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
-
-
+import {Card, CardBody} from "@nextui-org/card";
+import { updateJobClicks } from '../actions/actions';
+import { useRouter } from 'next/navigation';
+import { InView, useInView } from 'react-intersection-observer'
 
 export default function Job({ ...props }) {
 
+  const {ref, inView, entry} = useInView({
+  });
+
   const date = new Date(props.created_at);
   const today = new Date(Date.now());
+
+  const router = useRouter();
 
   const todayFormatted = today.toLocaleString('lu-LU', {
     year: 'numeric',
@@ -20,15 +28,61 @@ export default function Job({ ...props }) {
     month: '2-digit',
     day: '2-digit',
   });
+
+
+  const handleClick = async (e, jobId) => {
+
+    e.preventDefault();
+
+    console.log("inside handle click");
+    const res = await updateJobClicks(jobId);
+
+    if(!res){
+      console.log(`unable to update job clicks for jobId: ${jobId}`)
+    }
+
+    router.push(`/job/${jobId}`)
+  }
+
+  const handleInView = async (jobId) => {
+    
+    const jobsInStorage = JSON.parse(localStorage.getItem("jobSeenArray")) || [];
+
+    console.log(jobsInStorage);
+
+    if (!jobsInStorage.includes(jobId)) {
+      // If not present, add the current job ID to the list
+      jobsInStorage.push(jobId);
+  
+      // Update localStorage with the updated list of job IDs
+      localStorage.setItem("jobSeenArray", JSON.stringify(jobsInStorage));
+  
+      // Send a request to the API to update job views
+      const result = await fetch('api/job-views', {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ jobId: jobId })
+      });
+
+      const json = await result.json();
+
+      console.log(json);
+
+      if(!json.ok){
+        console.log(`unable to update job views for jobId: ${jobId}`)
+      }
+
+    }
+
+  }
  
 
   return (
-
-
-    <>
-      <Link href={`/job/${props.id}`} className='flex flex-col items-center justify-center mb-2 '>
+    <InView as='div' triggerOnce onChange={(inView, entry) => { if(inView) handleInView(props.id) }} >
+      <Link href={`/job/${props.id}`} className='flex flex-col items-center justify-center mb-2' onClick={(e) => handleClick(e, props.id)}>
         <Card className={`w-11/12 md:w-10/12 flex flex-col items-center justify-center px-2 pb-0.5`}>
-          
           <CardBody className='flex flex-row items-start justify-between bg-slate-50 rounded-xl mx-2 mt-1.5'>
             <div className="w-[30%] max-w-[30%] md:w-[15%] md:max-w-[15%] flex flex-col justify-around ">
                 <Image className="rounded-full" src={props.jobLogoUrl ? props.jobLogoUrl : "/Logo.jpg"} alt="company_logo" width={70} height={70}></Image>
@@ -54,7 +108,7 @@ export default function Job({ ...props }) {
           </div>
         </Card>
       </Link>
-    </>
+    </InView>
 
     // <div>
     //   <Link className="relative flex flex-row items-center mb-4" href={`/job/${props.id}`}>

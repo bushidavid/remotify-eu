@@ -129,3 +129,40 @@ export async function getJobDetails(jobId){
       return null;
     }
 }
+
+export async function updateJobClicks(jobId){
+    try {
+  
+        const {data: job, error} = await supabase.rpc('get_jobs_details_v3', { jobid: jobId });
+
+        if(error){
+            console.log(error);
+            return false;
+        }
+      
+        const { clicks } = job[0];
+
+        const { data: insertData, error: insertError } = await supabase
+            .from('job')
+            .update({
+                clicks: clicks + 1,
+            })
+            .eq('id', jobId)
+            .select();
+        
+        if(insertError) {
+            console.log(insertError);
+            return false;
+        }
+        
+        revalidatePath("/")
+        
+        return true;
+    
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+}
+
+
