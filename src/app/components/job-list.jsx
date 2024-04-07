@@ -3,6 +3,7 @@
 import { FilterContext } from '../context/store';
 import Job from './job';
 import { useContext } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 
 const JobList = ({ jobs, title,  companyId }) => {
@@ -31,6 +32,7 @@ const JobList = ({ jobs, title,  companyId }) => {
                             companyId={companyId}
                         />
                     ))
+                    
                 }
             </div>
         </div>

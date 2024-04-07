@@ -2,10 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Input } from '@nextui-org/react';
-
+import { useContext } from 'react';
+import { FilterContext } from '../context/store';
 
 export default function Example() {
-  const [open, setOpen] = useState(false);
+
+  const context = useContext(FilterContext);
+
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState(false);
@@ -43,19 +46,18 @@ export default function Example() {
     let returningUser = localStorage.getItem("seenPopUp");
 
     if (didMount.current){
-        setTimeout(() => setOpen(false), 5000);
-
+        setTimeout(() => context.setOpenPopUp(false), 5000);
     }
     else {
         if(!returningUser){
-            setTimeout(() => setOpen(true), 3000);
+            setTimeout(() => context.setOpenPopUp(true), 3000);
             didMount.current = true
         }
     };
 }, [subscribed]);
 
   return (
-    open && 
+    context.openPopUp && 
         (!subscribed ? (
             <form onSubmit={e => handleSubmit(e)}>
                 <div
@@ -137,7 +139,7 @@ export default function Example() {
                                 e.preventDefault();
 
                                 try {
-                                    localStorage.setItem("seenPopUp", true); console.log(localStorage.getItem("seenPopUp")); setOpen(prev => !prev);
+                                    localStorage.setItem("seenPopUp", true); console.log(localStorage.getItem("seenPopUp")); context.setOpenPopUp(prev => !prev);
                                 } catch (error) {
                                     console.error("Error setting item in Local Storage:", error);
                                 }
@@ -228,7 +230,7 @@ export default function Example() {
                                 e.preventDefault();
 
                                 try {
-                                    localStorage.setItem("seenPopUp", true); console.log(localStorage.getItem("seenPopUp")); setOpen(prev => !prev);
+                                    localStorage.setItem("seenPopUp", true); console.log(localStorage.getItem("seenPopUp")); context.setOpenPopUp(prev => !prev);
                                 } catch (error) {
                                     console.error("Error setting item in Local Storage:", error);
                                 }
@@ -237,7 +239,7 @@ export default function Example() {
                             type="button"
                             className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                         >
-                            Cancel
+                            Close
                         </button>
                         </div>
                     </div>
