@@ -1,8 +1,14 @@
+'use client';
+
 import Link from "next/link";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { useContext } from "react";
+import { FilterContext } from "../context/store";
 
 export default function Footer() {
+
+  const context = useContext(FilterContext);
 
   return (
     <div className="flex flex-col w-full text-white items-center text-xs bg-remotify-db">
@@ -20,6 +26,7 @@ export default function Footer() {
           <div className="flex flex-col md:col-start-3 md:col-span-2 md:items-center mt-3 md:mt-0">
             <div className="flex flex-col font-poppins">
               <p className="text-white font-medium text-sm md:text-lg mb-1 md:mb-2">For candidates</p>
+                <button onClick={() => context.setOpenPopUp(true)} className="text-slate-400 text-xs hover:underline text-left">Newsletter</button>
                 <Link href="/" className="text-slate-400 text-xs hover:underline">Sign Up with RemotifyEurope</Link>
                 <Link href="/" className="text-slate-400 text-xs hover:underline">Browse remote jobs</Link> 
             </div>
