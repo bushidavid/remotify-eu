@@ -48,8 +48,6 @@ export default function Job({ ...props }) {
     
     const jobsInStorage = JSON.parse(localStorage.getItem("jobSeenArray")) || [];
 
-    console.log(jobsInStorage);
-
     if (!jobsInStorage.includes(jobId)) {
       // If not present, add the current job ID to the list
       jobsInStorage.push(jobId);

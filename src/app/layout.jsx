@@ -18,15 +18,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-poppins'>
-        <SubscribeModal />
         <SessProvider >
           <Navbar />
             <Providers>
               <ContextProvider >
+              <SubscribeModal />
                 { children }
+                <Footer />
               </ContextProvider>
             </Providers>
-            <Footer />
+            
           </SessProvider>
         </body>
     </html>
