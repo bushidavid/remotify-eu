@@ -15,8 +15,13 @@ import { Tags } from "../../../../lib/tags";
 
 export default function Page ({ params }) {
 
+    console.log(params.slug[0]);
+
 
     const router = useRouter();
+
+
+    if(params.slug != '3452asddwef-adsdad-12e23edad') router.push('/');
 
     const id = params.slug;
     var newJobId = "";
@@ -125,7 +130,7 @@ export default function Page ({ params }) {
             console.log("printing error message: \n", err.message);
         }
 
-        handlePayment(newJobId);
+        //handlePayment(newJobId);
     }
 
     const handleChange = (e) => {
