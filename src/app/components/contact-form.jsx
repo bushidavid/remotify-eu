@@ -24,6 +24,8 @@ export default function ContactForm() {
 
     const onSubmitForm = (e) => {
 
+        console.log("submitting");
+
         e.preventDefault();
 
         const emailSent = sendEmail(form);
@@ -56,7 +58,7 @@ export default function ContactForm() {
                 <Input className="w-full" type="text" variant="underlined" label="Subject" name="customerSubject" isRequired onChange={e => handleChange(e)}/>  
             </div>
             <div className="hidden mb-10 min-w-4/12">
-                <Input className="w-full" type="text" variant="underlined" label="control" name="control" isRequired onChange={() => setBotControl(false)}/>  
+                <Input className="w-full" type="text" variant="underlined" label="control" name="control" onChange={() => setBotControl(false)}/>  
             </div>
             
             <Textarea
