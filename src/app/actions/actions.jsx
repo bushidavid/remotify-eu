@@ -41,12 +41,16 @@ import { sendgridClient } from "../../../lib/email";
 
 export async function sendEmail(form){
 
+    console.log(form);
+
     const msgToProspect = {
         to: form.customerEmail, // Change to your recipient
         from: 'david.bushi@remotifyeurope.com', // Change to your verified sender
-        subject: form.customerSubject,
+        subject: "RemotifyEurope | We have received your message",
         text: `${form.customerName}, your contact request was sent`,
-        html: form.customerMessage,
+        html: `<h1>Thank you for contacting us, ${form.customerName}</h1>
+            <h3>We will get back you as soon as possible!</h3>
+        `,
     }
 
     const msg = {
@@ -54,7 +58,9 @@ export async function sendEmail(form){
         from: 'david.bushi@remotifyeurope.com', // Change to your verified sender
         subject: form.customerSubject,
         text: `${form.customerName}, your contact request was sent`,
-        html: `You have a new message from ${form.customerEmail}`
+        html: `You have a new message from ${form.customerName}, email: ${form.customerEmail} saying: <br>
+            ${form.customerMessage}
+        `
     }
 
     sendgridClient.send(msg)
