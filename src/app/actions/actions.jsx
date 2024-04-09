@@ -41,17 +41,17 @@ import { sendgridClient } from "../../../lib/email";
 
 export async function sendEmail(form){
 
-    console.log(form);
 
     const msgToProspect = {
-        to: form.customerEmail, // Change to your recipient
-        from: 'david.bushi@remotifyeurope.com', // Change to your verified sender
-        subject: "RemotifyEurope | We have received your message",
-        text: `${form.customerName}, your contact request was sent`,
-        html: `<h1>Thank you for contacting us, ${form.customerName}</h1>
-            <h3>We will get back you as soon as possible!</h3>
-        `,
-    }
+        to: form.customerEmail,
+        from: 'david.bushi@remotifyeurope.com',
+        templateId: 'd-b23da83288054da1b24e05e31ccd7590',
+        dynamicTemplateData: {
+          user_message: form.customerMessage,
+          user_name: form.customerName,
+          user_subject: form.customerSubject
+        },
+      };
 
     const msg = {
         to: 'sales@remotifyeurope.com', // Change to your recipient
