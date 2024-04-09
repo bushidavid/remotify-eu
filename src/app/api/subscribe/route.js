@@ -32,6 +32,12 @@ export async function PUT( req ) {
         email: 'david.bushi@remotifyeurope.com',
         name: 'RemotifyEurope Newsletter'
       },
+      asm: {
+        group_id: 24526,
+        groups_to_display: [
+            24526
+        ],
+      },
       personalizations: [
         {
           to: [
