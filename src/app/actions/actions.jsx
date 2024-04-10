@@ -65,6 +65,7 @@ export async function sendEmail(form){
 
     sendgridClient.send(msg)
         .then(() => {
+            console.log("Message to David sent successfully");
             return true;
         })
         .catch((error) => {
@@ -74,6 +75,7 @@ export async function sendEmail(form){
 
     sendgridClient.send(msgToProspect)
         .then(() => {
+            console.log("Message to prospect sent successfully");
             return true;
         })
         .catch((error) => {
