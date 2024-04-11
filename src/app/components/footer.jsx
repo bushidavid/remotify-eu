@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="flex flex-col md:col-start-1 md:col-span-2 md:grid-span md:items-center">
             <div className="flex flex-col font-poppins">
               <p className="text-white font-medium  text-sm md:text-lg mb-1 md:mb-2">Company</p>
-              <Link href="/about" className="text-slate-400 text-xs hover:underline">About RemotifyEurope</Link>
+              <Link href="/" className="text-slate-400 text-xs hover:underline">About RemotifyEurope</Link>
               <Link href="/" className="text-slate-400 text-xs hover:underline">Careers</Link>
               <Link href="/contact-us" className="text-slate-400 text-xs hover:underline">Support</Link>
               <Link href="/contact-us" className="text-slate-400 text-xs hover:underline">Contact Us</Link>
@@ -49,7 +49,8 @@ export default function Footer() {
       <div className="text-slate-400">&copy; 2024 RemotifyEurope - All Rights Reserved</div>
       <div className="text-slate-400 flex flex-row">
         <p className="pb-1">
-          <Link href={'https://app.enty.io/doc_preview?fileId=5da38960-5f64-4cc0-be5f-861138b47262'} className="hover:underline">Terms of Service - </Link>
+          <Link href={'https://app.enty.io/doc_preview?fileId=5da38960-5f64-4cc0-be5f-861138b47262'} className="hover:underline">Terms of Service</Link>
+          <span> - </span>
           <Link href={'https://rzghwrcqyzeuluqxwale.supabase.co/storage/v1/object/public/RemotifyLogoImages/PDFs/Privacy%20Policy%20RemotifyEurope.pdf?t=2024-04-03T09%3A42%3A09.828Z'} className="hover:underline">Privacy Policy</Link>
         </p>
       </div>

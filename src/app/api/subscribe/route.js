@@ -29,7 +29,7 @@ export async function PUT( req ) {
 
     const message = {
       from: {
-        email: 'david.bushi@remotifyeurope.com',
+        email: 'sales@remotifyeurope.com',
         name: 'RemotifyEurope Newsletter'
       },
       asm: {
