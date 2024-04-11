@@ -44,18 +44,21 @@ export async function sendEmail(form){
 
     const msgToProspect = {
         to: form.customerEmail,
-        from: 'david.bushi@remotifyeurope.com',
+        from: {
+            email: 'sales@remotifyeurope.com',
+            name: 'Sales at RemotifyEurope'
+        },
         templateId: 'd-b23da83288054da1b24e05e31ccd7590',
         dynamicTemplateData: {
           user_message: form.customerMessage,
           user_name: form.customerName,
           user_subject: form.customerSubject
         },
-      };
+    };
 
     const msg = {
         to: 'sales@remotifyeurope.com', // Change to your recipient
-        from: 'david.bushi@remotifyeurope.com', // Change to your verified sender
+        from: 'sales@remotifyeurope.com', // Change to your verified sender
         subject: form.customerSubject,
         text: `${form.customerName}, your contact request was sent`,
         html: `You have a new message from ${form.customerName}, email: ${form.customerEmail} saying: <br>
