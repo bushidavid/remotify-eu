@@ -5,7 +5,8 @@ import Image from 'next/image';
 import {Card, CardBody} from "@nextui-org/card";
 import { updateJobClicks } from '../actions/actions';
 import { useRouter } from 'next/navigation';
-import { InView, useInView } from 'react-intersection-observer'
+import { InView, useInView } from 'react-intersection-observer';
+import { MdLocationPin } from 'react-icons/md';
 
 export default function Job({ ...props }) {
 
@@ -34,7 +35,6 @@ export default function Job({ ...props }) {
 
     e.preventDefault();
 
-    console.log("inside handle click");
     const res = await updateJobClicks(jobId);
 
     if(!res){
@@ -79,7 +79,7 @@ export default function Job({ ...props }) {
 
   return (
     <InView as='div' triggerOnce onChange={(inView, entry) => { if(inView) handleInView(props.id) }} >
-      <Link href={`/job/${props.id}`} className='flex flex-col items-center justify-center mb-2' onClick={(e) => handleClick(e, props.id)}>
+      <Link href={`/job/${props.id}`} className='flex flex-col items-center justify-center mb-2 ' onClick={(e) => handleClick(e, props.id)}>
         <Card className={`w-11/12 md:w-10/12 flex flex-col items-center justify-center px-2 pb-0.5`}>
           <CardBody className='flex flex-row items-start justify-between bg-slate-50 rounded-xl mx-2 mt-1.5'>
             <div className="w-[30%] max-w-[30%] md:w-[15%] md:max-w-[15%] flex flex-col justify-around ">
@@ -88,11 +88,11 @@ export default function Job({ ...props }) {
             <div className='flex md:flex-row flex-col md:justify-start md:items-center w-full pl-2'>        
                 <div className='w-full md:w-[40%] md:max-w-[40%]'>
                     <h1 className="text-base">{props.title}</h1>{/* <h1>{job.job_title}</h1> */}
-                    <h2 className="text-sm">{props.companyName}</h2>
-                    <h3 className='text-sm'>{props.salaryMin +" to " + props.salaryMax + ' ' + props.currency}</h3>
+                    <h2 className="text-sm text-slate-600">{props.companyName}</h2>
+                    <h3 className='text-xs text-slate-600'>{props.salaryMin +" to " + props.salaryMax + ' ' + props.currency}</h3>
                 </div>
-                <div className='w-full md:min-w-[30%] md:max-w-[30%]'>
-                    <h1 className='text-md'> {props.worldwide ? "Worlwide" : `Remote from ${props.country}`}</h1>
+                <div className='w-full md:min-w-[30%] md:max-w-[30%] flex flex-row items-center gap-1'>
+                  <MdLocationPin /><h1 className='text-md'>{props.worldwide ? "Worlwide" : `${props.country}`}</h1>
                 </div>
               </div>
 

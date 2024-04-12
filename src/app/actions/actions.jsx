@@ -44,6 +44,7 @@ export async function sendEmail(form){
 
     const msgToProspect = {
         to: form.customerEmail,
+        bcc: 'sales@remotifyeurope.com',
         from: {
             email: 'sales@remotifyeurope.com',
             name: 'Sales at RemotifyEurope'
@@ -56,25 +57,25 @@ export async function sendEmail(form){
         },
     };
 
-    const msg = {
-        to: 'sales@remotifyeurope.com', // Change to your recipient
-        from: 'sales@remotifyeurope.com', // Change to your verified sender
-        subject: form.customerSubject,
-        text: `${form.customerName}, your contact request was sent`,
-        html: `You have a new message from ${form.customerName}, email: ${form.customerEmail} saying: <br>
-            ${form.customerMessage}
-        `
-    }
+    // const msg = {
+    //     to: 'sales@remotifyeurope.com', // Change to your recipient
+    //     from: 'sales@remotifyeurope.com', // Change to your verified sender
+    //     subject: form.customerSubject,
+    //     text: `${form.customerName}, your contact request was sent`,
+    //     html: `You have a new message from ${form.customerName}, email: ${form.customerEmail} saying: <br>
+    //         ${form.customerMessage}
+    //     `
+    // }
 
-    sendgridClient.send(msg)
-        .then(() => {
-            console.log("Message to David sent successfully");
-            return true;
-        })
-        .catch((error) => {
-            console.error(error);
-            return false;
-        })
+    // sendgridClient.send(msg)
+    //     .then(() => {
+    //         console.log("Message to David sent successfully");
+    //         return true;
+    //     })
+    //     .catch((error) => {
+    //         console.error(error);
+    //         return false;
+    //     })
 
     sendgridClient.send(msgToProspect)
         .then(() => {
