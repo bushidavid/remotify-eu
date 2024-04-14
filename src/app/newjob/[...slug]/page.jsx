@@ -2,13 +2,13 @@
 
 import React, {useEffect, useState} from "react";
 import {Input} from "@nextui-org/input";
-import {Select, SelectItem} from "@nextui-org/select";
+import {Select, SelectItem, SelectSection} from "@nextui-org/select";
 import {Switch} from "@nextui-org/switch";
 import { useRouter } from "next/navigation";
 import { Categories } from '../../../../lib/departments';
 import { Levels } from "../../../../lib/levels";
 import TipTap from "@/app/components/tiptap/tiptap";
-import {Countries} from "../../../../lib/countries";
+import {Countries, Regions} from "../../../../lib/countries";
 import supabase from "../../../../lib/config/supabaseClient";
 import { Tags } from "../../../../lib/tags";
 
@@ -238,11 +238,33 @@ export default function Page ({ params }) {
                         isRequired={!form.worldwide}
                         name="jobCountry"
                     >
+                        <SelectSection 
+                        showDivider 
+                        title="Regions"
+                        classNames={{
+                            heading: "flex w-full sticky top-1 z-20 py-1.5 px-2 bg-default-100 shadow-small rounded-small"
+                            }}
+                        >
+                        {
+                            Regions.map(region => (
+                                <SelectItem key={region.id} value={region.id}>{region.name}</SelectItem>
+                            ))
+                        }
+                        </SelectSection>
+                        <SelectSection 
+                        showDivider 
+                        title="Countries"
+                        classNames={{
+                            heading: "flex w-full sticky top-1 z-20 py-1.5 px-2 bg-default-100 shadow-small rounded-small"
+                            }}
+                        >
                         {
                             Countries.map(country => (
+
                                 <SelectItem key={country.id} value={country.id}>{country.name}</SelectItem>
                             ))
                         }
+                        </SelectSection>
                     </Select>
             </div>
 
