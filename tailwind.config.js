@@ -33,7 +33,7 @@ module.exports = {
       },
       gridTemplateRows: {
         '12': 'repeat(12, minmax(0, 1fr))',
-        'layout': 'repeat(5, minmax(150px,1fr)) 600px 200px 200px 200px 600px 150px 150px'
+        'layout': 'repeat(5, minmax(100px,1fr)) 600px 100px 100px 100px 600px 100px 100px'
       },
       maxWidth: {
         '2/6': '33.333333%'
