@@ -36,6 +36,8 @@ export async function POST(req, res) {
 
         console.log("printing logo url from API:", logoUrl);
 
+        console.log(tags);
+
         if(worldwide){
             jobCountry = ""
         }
@@ -87,6 +89,7 @@ export async function POST(req, res) {
                 .rpc('populate_job_country_table', { countries: countries, job_id: data[0].id });
 
             if(countryError) {
+                console.log(countryError);
                 return NextResponse.json({message: countryError.message}, {status: 400})
             }
         }
@@ -99,6 +102,7 @@ export async function POST(req, res) {
         .rpc('job_tags', { tags: tagArray, job_id: data[0].id });
 
         if(tagsError){
+            console.log(tagsError);
             return NextResponse.json({message: tagsError.message}, {status: 400})
         }
     
