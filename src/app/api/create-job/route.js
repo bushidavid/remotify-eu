@@ -41,30 +41,38 @@ export async function POST(req, res) {
         if(worldwide){
             jobCountry = ""
         }
+
+        const insertData = {
+            title: jobTitle,
+            company_name: companyName,
+            category_id: jobDepartment,
+            worldwide,
+            expired: false,
+            views: 0,
+            clicks: 0,
+            description: jobDescription,
+            company_description: compDescription,
+            salary_currency: salaryCur,
+            logo_url: logoUrl,
+            expiration_date: today.toISOString().toLocaleString('de-DE'),
+            company_website: companyWebsite,
+            job_link: jobLink,
+            payment_verified: true
+        };
+        
+        if (salaryMin !== "") {
+            insertData.salary_range_min = salaryMin;
+        }
+        
+        if (salaryMax !== "") {
+            insertData.salary_range_max = salaryMax;
+        }
+        
     
         //creating new job
         const { data, error } = await supabase
             .from('job')
-            .insert({
-                title : jobTitle,
-                company_name: companyName,
-                category_id: jobDepartment,
-                worldwide,
-                expired: false,
-                salary_range_min: salaryMin,
-                salary_range_max: salaryMax,
-                views: 0, 
-                clicks: 0,
-                description: jobDescription,
-                company_description: compDescription,
-                salary_currency: salaryCur,
-                logo_url: logoUrl,
-                expiration_date: today.toISOString().toLocaleString('de-DE'),
-                company_website: companyWebsite, 
-                job_link: jobLink,
-                payment_verified: true
-
-            })
+            .insert(insertData)
             .select();
 
         if(error) {
