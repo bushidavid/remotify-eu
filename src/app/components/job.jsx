@@ -89,7 +89,7 @@ export default function Job({ ...props }) {
                 <div className='w-full md:w-[40%] md:max-w-[40%]'>
                     <h1 className="text-base">{props.title}</h1>{/* <h1>{job.job_title}</h1> */}
                     <h2 className="text-sm text-slate-600">{props.companyName}</h2>
-                    <h3 className='text-xs text-slate-600'>{props.salaryMin +" to " + props.salaryMax + ' ' + props.currency}</h3>
+                    {props.salaryMin && <h3 className='text-xs text-slate-600'>{props.salaryMin +" to " + props.salaryMax + ' ' + props.currency}</h3>}
                 </div>
                 <div className='w-full md:min-w-[30%] md:max-w-[30%] flex flex-row items-center gap-1'>
                   <MdLocationPin /><h1 className='text-md'>{props.worldwide ? "Worlwide" : `${props.country}`}</h1>
