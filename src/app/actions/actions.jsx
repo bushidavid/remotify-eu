@@ -117,6 +117,24 @@ export async function getCompanyJobs(limit = 24, lastLoadedTime = currentTime, c
     return data;
 }
 
+export async function getCompanyStats(companyId) {
+
+    console.log("inside server action stats");
+    console.log(companyId);
+
+    try {
+        const {data: stats, error} = await supabase.rpc('get_company_stats', { companyid: companyId });
+        console.log(stats);
+        console.log(error);
+        return stats[0];
+        
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+    
+}
+
 
 // fetch job details from database
 export async function getJobDetails(jobId){
@@ -133,8 +151,35 @@ export async function getJobDetails(jobId){
       
     //     // Use JSON.parse and JSON.stringify to apply the transformation
     //   const data = JSON.parse(JSON.stringify(job, transformBigIntToString));
+        revalidatePath("/")
+        return job[0];
+  
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+
+    
+}
+
+
+// fetch job details from database
+export async function getUserDetails(userId){
+    try {
+  
+      const {data: user, error} = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', userId);
+
+      console.log("loggin user from backend", user);
+    
       
-      return job[0];
+    if(error){
+        console.log(error);
+    }
+      
+      return user[0];
   
     } catch (error) {
       console.log(error);
@@ -167,7 +212,7 @@ export async function updateJobClicks(jobId){
             return false;
         }
         
-        revalidatePath("/")
+        revalidatePath("/");
         
         return true;
     

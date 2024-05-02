@@ -1,4 +1,4 @@
-import JobEdit from './job-edit';
+import JobEdit from '../job-edit/job-edit';
 
 const JobListEdit = ({ jobs, title }) => {
 

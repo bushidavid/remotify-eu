@@ -11,17 +11,21 @@ import TipTap from "@/app/components/tiptap/tiptap";
 import {Countries, Regions} from "../../../../lib/countries";
 import supabase from "../../../../lib/config/supabaseClient";
 import { Tags } from "../../../../lib/tags";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 
 export default function Page ({ params }) {
 
     console.log(params.slug[0]);
+    
+    const { data: session, status } = useSession({
+        required: true,
+        onUnauthenticated() {redirect('/')}
+    })
 
 
     const router = useRouter();
-
-
-    if(params.slug != '3452asddwef-adsdad-12e23edad') router.push('/');
 
     const id = params.slug;
     var newJobId = "";
@@ -48,7 +52,12 @@ export default function Page ({ params }) {
             },
             body: JSON.stringify({
                 priceId: id,
-                newJobId
+                newJobId,
+                user: {
+                    email: session.user.email,
+                    name: session.user.name,
+                    id: session.user.id
+                }
             })
         })
 
@@ -130,7 +139,7 @@ export default function Page ({ params }) {
             console.log("printing error message: \n", err.message);
         }
 
-        //handlePayment(newJobId);
+        handlePayment(newJobId);
     }
 
     const handleChange = (e) => {
@@ -185,6 +194,8 @@ export default function Page ({ params }) {
 
         setSelectedTags(new Set(e.target.value.split(",")));
 
+        console.log(selectedTags);
+
         handleChange(e);
     };
 
@@ -228,7 +239,7 @@ export default function Page ({ params }) {
             {/* Countries */}
 
             <div className={`col-start-8 col-span-5 row-start-3 ${form.worldwide ? "hidden invisible" : ""}`} >
-                    <Select label="Countries"
+                    <Select label="Countries or Regions"
                         selectionMode="multiple"
                         placeholder="Select one or more countries"
                         variant="underlined"

@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CiCircleCheck } from "react-icons/ci";
 import { BsCurrencyEuro } from "react-icons/bs";
 
-export default function PricingCard( { price, nickname, id, features, description} ) {    
+export default function PricingCard( { price, nickname, id, features, description} ) {   
+    
+    console.log(id);
 
   return (
     <div className={`w-80 flex flex-col py-4 px-10 ${nickname === 'Enterprise' ? "bg-gray-100 rounded-lg" : ""}`}>

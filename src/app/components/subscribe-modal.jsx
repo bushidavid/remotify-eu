@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Input } from '@nextui-org/react';
 import { useContext } from 'react';
 import { FilterContext } from '../context/store';
+import { Transition } from '@headlessui/react'
 
 export default function Example() {
 
@@ -61,7 +62,7 @@ export default function Example() {
         (!subscribed ? (
             <form onSubmit={e => handleSubmit(e)}>
                 <div
-                className="relative z-10"
+                className="relative z-10 animate-jump-in animate-once animate-duration-[1000ms] animate-ease-inv"
                 aria-labelledby="modal-title"
                 role="dialog"
                 aria-modal="true"
@@ -76,6 +77,15 @@ export default function Example() {
                 From: "opacity-100"
                 To: "opacity-0"
                 */}
+                <Transition
+                    show={context.openPopUp}
+                    enter="transition-opacity duration-75"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="transition-opacity duration-150"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                >
                 <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -154,6 +164,7 @@ export default function Example() {
                     </div>
                     </div>
                 </div>
+                </Transition>
                 </div>
             </form>
         ): (

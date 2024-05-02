@@ -79,7 +79,6 @@ export default function FormEditJob ({ job }) {
     const [ compDescription, setCompDescription ] = useState();
     const [ jobDescription, setJobDescription ] = useState();
     const [logo, setLogo] = useState(job.logo_url);
-    const [edit, setEdit] = useState(true);
     const [compare, setCompare] = useState(true);
 
     const [values, setValues] = useState(new Set([job.exp_names]));
@@ -87,27 +86,6 @@ export default function FormEditJob ({ job }) {
     const [selectedTags, setSelectedTags] = useState(new Set([job.tag_ids?.split(',')]));
 
     const [logoURL, setLogoURL] = useState(null);
-
-    const handlePayment = async (newJobId) => {
-
-        const response  = await fetch('/api/payment' ,{
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                priceId: id,
-                newJobId
-            })
-        })
-
-        const data = await response.json();
-        
-        router.push(data.url);
-
-        return;
-
-    }
 
    
     const [form, setForm] = useState({
@@ -278,49 +256,21 @@ export default function FormEditJob ({ job }) {
         handleChange(e);
     };
 
-    const handleDelete = async () => {
-        const response = await fetch('/api/delete-job', {
-            method: 'DELETE',
-            headers: {   
-                    ContentType: 'application/json',
-                },
-            body: JSON.stringify({id: job.id})
-        })
-
-        const res = await response.json();
-
-        console.log(res);
-
-        router.push(`/company/${job.companyId}/dashboard`)
-    }
-
     
-    return (
-
-        <>
-        <div className="flex flex-row">
-            <button onClick={handleDelete} className="bg-red-600 hover:bg-red-700 text-white px-6 rounded-md py-2 mx-2 my-2">Delete Job</button>
-            {edit && <button onClick={() => setEdit(!edit)} className="bg-slate-500 hover:bg-red-700 text-white px-6 rounded-md py-2 mx-2 my-2">Edit Job</button>}
-            {/* {!edit && <button className="bg-green-500 hover:bg-red-700 text-white px-6 rounded-md py-2 mx-2 my-2" disabled={compare}>Save</button>} */}
-            {!edit && <button onClick={() => setEdit(!edit)} className="bg-green-500 hover:bg-red-700 text-white px-6 rounded-md py-2 mx-2 my-2">Cancel</button>}
-         </div>
-        { !edit === true ? (
+    return (        
             <>
-       
-        
-                <h1 className="text-4xl mt-20">Click on Edit to edit job</h1>
                 <form className="grid grid-cols-12 grid-rows-layout justify-center items-center max-w-4xl w-full h-full" onSubmit={onSubmitForm}>
 
                     {/*  Job Title */}
                     <div className="col-start-1 col-span-full row-start-1 row-span-1">
-                        <Input className="" type="text" variant="underlined" label="Job Title" isRequired name="jobTitle" onChange={handleChange} value={form.jobTitle} disabled={edit}/>  
+                        <Input className="" type="text" variant="underlined" label="Job Title" isRequired name="jobTitle" onChange={handleChange} value={form.jobTitle} />  
                     </div>
                     {/*  Job Title End */}
 
                     {/*  Job Category */}
                     <div className="col-start-1 col-span-2 row-start-2 row-span-1">
                         <div>
-                            <Select label="Category" variant="underlined" className="w-96" id="job-department" name="jobDepartment" isRequired onChange={handleChange} disabled={edit}>
+                            <Select label="Category" variant="underlined" className="w-96" id="job-department" name="jobDepartment" isRequired onChange={handleChange} >
                                 {
                                     Categories.map(category => (
                                         <SelectItem key={category.id} value={category.id} >
@@ -336,7 +286,7 @@ export default function FormEditJob ({ job }) {
                     {/*  Worldwide */}
                     <div className="col-start-1 col-span-4 row-start-3 row-span-1 flex flex-row justify-around">
                         <p>Is this a worldwide position?</p>
-                        <Switch name="worldwide" isSelected={form.worldwide} onChange={e => handleSwitchChange(e)} disabled={edit}>
+                        <Switch name="worldwide" isSelected={form.worldwide} onChange={e => handleSwitchChange(e)}>
                         </Switch>
                     </div>
                     {/*  Worldwide  End */}
@@ -353,7 +303,6 @@ export default function FormEditJob ({ job }) {
                                 onChange={handleSelectionChangeCountry}
                                 isRequired={!form.worldwide}
                                 name="jobCountry"
-                                disabled={edit}
                             >
                                 {
                                     Countries.map(country => (
@@ -377,7 +326,6 @@ export default function FormEditJob ({ job }) {
                                 onChange={handleSelectionChangeTag}
                                 selectionMode="multiple"
                                 selectedKeys={selectedTags}
-                                disabled={edit}
                                 >
                                     
                                 {
@@ -395,7 +343,7 @@ export default function FormEditJob ({ job }) {
 
                     {/*  Job link */}
                     <div className="col-start-1 col-span-full row-start-5 row-span-1">
-                        <Input className="" type="text" variant="underlined" label="Link to the job post" isRequired name="jobLink" onChange={handleChange} disabled={edit}/>  
+                        <Input className="" type="text" variant="underlined" label="Link to the job post" isRequired name="jobLink" onChange={handleChange} />  
                     </div>
                     {/*  Job Link End */}
 
@@ -412,7 +360,6 @@ export default function FormEditJob ({ job }) {
                                 onChange={handleSelectionChange}
                                 isRequired
                                 name="candidateLevel"
-                                disabled={edit}
                             >
                                 {
                                     Levels.map(level => (
@@ -437,7 +384,7 @@ export default function FormEditJob ({ job }) {
                     
                     <div className="col-start-1 col-span-full row-start-7 row-span-1 mt-20 mb-20">
                         <h1 className="text-4xl mb-10">Tell us about your Company</h1>
-                        <Input className="" type="text" variant="underlined" label="Company Name" name="companyName" isRequired onChange={handleChange} value={form.companyName} disabled={edit}/>  
+                        <Input className="" type="text" variant="underlined" label="Company Name" name="companyName" isRequired onChange={handleChange} value={form.companyName} />  
                     </div>
 
                     {/* Company Name End */}
@@ -445,7 +392,7 @@ export default function FormEditJob ({ job }) {
                     {/*  Company Website*/}
                     
                     <div className="col-start-1 col-span-full row-start-8 row-span-1 mt-20 mb-20">
-                        <Input className="" type="text" variant="underlined" label="Company Website" name="companyWebsite" isRequired onChange={handleChange} value={form.companyWebsite} disabled={edit}/>  
+                        <Input className="" type="text" variant="underlined" label="Company Website" name="companyWebsite" isRequired onChange={handleChange} value={form.companyWebsite} />  
                     </div>
 
                     {/* Company Website End */}
@@ -455,7 +402,7 @@ export default function FormEditJob ({ job }) {
                     <div className="flex flex-col justify-center col-start-1 col-span-full bg-white w-full h-full row-start-9 items-center place-self-center border-1 border-dashed border-zinc-700 rounded-lg">
                     
                         <label htmlFor='logo'>Upload an image</label>
-                        <input type='file' name="logo" onChange={(e) => (handleLogo(e))} disabled={edit}></input>
+                        <input type='file' name="logo" onChange={(e) => (handleLogo(e))} ></input>
                 
                     </div>        
 
@@ -465,7 +412,7 @@ export default function FormEditJob ({ job }) {
                     
                     <div className="col-start-1 col-span-full row-start-10 ">
                         <h3 className="text-2xl">Tell us more about your company:</h3>
-                        <TipTap setDescription={updateCompDescription} content={job.company_description} setEdit={setEdit}  />
+                        <TipTap setDescription={updateCompDescription} content={job.company_description} />
                         <div dangerouslySetInnerHTML={{ __html: compDescription }} />
                     </div>
 
@@ -476,9 +423,9 @@ export default function FormEditJob ({ job }) {
                     <div className="w-96 row-start-[11]">
                         <label className='' htmlFor="salary-min">Salary Range</label>
                         <div className="flex flex-row justify-between gap-4 w-full">
-                        <Input className="" type="text" name="salaryMin" variant="underlined" label="Salary Min" onChange={handleChange} value={form.salaryMin} disabled={edit}/>  
-                        <Input className="" type="text" name="salaryMax" variant="underlined" label="Salary Max" onChange={handleChange} value={form.salaryMax} disabled={edit}/>  
-                        <Input className="" type="text" name="salaryCur" variant="underlined" label="Currency" onChange={handleChange} value={form.salaryCur} disabled={edit}/>  
+                        <Input className="" type="text" name="salaryMin" variant="underlined" label="Salary Min" onChange={handleChange} value={form.salaryMin} />  
+                        <Input className="" type="text" name="salaryMax" variant="underlined" label="Salary Max" onChange={handleChange} value={form.salaryMax} />  
+                        <Input className="" type="text" name="salaryCur" variant="underlined" label="Currency" onChange={handleChange} value={form.salaryCur} />  
                         </div>
                     </div>
 
@@ -486,37 +433,7 @@ export default function FormEditJob ({ job }) {
 
                     <button type="submit" className="col-start-5 col-span-3 row-start-[12] row-span-1 w-96 px-3 py-2 my-12 border-2 rounded-lg shadow-sm border-remotify-lb hover:bg-remotify-lb focus:ring-1 focus:ring-indigo-500">Submit Changes</button>
                 </form> 
-            </>) :
-            (
-                <>
-                    <section className='w-10-12 mt-10 px-4'>
-            
-                    <JobHero job={job} postedDate={postedFormatted}/>
-                        <section className='flex flex-row justify-between relative w-full min-w-full'>
-                            <div className='sticky top-0'>
-                            <JobDetails job={job}/>
-                            
-                            </div>
-                            <div className='flex flex-col h-fit items-center mt-4 sticky top-10 z-50'>
-                                <Image src={job.logo_url ? job.logo_url : '/Logo.jpg'} width={200} height={200} alt="company_logo"></Image>
-                                <div className='flex flex-row mt-1'>
-                                    <FontAwesomeIcon icon={faLink} /><Link className="hover:underline ml-2" href={job.company_website ? job.company_website : '/'}>{job.company_name}</Link>
-                                </div>
-                                <div className="flex flex-row flex-wrap justify-center">
-                                        {job.tag_names.split(',').map(tag => (
-                                            <p className={`border-1 border-remotify-db rounded-md text-[14px] font-medium m-1 p-1`} key={tag}>{tag}</p>
-                                    ))}
-                                </div>
-                                <div>
-                                    <p>Valid Until: {expirationFormatted}</p>
-                                </div>
-                            </div>
-                        </section>
-                    </section>
-                </>
-            )
-        }
-        </>
+            </>
     );
 }
  

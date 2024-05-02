@@ -18,18 +18,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-poppins'>
-        <SessProvider >
+      <body className='flex flex-col w-screen items-center no-scrollbar h-screen font-poppins'>
+
           <Navbar />
-            <Providers>
-              <ContextProvider >
-              <SubscribeModal />
-                { children }
-                <Footer />
-              </ContextProvider>
-            </Providers>
             
-          </SessProvider>
+              <ContextProvider >
+                { children }
+              </ContextProvider>
+              <Footer />
+          
         </body>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
     </html>
