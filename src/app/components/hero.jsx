@@ -1,6 +1,7 @@
 'use client'
 
 import Image from "next/image";
+import Search from "./search";
 import Link from "next/link";
 import { Input } from "@nextui-org/react";
 import { useState } from "react";

@@ -1,7 +1,9 @@
 import Hero from './components/hero';
-
+import { fetchJobs } from './actions/actions';
+import InfiniteScrollJobs from './components/job-scroll';
 import {sgMail} from '../../lib/email.js'
-
+import JobScroll from './components/job-scroll';
+import Search from './components/search';
 
 
 

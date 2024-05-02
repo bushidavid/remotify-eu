@@ -14,8 +14,8 @@ export default function Footer() {
     <div className="flex flex-col w-full text-white items-center text-xs bg-remotify-db relative bottom-0">
       <div className="flex w-full justify-center mb-2">
             <div className="flex gap-6 text-slate-400">
-              <Link href="https://www.instagram.com/remotifyeurope/" ><FaInstagram size={28}></FaInstagram></Link>
-              <Link href="https://www.linkedin.com/company/remotifyeurope/" ><FaLinkedinIn size={28}/></Link>
+              <Link href="/" ><FaInstagram size={28}></FaInstagram></Link>
+              <Link href="https://www.linkedin.com/company/92876524/admin/feed/posts/?feedType=following" ><FaLinkedinIn size={28}/></Link>
               <Link href="https://twitter.com/Remotify_Europe" ><FaXTwitter size={28} /></Link>
             </div>
       </div>
