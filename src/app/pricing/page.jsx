@@ -22,6 +22,7 @@ export default async function Page() {
 
     const prices = await getPrices();
 
+
     const products = await getFeatures();
 
   return (
@@ -42,10 +43,10 @@ export default async function Page() {
                       </p>
                   </div>
                   <div className="pt-16 flex md:flex-row flex-col">
-                    <PricingCard key={prices[0].id} price={prices[2].unit_amount} nickname={prices[2].nickname} description={"As simple as it gets"} features={products[2].features} />
-                    <PricingCard key={prices[1].id} price={prices[0].unit_amount} nickname={prices[0].nickname} description={"Because you are a Pro"} features={products[0].features}/>
-                    <PricingCard key={prices[2].id} price={prices[1].unit_amount} nickname={prices[1].nickname} description={"The Best Ever"} features={products[1].features}/>
-                    <PricingCard key={Math.random()} price={"Custom"} nickname={"Custom"} description={"Tailored for You"} features={products[2].features}/>
+                    <PricingCard id={prices[0].id} price={prices[2].unit_amount} nickname={prices[2].nickname} description={"As simple as it gets"} features={products[2].features} />
+                    <PricingCard id={prices[1].id} price={prices[0].unit_amount} nickname={prices[0].nickname} description={"Because you are a Pro"} features={products[0].features}/>
+                    <PricingCard id={prices[2].id} price={prices[1].unit_amount} nickname={prices[1].nickname} description={"The Best Ever"} features={products[1].features}/>
+                    <PricingCard id={Math.random()} price={"Custom"} nickname={"Custom"} description={"Tailored for You"} features={products[2].features}/>
                   </div>
               </div>
           </div>

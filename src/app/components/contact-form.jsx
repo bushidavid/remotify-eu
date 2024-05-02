@@ -13,7 +13,7 @@ export default function ContactForm() {
     const [form, setForm] = useState({
         customerName: null,
         customerEmail: null,
-        customerSubject: null,
+        customerSubject: "I want to post a Free Job for launch day",
         customerMessage: null,
     })
 
@@ -55,7 +55,7 @@ export default function ContactForm() {
                 <Input isRequired type="email" variant={"underlined"} label="Your Email" name="customerEmail" onChange={e => handleChange(e)}/>
             </div>
             <div className="mb-10 min-w-4/12">
-                <Input className="w-full" type="text" variant="underlined" label="Subject" name="customerSubject" isRequired onChange={e => handleChange(e)}/>  
+                <Input className="w-full" type="text" variant="underlined" value={form.customerSubject} label="Subject" name="customerSubject" isRequired onChange={e => handleChange(e)}/>  
             </div>
             <div className="hidden mb-10 min-w-4/12">
                 <Input className="w-full" type="text" variant="underlined" label="control" name="control" onChange={() => setBotControl(false)}/>  

@@ -8,7 +8,7 @@ import LinkedinProvider from "next-auth/providers/linkedin"
 import CredentialsProvider from "next-auth/providers/credentials";
 import nextAuth from "next-auth";
 import supabase from "../../../../../lib/config/supabaseClient";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 
 export const Options  = {
     providers: [
@@ -51,9 +51,32 @@ export const Options  = {
     pages: {
         signIn: '/signin',
     },
-    strategy: [ 'jwt' ],
+    session: {
+        strategy: "jwt",
+    },
+    jwt: {
+        // if you definde the env variable you don't need to define the secret here
+        // secret: process.env.NEXTAUTH_SECRET,
+
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+
+        // You only need the below if you are custom signing your JWTs
+        // async encode({ token, secret }: { token: typeof JWT; secret: string }) {
+        //     const jwt = require("jsonwebtoken");
+        //     const encodedToken = jwt.sign(token, secret);
+        //     return encodedToken;
+        // },
+        // async decode({ token, secret }: { token: typeof JWT; secret: string }) {
+        //     const jwt = require("jsonwebtoken");
+        //     const decodedToken = jwt.verify(token, secret);
+        //     return decodedToken;
+        // },
+
+    },
     callbacks: {
         async session({ session, token }) {
+
+            console.log(token);
 
             const {data: user, error} = await supabase
                     .from('users')
@@ -72,18 +95,18 @@ export const Options  = {
           },
           async redirect({ url, baseUrl }) {
             return baseUrl
-          }
+          },
+          async jwt({ token, account, profile }) {
+            // Persist the OAuth access_token and or the user id to the token right after signin
+            console.log("printing token inside jwt",account);
+
+            if (account) {
+              token.accessToken = account.access_token
+            }
+            return token
+        },
     },
-    // async jwt({ token, user }) {
-    //     if (!user) {
-    //       return token
-    //     }
     
-    //     return {
-    //       ...token,
-    //       ...user
-    //     }
-    // },
 }
 
 const handler = NextAuth(Options);

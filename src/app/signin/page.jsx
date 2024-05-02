@@ -37,7 +37,7 @@ export default function Page() {
     //redirect to company page
     useEffect(() => {
       if (session) {
-        router.push(`/company/${session.user.id}/dashboard`);
+        router.push(`/company/dashboard`);
       }
     }, [session, router])
 

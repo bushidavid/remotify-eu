@@ -8,6 +8,7 @@ import Image from "next/image";
 import JobList from "./job-list";
 import { FilterContext } from "../context/store";
 
+
 const revalidate = 0;
 
 
