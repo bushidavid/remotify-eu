@@ -41,10 +41,10 @@ function CompanyJobs({ jobs }) {
 
 
                 <div class="inline-flex h-8 rounded-md shadow-sm " role="group">
-                <button onClick={() => router.push(`/company/${'c7d2d5c4-bc84-41e5-9467-e393ede08f39'}/viewjob/${job.id}/`)} type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 ">
+                <button onClick={() => router.push(`dashboard/viewjob/${job.id}/`)} type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 ">
                         View
                     </button>
-                    <button onClick={() => router.push(`/company/${'c7d2d5c4-bc84-41e5-9467-e393ede08f39'}/editjob/${job.id}/`)} type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
+                    <button onClick={() => router.push(`editjob/${job.id}/`)} type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
                         Edit
                     </button>
                     <button type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
