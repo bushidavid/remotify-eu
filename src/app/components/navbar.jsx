@@ -4,7 +4,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Categories } from "../../../lib/departments"
 import { useState } from "react"
-import { signIn, signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 
