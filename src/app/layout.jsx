@@ -1,12 +1,8 @@
 import './globals.css'
 import { Roboto, Inter, Ubuntu_Mono, Montserrat } from 'next/font/google';
 import Footer from './components/footer'
-import Providers from './providers';
-import NavbarComp from './components/navbar';
 import {ContextProvider} from './context/store';
 import Navbar from './components/navbar';
-import SessProvider from './components/session-provider';
-import SubscribeModal from './components/subscribe-modal';
 import { GoogleAnalytics } from '@next/third-parties/google'
 
 
@@ -20,8 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className='flex flex-col w-screen items-center no-scrollbar h-screen font-poppins'>
 
-          <Navbar />
-            
+            <Navbar />
               <ContextProvider >
                 { children }
               </ContextProvider>
