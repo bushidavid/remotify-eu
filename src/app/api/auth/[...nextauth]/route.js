@@ -21,7 +21,7 @@ export const Options  = {
               },
 
             async authorize(credentials, req) {
-                console.log("inside authorize");
+                console.log("inside authorize. printing credentials: ", credentials);
                 if(!credentials.email || !credentials.password){
                     return null;
                 }
@@ -30,15 +30,14 @@ export const Options  = {
                     .from('users')
                     .select()
                     .eq('email', credentials.email)
+                
 
-                if(user.email == credentials.email){
-                    return null;
-                }
+                const passwordMatch = await bcrypt.compare(credentials.password, user[0].password);
 
-                const passwordMatch = bcrypt.compare(credentials.password, "10", user.hashedPassword);
+                console.log("passwordMatch: ", passwordMatch);
 
                 if(!passwordMatch){
-                    return null;
+                    throw new Error( JSON.stringify({ errors: user.errors, status: false }));
                 }
                 
                 return user[0];

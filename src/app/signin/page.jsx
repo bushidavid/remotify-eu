@@ -12,12 +12,13 @@ import { useEffect } from 'react'
 export default function Page() {
 
     const router = useRouter();
+    const [error, setError] = useState(false);
     const {data: session, status} = useSession();
 
-  const [signInForm, setSignInForm] = useState({
-    email: "",
-    password: "",
-  })
+    const [signInForm, setSignInForm] = useState({
+      email: "",
+      password: "",
+    })
 
     const handleChange = (e) => {
       setSignInForm({
@@ -28,10 +29,14 @@ export default function Page() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        signIn('credentials', {
+        const result = await signIn('credentials', {
           ...signInForm,
           redirect: false,
         });
+
+        if(!error.ok){
+          setError(true);
+        }
     }
 
     //redirect to company page
@@ -49,6 +54,7 @@ export default function Page() {
           <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-500">
             Company Sign In
           </h2>
+          {error && <div className='bg-red-200 rounded-lg p-2 text-center'><p className='text-red-500'>Invalid email or password. </p></div>  }
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -61,8 +67,7 @@ export default function Page() {
               <Input type="password" variant="underlined" label="Password" isRequired name="password" onChange={(e) => handleChange(e)}></Input>
               </div>
             </div>
-
-            <div>
+            <div> 
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-remotify-db px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-remotify-db focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -73,9 +78,12 @@ export default function Page() {
           </form>
           
         </div>
-        <div className='flex flex-row gap-5 text-sm justify-center mt-2'>
+        <div className='flex flex-col gap-y-1 text-sm justify-center items-center mt-2'>
+          <div className='flex flex-row text-sm justify-center mt-2 gap-3'>
             <p>Not a member?</p> <Link href={'/register'} className='text-remotify-db hover:underline'>Register</Link>
           </div>
+            <Link href={'/forgot-password'} className='text-remotify-db hover:underline'>I forgot my password</Link> 
+        </div>
       </div>
     </>
   )
