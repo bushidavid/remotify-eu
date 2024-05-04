@@ -1,7 +1,9 @@
-'use server'
+'use server';
 
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
+import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcrypt';
 
 import supabase from "../../../lib/config/supabaseClient";
 
@@ -223,3 +225,108 @@ export async function updateJobClicks(jobId){
 }
 
 
+export async function resetPassword(email) {
+    try {
+  
+        const {data: user, error} = await supabase
+            .from('users')
+            .select('id')
+            .eq('email', email);
+  
+        console.log("user details:", user);
+      
+        
+        if(error){
+            console.log(error);
+            return {message: "invalid username", ok: false};
+        }
+
+        const { data: tokenData, error: errorInsertToken } = await supabase
+            .from('password_reset_token')
+            .insert({
+                user_id: user[0].id,
+                token: `${uuidv4()}${uuidv4()}`.replace(/-/g, '')
+            })
+            .select();
+    
+        if(errorInsertToken) {
+            console.log("printing errorInsertToken", errorInsertToken);
+            return {message: "failed to create token", ok: false};
+        }
+
+        console.log("printing created token: ", tokenData)
+
+        const msgToProspect = {
+            to: email,
+            from: {
+                email: 'support@remotifyeurope.com',
+                name: 'Support at RemotifyEurope'
+            },
+            templateId: 'd-7ec4442d067a44ad8b67dc1d54e2c998',
+            dynamicTemplateData: {
+             //reset_link: `localhost:3000/reset-password/${tokenData[0].token}`
+             reset_link: `https://remotifyeurope.com/reset-password/${tokenData[0].token}`
+            },
+        };
+    
+        sendgridClient.send(msgToProspect)
+            .then(() => {
+                console.log("Password reset sent successfully");
+                return true;
+            })
+            .catch((error) => {
+                console.error(error);
+                return false;
+            })
+
+
+        
+        return {message: "email sent successfully", ok: true};
+    
+      } catch (error) {
+        console.log(error);
+        return {message: error, ok: false};
+      }
+}
+
+export  async function submitNewPassword( token, pwd ){
+
+    console.log("token", token);
+    console.log("pwd", pwd);
+
+    console.log(new Date(Date.now() - 1000 * 60 * 60 * 24))
+
+    const {data, error} = await supabase
+        .from('password_reset_token')
+        .select('*')
+        .filter('reset_at', 'is', null)
+        .filter('token', 'eq', token)
+        .filter('created_at', 'gt', new Date(Date.now() - 1000 * 60 * 60 * 1).toUTCString());
+        
+
+        console.log(data);
+
+    if(!data){
+        return {
+            message: "Invalid token"
+        }
+    }
+
+    if(error){
+        return error;
+    }
+
+    const hashedPassword = await bcrypt.hash(pwd, 10);
+
+    const {data: isUpdated, error: updatePasswordError} = await supabase.rpc('update_user_password', {userid: data[0].user_id, pwd: hashedPassword, tokenid: token})
+
+    if(updatePasswordError || !isUpdated){
+        return {
+            message: "couldn't update password",
+            error: updatePasswordError
+        }
+    }
+
+    return isUpdated;
+
+}
