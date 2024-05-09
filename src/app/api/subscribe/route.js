@@ -54,12 +54,8 @@ export async function PUT( req ) {
         const response = await fetch(url, options);
         const json = await response.json();
 
-        sendgridClient
-        .send(message)
-        .then(() => console.log('Mail sent successfully'))
-        .catch(error => {
-          console.error(error);
-        });
+        const res = await sendgridClient.send(message)
+        
 
         return NextResponse.json({message: "Your email has been succesfully added to the mailing list. Welcome 👋" , status: 200, ok: true, jobId: json.job_id})
     } catch (error) {
