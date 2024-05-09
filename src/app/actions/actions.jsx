@@ -77,15 +77,14 @@ export async function sendEmail(form){
     //         return false;
     //     })
 
-    sendgridClient.send(msgToProspect)
-        .then(() => {
-            console.log("Message to prospect sent successfully");
-            return true;
-        })
-        .catch((error) => {
-            console.error(error);
-            return false;
-        })
+    const res = await sendgridClient.send(msgToProspect);
+        
+    if(res[0].statusCode == 202){
+        return true;
+    }
+
+    return false;
+
 }
 
 async function getCompanyData(companyId) {
