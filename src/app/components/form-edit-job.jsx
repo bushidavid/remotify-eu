@@ -13,12 +13,8 @@ import supabase from "../../../lib/config/supabaseClient";
 import { Tags } from "../../../lib/tags";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import JobHero from "./job-hero";
-import JobDetails from "./job-details";
-import Image from "next/image";
-import Link from "next/link";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink } from '@fortawesome/free-solid-svg-icons';
+import MultiSelect from "./multi-select";
+
 
 
 function compareObjects(obj1, obj2) {
@@ -81,11 +77,21 @@ export default function FormEditJob ({ job }) {
     const [logo, setLogo] = useState(job.logo_url);
     const [compare, setCompare] = useState(true);
 
-    const [values, setValues] = useState(new Set([job.exp_names]));
-    const [selectedCountry, setSelectedCountry] = useState(new Set([job.country_ids?.split(',')]));
-    const [selectedTags, setSelectedTags] = useState(new Set([job.tag_ids?.split(',')]));
+    const [values, setValues] = useState(() => {
+        const levels = job.exp_ids?.split(',').map(level => level.trim()) || [];
+        return new Set(levels);
+    });
+
+    const [selectedCountry, setSelectedCountry] = useState(() => {
+        const countryIds = job.country_ids?.split(',').map(id => id.trim()) || [];
+        return new Set(countryIds);
+    });
+    const [selectedTags, setSelectedTags] = useState(new Set(job.tag_ids?.split(',') || []));
 
     const [logoURL, setLogoURL] = useState(null);
+
+    console.log("printing countries", selectedCountry);
+    console.log("printing level:", values);
 
    
     const [form, setForm] = useState({
@@ -93,7 +99,7 @@ export default function FormEditJob ({ job }) {
         jobTitle : job.job_title,
         jobCountry: "",
         worldwide: job.worldwide,
-        jobDepartment: job.category,
+        jobDepartment: job.category_id,
         jobDescription: job.job_description,
         compDescription: job.company_description,
         companyName: job.company_name,
@@ -112,7 +118,7 @@ export default function FormEditJob ({ job }) {
         jobTitle : job.job_title,
         jobCountry: "",
         worldwide: job.worldwide,
-        jobDepartment: job.category,
+        jobDepartment: job.category_id,
         jobDescription: job.job_description,
         compDescription: job.company_description,
         companyName: job.company_name,
@@ -128,15 +134,17 @@ export default function FormEditJob ({ job }) {
     
 
     const handleSelectionChangeCountry = (e) => {
-
-        setSelectedCountry(new Set(e.target.value.split(",")));
-
-        handleChange(e);
-        
+        const newSelection = new Set(e.target.value.split(",").map(id => id.trim()));
+        setSelectedCountry(newSelection);
+        setForm(prevForm => ({
+            ...prevForm,
+            jobCountry: Array.from(newSelection).join(',')
+        }));
+        setHasChanges(true);
     };
 
     const handleSelectionChange = (e) => {
-        setValues(new Set(e.target.value.split(",")));
+        setValues(new Set(e.target.value.split(',')));
 
         handleChange(e);
     };
@@ -269,8 +277,11 @@ export default function FormEditJob ({ job }) {
 
                     {/*  Job Category */}
                     <div className="col-start-1 col-span-2 row-start-2 row-span-1">
+                        <MultiSelect options={Categories} defaultSelected={job.category_id} labelKey="id" valueKey="value"/>
+                    </div>
+                    {/* <div className="col-start-1 col-span-2 row-start-2 row-span-1">
                         <div>
-                            <Select label="Category" variant="underlined" className="w-96" id="job-department" name="jobDepartment" isRequired onChange={handleChange} >
+                            <Select label="Category" variant="underlined" className="w-96" id="job-department" name="jobDepartment" isRequired onChange={handleChange} selectedKeys={job.category_id}>
                                 {
                                     Categories.map(category => (
                                         <SelectItem key={category.id} value={category.id} >
@@ -280,7 +291,7 @@ export default function FormEditJob ({ job }) {
                                 }
                             </Select>
                         </div>
-                    </div> 
+                    </div>  */}
                     {/*  Job Category End */}
                     
                     {/*  Worldwide */}
@@ -298,7 +309,6 @@ export default function FormEditJob ({ job }) {
                                 selectionMode="multiple"
                                 placeholder="Select one or more countries"
                                 variant="underlined"
-                                className=""
                                 selectedKeys={selectedCountry}
                                 onChange={handleSelectionChangeCountry}
                                 isRequired={!form.worldwide}
@@ -306,11 +316,14 @@ export default function FormEditJob ({ job }) {
                             >
                                 {
                                     Countries.map(country => (
-                                        <SelectItem key={country.id} value={country.id}>{country.name}</SelectItem>
+                                        <SelectItem key={country.id.toString()} value={country.id.toString()}>
+                                            {country.name}
+                                        </SelectItem>
                                     ))
                                 }
                             </Select>
                     </div>
+
 
                     {/* Countries End */}
 
@@ -329,9 +342,9 @@ export default function FormEditJob ({ job }) {
                                 >
                                     
                                 {
-                                    Tags.map(tags => (
-                                        <SelectItem key={tags.id} value={tags.id} >
-                                            {tags.value}
+                                    Tags.map(tag => (
+                                        <SelectItem key={tag.id.toString()} value={tag.id.toString()} >
+                                            {tag.value}
                                         </SelectItem> 
                                     ))
                                 }
@@ -363,7 +376,7 @@ export default function FormEditJob ({ job }) {
                             >
                                 {
                                     Levels.map(level => (
-                                        <SelectItem key={level.id} value={level.id}>{level.value}</SelectItem>
+                                        <SelectItem key={level.id.toString()} value={level.id.toString()}>{level.value}</SelectItem>
                                     ))
                                 }
                             </Select>

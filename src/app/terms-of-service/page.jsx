@@ -1,4 +1,5 @@
 import React from 'react'
+import Footer from '../components/footer'
 
 export default function Page() {
   return (
@@ -1123,6 +1124,7 @@ export default function Page() {
     If you have any questions regarding these Terms, you are welcome to contact
     us by email at support@remotifyeurope.com
   </p>
+  <Footer />
 </div>
 
   )

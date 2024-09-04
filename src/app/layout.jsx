@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
               <ContextProvider >
               <SubscribeModal />
                 { children }
-                <Footer />
+                
               </ContextProvider>
             </Providers>
             

@@ -11,17 +11,18 @@ import TipTap from "@/app/components/tiptap/tiptap";
 import {Countries, Regions} from "../../../../lib/countries";
 import supabase from "../../../../lib/config/supabaseClient";
 import { Tags } from "../../../../lib/tags";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { sign } from "jsonwebtoken";
+import Credentials from "next-auth/providers/credentials";
 
 
 export default function Page ({ params }) {
 
-    console.log(params.slug[0]);
     
     const { data: session, status } = useSession({
         required: true,
-        onUnauthenticated() {redirect('/')}
+        onUnauthenticated() { signIn(Credentials, {callbackUrl: `/newjob/${params.slug}`})}
     })
 
 
@@ -78,6 +79,7 @@ export default function Page ({ params }) {
         jobDescription: "",
         compDescription: "",
         companyName: "",
+        companyId: session?.user.id,
         salaryMin: "",
         salaryMax: "",
         candidateLevel: "",

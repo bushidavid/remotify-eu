@@ -20,14 +20,14 @@ export default function Job({ ...props }) {
 
   const todayFormatted = today.toLocaleString('lu-LU', {
     year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
+    month: 'short',
+    day: 'numeric',
   })
 
   const formattedDate = date.toLocaleString('lu-LU', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
+    year : "numeric",
+    month: "short",
+    day: "numeric"
   });
 
 

@@ -94,7 +94,7 @@ export default function JobScroll({ initialJobs, search, filter }) {
             </section> 
            ) : (
             <section className='w-screen h-screen flex flex-col justify-center items-center'>
-                <h1 className="text-4xl pt-10">No jobs found in this category</h1>
+                <h1 className="text-4xl pt-10">Nothing to see here yet</h1>
             </section> 
            )
         

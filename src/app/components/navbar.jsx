@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Categories } from "../../../lib/departments"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Router from "next/navigation";
@@ -13,13 +13,33 @@ export default function Navbar() {
 
     const [ open, setOpen ] = useState(false);
     const [ profileMenuOpen, setProfileMenuOpen ] = useState(false);
+    const menuRef = useRef(null);
+    const categoriesMenuRef = useRef(null);
+
     const { data: session, status } = useSession({
         onUnauthenticated() {redirect('/signin')}
     })
 
     const router = useRouter();
 
+    //close user menu when clicking outside of it
+    useEffect(() => {
+        function handleClickOutside(event) {
+          if (menuRef.current && !menuRef.current.contains(event.target)) {
+            setProfileMenuOpen(false);
+          }
+          if (categoriesMenuRef.current && !categoriesMenuRef.current.contains(event.target)) {
+            setOpen(false);
+          }
+        }
+      
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, []);
 
+    
   return (
     <nav className="bg-remotify-db w-full sticky top-0 z-50 backdrop-blur-lg">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -123,7 +143,8 @@ export default function Navbar() {
                 To: "transform opacity-0 scale-95"
             */}
                 {open && <div
-                    className="font-poppins absolute flex flex-col p-4 gap-1 right-0 z-10 mt-2 w-fit h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    ref={categoriesMenuRef}
+                    className="font-poppins absolute flex flex-col p-4 gap-1 right-0 z-10 mt-2 w-48 max-h-60 overflow-y-auto h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
@@ -134,7 +155,7 @@ export default function Navbar() {
                         Categories.map(category => {
                             return (
                                 // <Link href={`/jobs/${category.value}`}  className=" px-2 text-remotify-db hover:rounded-lg hover:bg-remotify-lum"></Link>
-                                    <Link className="hover:bg-slate-200 py-1 px-2 rounded-md" href={`/jobs/${category.value}`} key={category.id} onClick={() => setOpen(prev => !prev)} >{category.value}</Link>
+                                    <Link className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" href={`/jobs/${category.value}`} key={category.id} onClick={() => setOpen(false)} >{category.value}</Link>
                             )
                         })
                     }
@@ -169,11 +190,11 @@ export default function Navbar() {
             
 
                        
-                      {profileMenuOpen && <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                        <button onClick={() => {router.push('/company/dashboard')}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Dashboard</button>
-                        <button onClick={() => {router.push('/company/alljobs')}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Listings</button>
-                        <button onClick={() => {router.push('/company/orders')}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Orders</button>
-                        <button onClick={() => {router.push('/company/account')}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Account</button>
+                      {profileMenuOpen && <div ref={menuRef} class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                        <button onClick={() => {setProfileMenuOpen(prev => !prev); router.push('/company/dashboard');}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Dashboard</button>
+                        <button onClick={() => {router.push('/company/alljobs'); setProfileMenuOpen(prev => !prev)}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Listings</button>
+                        <button onClick={() => {router.push('/company/orders'); setProfileMenuOpen(prev => !prev)}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Orders</button>
+                        <button onClick={() => {router.push('/company/account'); setProfileMenuOpen(prev => !prev)}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Account</button>
                         <button onClick={signOut} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
                       </div>}
                     </div>

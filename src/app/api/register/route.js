@@ -6,12 +6,12 @@ export async function POST(req){
 
     const body = await req.json();
 
-    let {name, email, password, role} = body.signInForm;
+    console.log(body)
 
-    console.log(body);
+    let {email, password} = body;
 
-    if(!name || !email || !password) {
-        return new NextResponse("Missing name, email or password", {status: 400});
+    if(!email || !password) {
+        return new NextResponse({message: "Missing email or password"}, {status: 400});
     }
 
     try {
@@ -24,7 +24,7 @@ export async function POST(req){
 
         if(user.email == email){
             console.log("existing user found");
-            return new NextResponse("User already exists", {status: 409})
+            return new NextResponse(JSON.stringify({message: "User already exists"}), {status: 409})
         }
 
         if(error){
@@ -37,10 +37,9 @@ export async function POST(req){
         const {error: newUserError} = await supabase
         .from('users')
         .insert({
-            name: name,
             email: email,
             password: hashedPassword,
-            role: role
+            role: 'company'
         })
 
         if(newUserError) {
@@ -48,12 +47,12 @@ export async function POST(req){
             return new NextResponse({message: newUserError}, {status: newUserError.status})
         }else{
             console.log("user created succesfully");
-            return new NextResponse("User created successfully", {status: 200})
+            return new NextResponse(JSON.stringify({message: "User created successfully"}), {status: 200})
         }
         
     } catch (err) {
         console.log(err);
-        return new NextResponse({message: err}, {status: err.status})
+        return new NextResponse({message: err, status: err.status})
     }
 
    

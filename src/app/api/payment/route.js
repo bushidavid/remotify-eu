@@ -14,7 +14,6 @@ export async function POST (NextRequest) {
     const session = await stripe.checkout.sessions.create({
         line_items: [
             {
-                currency: 'eur',
                 price: priceId,
                 quantity: 1,
             }
@@ -23,9 +22,13 @@ export async function POST (NextRequest) {
         billing_address_collection: "required",
         success_url: process.env.NEXT_PUBLIC_BASE_URL,
         cancel_url: process.env.NEXT_PUBLIC_BASE_URL,
+        tax_id_collection: {
+            enabled: true,
+          },
         customer_email: email,
         metadata: {
             newJobId,
+            price: priceId
         },
         payment_intent_data: {
             metadata: {

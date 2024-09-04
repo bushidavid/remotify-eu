@@ -1,10 +1,15 @@
 import { useRouter } from "next/navigation"
+import { useState } from "react";
 
+const options = {
+    "year" : "numeric",
+    "month": "short",
+    "day": "numeric"
+}
 
+function CompanyJobs({ jobs, deleteModalIsOpen, closeModalIsOpen, setDeleteModalIsOpen, setCloseModalIsOpen }) {
 
-function CompanyJobs({ jobs }) {
-
-    const handleDelete = async () => {
+    const handleDelete = async (job) => {
         const response = await fetch('/api/delete-job', {
             method: 'DELETE',
             headers: {   
@@ -20,11 +25,27 @@ function CompanyJobs({ jobs }) {
         router.push(`/company/${job.companyId}/dashboard`)
     }
 
+    const handleClose = async (job) => {
+        const response = await fetch('/api/close-job', {
+            method: 'PATCH',
+            headers: {   
+                    ContentType: 'application/json',
+                },
+            body: JSON.stringify({id: job.id})
+        })
+
+        const res = await response.json();
+
+        console.log(res);
+
+        //router.push(`/company/${job.companyId}/dashboard`)
+    }
+
     const router = useRouter();
 
     return (
         <>
-        <h1 className="text-center text-4xl mt-4">Active Jobs</h1>
+        <h1 className="text-center text-4xl mt-4">Active listings</h1>
         <ul role="list" className="divide-y divide-gray-100">
         {jobs.map((job) => (
             <li key={job.id} className="flex justify-between items-center gap-x-6 py-5">
@@ -34,7 +55,7 @@ function CompanyJobs({ jobs }) {
                     </div>
                     <div className="sm:flex">
                         <p className="mt-1 text-xs leading-5 text-gray-500">
-                            Posted 12 Apr 2024
+                            Posted {new Date(job.created_at).toLocaleString(undefined, options)}
                         </p>
                     </div>
                 </div>
@@ -47,10 +68,10 @@ function CompanyJobs({ jobs }) {
                     <button onClick={() => router.push(`editjob/${job.id}/`)} type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
                         Edit
                     </button>
-                    <button type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
+                    <button onClick={() => handleClose(job)} type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
                         Close
                     </button>
-                    <button onClick={handleDelete} type="button" class="px-4 py-0.5 text-xs text-red-800 bg-red-200  rounded-e-lg hover:bg-red-300 hover:text-red-900   ">
+                    <button onClick={() => handleDelete(job)} type="button" class="px-4 py-0.5 text-xs text-red-800 bg-red-200  rounded-e-lg hover:bg-red-300 hover:text-red-900   ">
                         Delete
                     </button>
                 </div>
