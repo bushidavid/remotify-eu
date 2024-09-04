@@ -1,17 +1,17 @@
 import JobHero from '@/app/components/job-hero';
 import JobDetails from '@/app/components/job-details';
 import Image from 'next/image';
-import supabase from '../../../../lib/config/supabaseClient';
+import supabase from '../../../../../../lib/config/supabaseClient';
 import Link from 'next/link';
 import { FaLink } from "react-icons/fa6";
-import ApplyButton from '@/app/components/apply-button';
-import Footer from '@/app/components/footer';
 
 export const revalidate = 1000;
 
 export default async function Page({ params }) {
 
   const job = await getJobDetails(params.jobId);
+
+  console.log(job);
 
   const postedDate = new Date(job.created_at);
   const expirationDate = new Date(job.expiration_date);
@@ -55,9 +55,6 @@ export default async function Page({ params }) {
                     <p className='text-sm text-center'>Valid Until: {expirationFormatted}</p>
                 </div>
                 <JobDetails job={job}/>
-                <div className='my-6'>
-                  <ApplyButton jobId={job.id} url={job.job_link} />
-                </div>
               </div>
               <div className='w-[30%] md:flex flex-col h-fit items-center mt-4 sticky top-20 z-50 hidden'>
                 <Image className='rounded-md' src={job.logo_url ? job.logo_url : '/Logo.jpg'} width={200} height={200} alt="company_logo"></Image>
@@ -79,7 +76,6 @@ export default async function Page({ params }) {
               <Image src={'/loading.svg'} fill={true} alt="loading"/>
             )
        }
-       <Footer />
     </>
   )
 }

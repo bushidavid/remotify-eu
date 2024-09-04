@@ -23,6 +23,7 @@ export async function POST(req, res) {
             jobCountry,
             tags,
             companyName,
+            companyId,
             compDescription,
             candidateLevel,
             worldwide,
@@ -34,9 +35,24 @@ export async function POST(req, res) {
             jobLink
         } = await req.json();
 
-        console.log("printing logo url from API:", logoUrl);
+        //console.log("printing logo url from API:", logoUrl);
 
-        console.log(tags);
+        console.log("printing out all object \n", jobTitle,
+            jobDepartment,
+            jobDescription,
+            jobCountry,
+            tags,
+            companyName,
+            companyId,
+            compDescription,
+            candidateLevel,
+            worldwide,
+            salaryMin,
+            salaryMax,
+            salaryCur,
+            logoUrl,
+            companyWebsite, 
+            jobLink);
 
         if(worldwide){
             jobCountry = ""
@@ -45,6 +61,7 @@ export async function POST(req, res) {
         const insertData = {
             title: jobTitle,
             company_name: companyName,
+            company_id: companyId,
             category_id: jobDepartment,
             worldwide,
             expired: false,
@@ -57,7 +74,7 @@ export async function POST(req, res) {
             expiration_date: today.toISOString().toLocaleString('de-DE'),
             company_website: companyWebsite,
             job_link: jobLink,
-            payment_verified: true
+            payment_verified: false
         };
         
         if (salaryMin !== "") {

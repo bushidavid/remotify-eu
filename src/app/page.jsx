@@ -4,6 +4,7 @@ import InfiniteScrollJobs from './components/job-scroll';
 import {sgMail} from '../../lib/email.js'
 import JobScroll from './components/job-scroll';
 import Search from './components/search';
+import Footer from './components/footer';
 
 
 
@@ -37,6 +38,7 @@ export default async function Home() {
       <Hero />
       <Search />
       <JobScroll initialJobs={jobs} />
+      <Footer />
     </section>
   )
 }

@@ -2,10 +2,9 @@
 
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
-import JobList from "./job-list";
 import { getCompanyJobs } from "../actions/actions";
 import Image from "next/image";
-import JobListEdit from "./job-list-edit";
+import JobListEdit from "./job-list-edit/job-list-edit";
 
 const revalidate = 0;
 

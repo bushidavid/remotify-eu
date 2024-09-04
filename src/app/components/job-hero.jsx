@@ -13,7 +13,7 @@ export default function JobHero({job, postedDate}) {
               {/*<h2 className='px-3 md:border-r-1 border-slate-300'><FontAwesomeIcon icon={faCalendarDays} /> 31/12/2023 {job?.expiration_date}</h2> */}
               <div className="flex flex-row items-center"><MdCalendarMonth /><h2 className='px-1 md:border-r-1 border-slate-300'>{postedDate}</h2></div>
               
-              <div className="flex flex-row items-center"><MdLocationPin /><p className='px-1 md:border-r-1 border-slate-300'> {job.worldwide ? 'Anywhere' : job.country_names}</p></div>
+              <div className="flex flex-row items-center"><MdLocationPin /><p className='px-1 md:border-r-1 border-slate-300'> {job.worldwide ? 'Anywhere' : job.countries}</p></div>
               <div className="flex flex-row items-center"><FaPersonCane /><p className='px-1 md:border-r-1 border-slate-300'>{job.experience}  </p></div>
               <div className="flex flex-row items-center"><IoMdBriefcase /><p className='px-1'>{job.category}</p></div>
             </div>
