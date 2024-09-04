@@ -26,10 +26,13 @@ export default async function Page() {
 
     prices.sort((a, b) => a.unit_amount - b.unit_amount);
 
+    console.log(prices);
 
     const products = await getFeatures();
 
     console.log(products)
+
+    console.log("building pricing page")
 
   return (
     <div className="flex flex-col min-h-screen w-full">
