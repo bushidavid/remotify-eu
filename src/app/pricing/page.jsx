@@ -6,12 +6,12 @@ import Footer from '../components/footer';
 
 const getPrices = async () => {
 
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-products`);
+    let res = await fetch('/api/get-products');
     return res.json();
 }
 
 const getFeatures = async () => {
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-features`)
+    let res = await fetch('/api/get-features')
     return res.json();
 
 }
@@ -51,10 +51,10 @@ export default async function Page() {
                                 </p>
                             </div>
                             <div className="pt-16 flex md:flex-row flex-col">
-                                <PricingCard id={prices[0].id} price={prices[0].unit_amount} nickname={prices[0].nickname} description={"As simple as it gets"} features={products[2].features} />
+                                {/* <PricingCard id={prices[0].id} price={prices[0].unit_amount} nickname={prices[0].nickname} description={"As simple as it gets"} features={products[2].features} />
                                 <PricingCard id={prices[1].id} price={prices[1].unit_amount} nickname={prices[1].nickname} description={"Because you are a Pro"} features={products[0].features}/>
                                 <PricingCard id={prices[2].id} price={prices[2].unit_amount} nickname={prices[2].nickname} description={"The Best Ever"} features={products[1].features}/>
-                                <PricingCard id={Math.random()} price={"Custom"} nickname={"Custom"} description={"Tailored for You"} features={products[2].features}/>
+                                <PricingCard id={Math.random()} price={"Custom"} nickname={"Custom"} description={"Tailored for You"} features={products[2].features}/> */}
                             </div>
                         </div>
                     </div>
