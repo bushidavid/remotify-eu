@@ -114,7 +114,29 @@ export async function getCompanyJobs(limit = 24, lastLoadedTime = currentTime, c
         return {};
     }
 
+    console.log(data);
+
+    revalidatePath("/");
+
     return data;
+}
+
+export async function getCompanyStats(companyId) {
+
+    console.log("inside server action stats");
+    console.log(companyId);
+
+    try {
+        const {data: stats, error} = await supabase.rpc('get_company_stats', { companyid: companyId });
+        console.log(stats);
+        console.log(error);
+        return stats[0];
+        
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+    
 }
 
 
@@ -124,17 +146,36 @@ export async function getJobDetails(jobId){
   
       const {data: job, error} = await supabase.rpc('get_jobs_details_v3', { jobid: jobId });
     
+
+        revalidatePath("/");
+        return job[0];
+  
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+
+    
+}
+
+
+// fetch job details from database
+export async function getUserDetails(userId){
+    try {
+  
+      const {data: user, error} = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', userId);
+
+      console.log("loggin user from backend", user);
+    
       
-    //   const transformBigIntToString = (key, value) => {
-    //       return typeof value === 'bigint' 
-    //         ? value.toString() 
-    //         : value;
-    //     }
+    if(error){
+        console.log(error);
+    }
       
-    //     // Use JSON.parse and JSON.stringify to apply the transformation
-    //   const data = JSON.parse(JSON.stringify(job, transformBigIntToString));
-      
-      return job[0];
+      return user[0];
   
     } catch (error) {
       console.log(error);
@@ -167,7 +208,42 @@ export async function updateJobClicks(jobId){
             return false;
         }
         
-        revalidatePath("/")
+        revalidatePath("/");
+        
+        return true;
+    
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+}
+
+export async function updateApplyClicks(jobId){
+    try {
+  
+        const {data: job, error} = await supabase.rpc('get_jobs_details_v3', { jobid: jobId });
+
+        if(error){
+            console.log(error);
+            return false;
+        }
+      
+        const { apply_clicks } = job[0];
+
+        const { data: insertData, error: insertError } = await supabase
+            .from('job')
+            .update({
+                apply_clicks: apply_clicks + 1,
+            })
+            .eq('id', jobId)
+            .select();
+        
+        if(insertError) {
+            console.log(insertError);
+            return false;
+        }
+        
+        revalidatePath("/");
         
         return true;
     
@@ -178,3 +254,25 @@ export async function updateJobClicks(jobId){
 }
 
 
+export async function getCompanyOrders(companyId){
+    try {
+  
+        const {data: orders, error} = await supabase
+        .from('order')
+        .select('*')
+        .eq('company_id', companyId);
+  
+        console.log("logging orders from backend", orders);
+      
+        
+      if(error){
+          console.log(error);
+      }
+        
+        return orders;
+    
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+}

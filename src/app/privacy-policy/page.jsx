@@ -1,4 +1,5 @@
 import React from 'react'
+import Footer from '../components/footer'
 
 export default function Page() {
   return (
@@ -1512,6 +1513,7 @@ export default function Page() {
           please contact us at bushidavid@gmail.com
         </span>
       </p>
+      <Footer />
     </div>
 
 

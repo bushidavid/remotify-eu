@@ -8,6 +8,8 @@ export async function POST (NextRequest) {
 
     const priceId = data.priceId[0];
     const newJobId = data.newJobId;
+    const email = data.user.email;
+    const customerId = data.user.id;
 
     const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -17,14 +19,21 @@ export async function POST (NextRequest) {
             }
         ],
         mode: "payment",
+        billing_address_collection: "required",
         success_url: process.env.NEXT_PUBLIC_BASE_URL,
         cancel_url: process.env.NEXT_PUBLIC_BASE_URL,
+        tax_id_collection: {
+            enabled: true,
+          },
+        customer_email: email,
         metadata: {
             newJobId,
+            price: priceId
         },
         payment_intent_data: {
             metadata: {
-                newJobId
+                newJobId,
+                price: priceId
             }
         },
     })

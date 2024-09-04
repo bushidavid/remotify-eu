@@ -12,10 +12,10 @@ export default function Footer() {
 
   return (
     <div className="flex flex-col w-full text-white items-center text-xs bg-remotify-db">
-      <div className="w-11/12 md:w-11/12 h-fit md:h-48 md:grid md:grid-cols-8 mt-5 md:mt-20 relative bottom-0 justify-around items-stretch text-xs">
+      <div className="w-11/12 md:w-10/12 h-fit md:h-48 md:grid md:grid-cols-8 mt-5 relative bottom-0 justify-around items-stretch text-xs">
           <div className="flex flex-col md:col-start-1 md:col-span-2 md:grid-span md:items-center">
             <div className="flex flex-col font-poppins">
-              <p className="text-white font-medium  text-sm md:text-lg mb-1 md:mb-2">Company</p>
+              <p className="text-white font-medium text-sm md:text-lg mb-1 md:mb-2">Company</p>
               <Link href="/" className="text-slate-400 text-xs hover:underline">About RemotifyEurope</Link>
               <Link href="/" className="text-slate-400 text-xs hover:underline">Careers</Link>
               <Link href="/contact-us" className="text-slate-400 text-xs hover:underline">Support</Link>
@@ -49,9 +49,9 @@ export default function Footer() {
       <div className="text-slate-400">&copy; 2024 RemotifyEurope - All Rights Reserved</div>
       <div className="text-slate-400 flex flex-row">
         <p className="pb-1">
-          <Link href={'https://app.enty.io/doc_preview?fileId=5da38960-5f64-4cc0-be5f-861138b47262'} className="hover:underline">Terms of Service</Link>
+          <Link href={'/terms-of-service'} className="hover:underline">Terms of Service</Link>
           <span> - </span>
-          <Link href={'https://rzghwrcqyzeuluqxwale.supabase.co/storage/v1/object/public/RemotifyLogoImages/PDFs/Privacy%20Policy%20RemotifyEurope.pdf?t=2024-04-03T09%3A42%3A09.828Z'} className="hover:underline">Privacy Policy</Link>
+          <Link href={'/privacy-policy'} className="hover:underline">Privacy Policy</Link>
         </p>
       </div>
     </div>
