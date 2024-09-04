@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function POST (NextRequest) {
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || process.env.STRIPE_LIVE_KEY);
     const data  = await NextRequest.json();
 
     const priceId = data.priceId[0];
