@@ -6,12 +6,12 @@ import Footer from '../components/footer';
 
 const getPrices = async () => {
 
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-products`);
+    let res = await fetch('/api/get-products');
     return res.json();
 }
 
 const getFeatures = async () => {
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-features`)
+    let res = await fetch('/api/get-features')
     return res.json();
 
 }
