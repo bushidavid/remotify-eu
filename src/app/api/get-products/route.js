@@ -11,5 +11,7 @@ export async function GET() {
         active: true,
     });
 
+    console.log("getting prices", prices);
+
     return NextResponse.json(prices.data.reverse());
 }
