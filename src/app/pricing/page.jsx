@@ -3,6 +3,11 @@ import Link from 'next/link';
 import PricingCard from '../components/pricing-card';
 import Footer from '../components/footer';
 
+export const metadata = {
+    title: 'RemotifyEurope - Pricing',
+    description: 'The best remote job board in Europe',
+}
+
 
 const getPrices = async () => {
 
