@@ -9,6 +9,26 @@ import Footer from '@/app/components/footer';
 
 export const revalidate = 1000;
 
+export async function generateMetadata({ params, searchParams }, parent) {
+  // read route params
+  const id = (await params).jobId;
+ 
+  // fetch data
+  const job = await getJobDetails(id);
+
+  console.log(job);
+ 
+  // optionally access and extend (rather than replace) parent metadata
+  // const previousImages = (await parent).openGraph?.images || []
+ 
+  return {
+    title: job.job_title,
+    // openGraph: {
+    //   images: ['/some-specific-page-image.jpg', ...previousImages],
+    // },
+  }
+}
+
 export default async function Page({ params }) {
 
   const job = await getJobDetails(params.jobId);
