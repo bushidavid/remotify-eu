@@ -1,6 +1,10 @@
 import React from 'react'
 import Footer from '../components/footer'
 
+export const metadata = {
+  title: 'Privacy Policy',
+}
+
 export default function Page() {
   return (
     <div className='w-10/12 flex-col place-self-center select-none'>
