@@ -15,17 +15,17 @@ export async function generateMetadata({ params, searchParams }, parent) {
  
   // fetch data
   const job = await getJobDetails(id);
-
-  console.log(job);
  
   // optionally access and extend (rather than replace) parent metadata
   // const previousImages = (await parent).openGraph?.images || []
  
   return {
     title: job.job_title,
-    // openGraph: {
-    //   images: ['/some-specific-page-image.jpg', ...previousImages],
-    // },
+    openGraph: {
+      title: job.job_title,
+      description: 'RemotifyEurope',
+      images: [job.logo_url, ...previousImages],
+    },
   }
 }
 
