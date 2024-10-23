@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { FaLink } from "react-icons/fa6";
 import ApplyButton from '@/app/components/apply-button';
 import Footer from '@/app/components/footer';
-import { Description } from '@radix-ui/react-dialog';
 
 export const revalidate = 1000;
 
@@ -24,7 +23,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
     title: job.job_title,
     openGraph: {
       title: job.job_title,
-      Description: 'RemotifyEurope',
+      description: 'RemotifyEurope',
       images: [job.logo_url, ...previousImages],
     },
   }
