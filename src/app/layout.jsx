@@ -4,12 +4,20 @@ import {ContextProvider} from './context/store';
 import Navbar from './components/navbar';
 import SessProvider from './components/session-provider';
 import SubscribeModal from './components/subscribe-modal';
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google';
+
 
 
 export const metadata = {
   title: 'RemotifyEurope - Home',
   description: 'The best remote job board in Europe',
+  openGraph: {
+    title: 'RemotifyEurope - Home',
+    description: 'Find the best remote jobs in Europe',
+    images: [
+      'Logo.jpg' // Path to the Open Graph image in your public directory
+    ],
+  },
 }
 
 export default function RootLayout({ children }) {
