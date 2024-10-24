@@ -22,13 +22,13 @@ export default function ContactForm() {
     const [showButton, setShowButton] = useState(true);
     const [botControl, setBotControl] = useState(true);
 
-    const onSubmitForm = (e) => {
+    const onSubmitForm = async (e) => {
 
         console.log("submitting");
 
         e.preventDefault();
 
-        const emailSent = sendEmail(form);
+        const emailSent = await sendEmail(form);
         setSuccess(emailSent);
         setError(!emailSent);
         setShowButton(!emailSent);

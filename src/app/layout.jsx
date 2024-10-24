@@ -8,6 +8,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 
 
+
 export const metadata = {
   title: 'RemotifyEurope - Home',
   description: 'The best remote job board in Europe',
@@ -15,7 +16,7 @@ export const metadata = {
     title: 'RemotifyEurope - Home',
     description: 'Find the best remote jobs in Europe',
     images: [
-      'Logo.jpg' // Path to the Open Graph image in your public directory
+      '/Logo.jpg' // Path to the Open Graph image in your public directory
     ],
   },
 }
