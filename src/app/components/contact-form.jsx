@@ -13,7 +13,7 @@ export default function ContactForm() {
     const [form, setForm] = useState({
         customerName: null,
         customerEmail: null,
-        customerSubject: "I want to post a Free Job for launch day",
+        customerSubject: "",
         customerMessage: null,
     })
 
