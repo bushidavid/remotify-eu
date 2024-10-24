@@ -77,15 +77,24 @@ export async function sendEmail(form){
     //         return false;
     //     })
 
-    sendgridClient.send(msgToProspect)
-        .then(() => {
-            console.log("Message to prospect sent successfully");
-            return true;
-        })
-        .catch((error) => {
-            console.error(error);
-            return false;
-        })
+    // sendgridClient.send(msgToProspect)
+    //     .then(() => {
+    //         console.log("Message to prospect sent successfully");
+    //         return true;
+    //     })
+    //     .catch((error) => {
+    //         console.error(error);
+    //         return false;
+    //     })
+
+    try {
+        await sendgridClient.send(msgToProspect);
+        console.log("Message to prospect sent successfully");
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }
 
 async function getCompanyData(companyId) {
