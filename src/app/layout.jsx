@@ -5,7 +5,7 @@ import Navbar from './components/navbar';
 import SessProvider from './components/session-provider';
 import SubscribeModal from './components/subscribe-modal';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import logo from '../../public/Logo.jpg'
+
 
 
 
@@ -16,7 +16,7 @@ export const metadata = {
     title: 'RemotifyEurope - Home',
     description: 'Find the best remote jobs in Europe',
     images: [
-      logo // Path to the Open Graph image in your public directory
+      '/Logo.jpg' // Path to the Open Graph image in your public directory
     ],
   },
 }
