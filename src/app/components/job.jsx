@@ -7,6 +7,7 @@ import { updateJobClicks } from '../actions/actions';
 import { useRouter } from 'next/navigation';
 import { InView, useInView } from 'react-intersection-observer';
 import { MdLocationPin } from 'react-icons/md';
+import CountryList from './country-list';
 
 export default function Job({ ...props }) {
 
@@ -118,12 +119,13 @@ export default function Job({ ...props }) {
 
                 </div>
                 <div className='w-full md:min-w-[30%] md:max-w-[30%] flex flex-row items-center gap-1'>
-                  <MdLocationPin /><h1 className='text-md'>{props.worldwide ? "Worlwide" : `${props.country}`}</h1>
+                  <MdLocationPin />
+                  <CountryList countries={props.country}/>
                 </div>
               </div>
 
           </CardBody>
-          <div className='flex flex-row flex-grow w-full my-1'>
+          <div className=' relative flex flex-row flex-grow w-full my-1'>
             <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
 
             {props.tags?.split(',').map(tag => (
