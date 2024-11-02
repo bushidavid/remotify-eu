@@ -6,12 +6,14 @@ const revalidate = 0;
 export async function GET() {
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-    const prices = await stripe.prices.list({
-        limit: 3,
+
+    const obj = await stripe.prices.list({
+        limit: 6,
         active: true,
     });
 
-    console.log("getting prices", prices);
+    // Merge prices and subscription into one object
+    const prices = obj.data.filter(price => !price.recurring)
 
-    return NextResponse.json(prices.data.reverse());
+    return NextResponse.json({prices: prices});
 }
