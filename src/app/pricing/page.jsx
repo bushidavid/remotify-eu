@@ -11,12 +11,12 @@ export const metadata = {
 
 const getPrices = async () => {
 
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-products`);
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-products`, { next: { revalidate: 0 } });
     return res.json();
 }
 
 const getFeatures = async () => {
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-features`)
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-features`, { next: { revalidate: 0 } })
     return res.json();
 
 }
@@ -27,17 +27,11 @@ export default async function Page() {
         return null;
     }
 
-    const prices = await getPrices();
-
+    const { prices }  = await getPrices();
     prices.sort((a, b) => a.unit_amount - b.unit_amount);
-
-    console.log(prices);
 
     const products = await getFeatures();
 
-    console.log(products)
-
-    console.log("building pricing page")
 
   return (
     <div className="flex flex-col min-h-screen w-full">
@@ -59,7 +53,7 @@ export default async function Page() {
                                 <PricingCard id={prices[0].id} price={prices[0].unit_amount} nickname={prices[0].nickname} description={"As simple as it gets"} features={products[0].features} />
                                 <PricingCard id={prices[1].id} price={prices[1].unit_amount} nickname={prices[1].nickname} description={"Because you are a Pro"} features={products[2].features}/>
                                 <PricingCard id={prices[2].id} price={prices[2].unit_amount} nickname={prices[2].nickname} description={"The Best Ever"} features={products[1].features}/>
-                                <PricingCard id={Math.random()} price={"Custom"} nickname={"Custom"} description={"Tailored for You"} features={products[2].features}/>
+                                <PricingCard id={Math.random()} price={"Custom"} nickname={"Custom"} description={"Tailored for You"} features={products[1].features}/>
                             </div>
                         </div>
                     </div>
