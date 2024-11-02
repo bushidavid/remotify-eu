@@ -10,10 +10,10 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 
 export const metadata = {
-  title: 'RemotifyEurope - Home',
+  title: 'RemotifyEurope: The Best Remote Jobs in Europe',
   description: 'The best remote job board in Europe',
   openGraph: {
-    title: 'RemotifyEurope - Home',
+    title: 'RemotifyEurope: The Best Remote Jobs in Europe',
     description: 'Find the best remote jobs in Europe',
     images: [
       '/Logo.jpg' // Path to the Open Graph image in your public directory
