@@ -27,6 +27,9 @@ export default async function Page() {
         return null;
     }
 
+    let prices = [];
+    let products = [];
+
     try {
         const priceData = await getPrices();
         prices = priceData.prices;
