@@ -27,10 +27,19 @@ export default async function Page() {
         return null;
     }
 
-    const { prices }  = await getPrices();
-    prices?.sort((a, b) => a.unit_amount - b.unit_amount);
+    try {
+        const priceData = await getPrices();
+        prices = priceData.prices;
+        prices.sort((a, b) => a.unit_amount - b.unit_amount);
+    } catch (error) {
+        console.error("Error fetching prices:", error);
+    }
 
-    const products = await getFeatures();
+    try {
+        products = await getFeatures();
+    } catch (error) {
+        console.error("Error fetching features:", error);
+    }
 
 
   return (
