@@ -8,8 +8,6 @@ import {
 
 export default function CountryList({ countries }) {
 
-    console.log(countries);
-
     // If worldwide, only display "Worldwide" without showing a tooltip or additional countries
     if (countries == '' || countries == null) {
         return <p className="text-sm">Worldwide</p>;

@@ -26,35 +26,38 @@ export default function JobScroll({ initialJobs, search, filter }) {
 
 
     const loadMoreJobs = async () => {
-
         setIsLoading(true);
 
-        const timeOfLastJob = jobs.length > 0 ? jobs[jobs.length - 1].created_at : today; 
-
+        const timeOfLastJob = jobs.length > 0 
+            ? new Date(jobs[jobs.length - 1].created_at).toISOString() 
+            : today.toISOString();
+    
+        // console.log("Fetching jobs from last loaded time:", timeOfLastJob);
+    
         const newLimit = limit + 24;
-        const newJobs = await fetchJobs(newLimit, timeOfLastJob, search ? search : "", filter);
-
-
-        if(newJobs?.length) {
-            setLimit(newLimit);
-            setJobs((prev) => [
-                ...(prev?.length ? prev : []),
-                ...newJobs
-                ]
-            )
-            setIsLoading(false);
-        } else {
-            setEmpty(true);
+        try {
+            const newJobs = await fetchJobs(newLimit, timeOfLastJob, search || "", filter);
+            // console.log("Fetched jobs:", newJobs);
+    
+            if (newJobs?.length) {
+                setLimit(newLimit);
+                setJobs((prev) => [...prev, ...newJobs]);
+                setIsLoading(false);
+            } else {
+                setEmpty(true);
+                setIsLoading(false);
+            }
+        } catch (error) {
+            console.error("Error fetching more jobs:", error);
             setIsLoading(false);
         }
-
-    }
+    };
 
     useEffect(() => {
        
         filterJobs();    
         
-    }, [context.title, context.filter])
+    }, [context.title, context.filter, jobs])
 
     const filterJobs = () => {
 
@@ -93,9 +96,9 @@ export default function JobScroll({ initialJobs, search, filter }) {
                 { empty && <p className="text-red-400">no more jobs to show</p> }
             </section> 
            ) : (
-            <section className='w-screen h-screen flex flex-col justify-center items-center'>
-                <h1 className="text-4xl pt-10">Nothing to see here yet</h1>
-            </section> 
+            <div className='flex items-center justify-center w-screen'>
+                <Image src={'/loading.svg'} width={300} height={300} alt='loading_svg'></Image>
+            </div>
            )
         
     )
