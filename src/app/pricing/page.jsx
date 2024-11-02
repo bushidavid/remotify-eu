@@ -28,7 +28,7 @@ export default async function Page() {
     }
 
     const { prices }  = await getPrices();
-    prices.sort((a, b) => a.unit_amount - b.unit_amount);
+    prices?.sort((a, b) => a.unit_amount - b.unit_amount);
 
     const products = await getFeatures();
 
