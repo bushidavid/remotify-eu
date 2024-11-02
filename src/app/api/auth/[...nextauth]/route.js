@@ -1,17 +1,22 @@
 import NextAuth from "next-auth";
 import { SupabaseAdapter } from "@auth/supabase-adapter";
 import jwt from "jsonwebtoken"
-import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import EmailProvider from "next-auth/providers/email";
-import LinkedinProvider from "next-auth/providers/linkedin"
+import LinkedInProvider from "next-auth/providers/linkedin"
 import CredentialsProvider from "next-auth/providers/credentials";
-import nextAuth from "next-auth";
 import supabase from "../../../../../lib/config/supabaseClient";
 import bcrypt from 'bcrypt';
 
 export const Options  = {
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+        }),
+        LinkedInProvider({
+            clientId: process.env.LINKEDIN_CLIENT_ID,
+            clientSecret: process.env.LINKEDIN_CLIENT_SECRET
+        }),
         CredentialsProvider({
             id: 'credentials',
             name: "Credentials",
@@ -26,20 +31,27 @@ export const Options  = {
                     return null;
                 }
 
+                console.log("log credentials inside authorize: ", credentials)
+
                 const {data: user, error} = await supabase
                     .from('users')
                     .select()
                     .eq('email', credentials.email)
 
-                if(user.email == credentials.email){
+                console.log("logging user inside authorize: ", user[0]);
+
+                if (error || !user) {
+                    console.log("User not found or error occurred:", error);
                     return null;
                 }
 
-                const passwordMatch = bcrypt.compare(credentials.password, "10", user.hashedPassword);
+                const passwordMatch = await bcrypt.compare(credentials.password, user[0].password);
 
                 if(!passwordMatch){
                     return null;
                 }
+
+                console.log("logging user inside authorize before return: ", user[0]);
                 
                 return user[0];
                 
@@ -49,64 +61,88 @@ export const Options  = {
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === 'development',
     pages: {
-        signIn: '/signin',
+        signIn: '/candidate-login',
     },
     session: {
         strategy: "jwt",
     },
-    jwt: {
-        // if you definde the env variable you don't need to define the secret here
-        // secret: process.env.NEXTAUTH_SECRET,
+    // jwt: {
+    //     // if you definde the env variable you don't need to define the secret here
+    //     // secret: process.env.NEXTAUTH_SECRET,
 
-        maxAge: 30 * 24 * 60 * 60, // 30 days
+    //     // maxAge: 30 * 24 * 60 * 60, // 30 days
 
-        // You only need the below if you are custom signing your JWTs
-        // async encode({ token, secret }: { token: typeof JWT; secret: string }) {
-        //     const jwt = require("jsonwebtoken");
-        //     const encodedToken = jwt.sign(token, secret);
-        //     return encodedToken;
-        // },
-        // async decode({ token, secret }: { token: typeof JWT; secret: string }) {
-        //     const jwt = require("jsonwebtoken");
-        //     const decodedToken = jwt.verify(token, secret);
-        //     return decodedToken;
-        // },
+    //     async jwt({ token, user }) {
 
-    },
+    //         console.log(token);
+
+    //         if (user) {
+    //             token.role = user.role;
+    //         }
+    //         console.log("JWT Callback - Token:", token);
+    //         return token;
+    //     }
+
+    //     // You only need the below if you are custom signing your JWTs
+    //     // async encode({ token, secret }: { token: typeof JWT; secret: string }) {
+    //     //     const jwt = require("jsonwebtoken");
+    //     //     const encodedToken = jwt.sign(token, secret);
+    //     //     return encodedToken;
+    //     // },
+    //     // async decode({ token, secret }: { token: typeof JWT; secret: string }) {
+    //     //     const jwt = require("jsonwebtoken");
+    //     //     const decodedToken = jwt.verify(token, secret);
+    //     //     return decodedToken;
+    //     // },
+
+    // },
     callbacks: {
         async session({ session, token }) {
 
-            console.log(token);
+            console.log("printing token inside session: ", token);
 
-            const {data: user, error} = await supabase
-                    .from('users')
-                    .select()
-                    .eq('email', token.email)
-            
-
-            session.accessToken = token.accessToken;
-            session.user.id = token.sub;
-            session.user.role = user[0].role;
-            
+            session.user.role = token.role;
+            console.log("Session Callback - Session:", session);
             return session;
+
+
+        //     const {data: user, error} = await supabase
+        //             .from('users')
+        //             .select()
+        //             .eq('email', token.email)
+            
+
+        //     session.accessToken = token.accessToken;
+        //     session.user.id = token.sub;
+        //     session.user.role = user[0].role;
+            
+        //     return session;
+        //   },
+        //   async signIn({ user, account, profile, email, credentials }) {
+        //     return true
           },
-          async signIn({ user, account, profile, email, credentials }) {
-            return true
-          },
-          async redirect({ url, baseUrl }) {
-            return baseUrl
-          },
-          async jwt({ token, account, profile }) {
-            // Persist the OAuth access_token and or the user id to the token right after signin
-            console.log("printing token inside jwt",account);
+        //   async redirect({ url, baseUrl }) {
+        //     return baseUrl
+        //   },
+        async jwt({ token, user, account }) {
+            console.log("JWT Callback - Token before assignment:", token);
+
+            if (user) {
+                // Add role and user id to token
+                token.role = user.role;
+                token.id = user.id;
+                token.image = user.picture
+            }
 
             if (account) {
-              token.accessToken = account.access_token
+                // Persist OAuth access token to the token
+                token.accessToken = account.access_token;
             }
-            return token
+
+            console.log("JWT Callback - Token after assignment:", token);
+            return token;
         },
-    },
-    
+    },    
 }
 
 const handler = NextAuth(Options);
