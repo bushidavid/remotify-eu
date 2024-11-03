@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import PricingCard from '../components/pricing-card';
 import Footer from '../components/footer';
+import Image from 'next/image';
 
 export const metadata = {
     title: 'RemotifyEurope - Pricing',
