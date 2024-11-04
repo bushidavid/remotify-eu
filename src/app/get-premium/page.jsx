@@ -18,7 +18,7 @@ export default async function Page() {
         return null;
     }
 
-    const { prices } = await getSubscriptions();
+    const prices = await getSubscriptions();
 
     return (
         <>
@@ -38,9 +38,9 @@ export default async function Page() {
                         </div>
                     </div>
                     <div className="flex flex-col md:flex-row w-full gap-y-2 md:gap-x-2 md:w-10/12 items-center md:justify-center max-w-7xl  rounded-lg absolute top-[150px]">
-                        <SubscriptionCard title={"Monthly Subscription"} reoccurrence={"Billed monthly"} price={prices[0]?.unit_amount} cadence={"per month"} comment={""} className={""} id={prices[0]?.id}/>
-                        <SubscriptionCard title={"Quarterly Subscription"} reoccurrence={"Billed every 3 months"} price={prices[1]?.unit_amount} cadence={"per quarter"} comment={"Only €5.33 per month"} className={"bg-cyan-50"} id={prices[1]?.id}/>
-                        <SubscriptionCard title={"Annual Subscription"} reoccurrence={"Billed yearly"} price={prices[2]?.unit_amount} cadence={"per year"} comment={"Only €4.15 per month"} className={""} id={prices[2]?.id}/>
+                        <SubscriptionCard title={"Monthly Subscription"} reoccurrence={"Billed monthly"} price={prices.prices[0]?.unit_amount} cadence={"per month"} comment={""} className={""} id={prices.prices[0]?.id}/>
+                        <SubscriptionCard title={"Quarterly Subscription"} reoccurrence={"Billed every 3 months"} price={prices.prices[1]?.unit_amount} cadence={"per quarter"} comment={"Only €5.33 per month"} className={"bg-cyan-50"} id={prices.prices[1]?.id}/>
+                        <SubscriptionCard title={"Annual Subscription"} reoccurrence={"Billed yearly"} price={prices.prices[2]?.unit_amount} cadence={"per year"} comment={"Only €4.15 per month"} className={""} id={prices.prices[2]?.id}/>
                     </div>
                     <div className="h-[300px] md:h-[300px] flex w-full flex-col gap-y-4 items-center justify-center bg-white">
                         <h1 className="w-10/12 md:w-full text-center text-xl md:text-3xl pb-4">About RemotifyEurope</h1>
