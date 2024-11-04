@@ -33,10 +33,6 @@ export default async function Page() {
 
     const prices = await getSubscriptions();
 
-    if (!prices) {
-        return <p>Error loading subscription data. Please try again later.</p>;
-    }
-
     return (
         <>
             { prices ? 
