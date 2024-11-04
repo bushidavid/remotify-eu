@@ -76,7 +76,11 @@ export default function LoginForm() {
         return;
       }
 
-      if(plan != 0){
+      console.log("logging search: ", search)
+
+      if(search == null){
+        router.push("/");
+      }else if(plan != 0){
         const stripeCheckout = async() => {
 
 
