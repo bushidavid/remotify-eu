@@ -90,9 +90,6 @@ export default function FormEditJob ({ job }) {
 
     const [logoURL, setLogoURL] = useState(null);
 
-    console.log("printing countries", selectedCountry);
-    console.log("printing level:", values);
-
    
     const [form, setForm] = useState({
         jobId: job.id,

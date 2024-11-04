@@ -79,7 +79,6 @@ export async function POST(req) {
             },
         });
 
-        console.log(session);
 
         return NextResponse.json({ "url": session.url });
     } catch (error) {

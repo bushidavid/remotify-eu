@@ -10,7 +10,6 @@ var currentTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
 
 export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, search = "", filter = ""){
 
-    console.log(search);
 
     const { data, error } = await supabase.rpc('get_jobs_v4', {loadlimit: limit, lastloadedtime: lastLoadedTime, p_category: search, p_search: filter});
 
@@ -130,8 +129,6 @@ export async function getCompanyJobs(limit = 24, lastLoadedTime = currentTime, c
 
 export async function getCompanyStats(companyId) {
 
-    console.log("inside server action stats");
-    console.log(companyId);
 
     try {
         const {data: stats, error} = await supabase.rpc('get_company_stats', { companyid: companyId });
@@ -172,8 +169,6 @@ export async function getUserDetails(userId){
       .from('users')
       .select('*')
       .eq('id', userId);
-
-      console.log("loggin user from backend", user);
     
       
     if(error){
@@ -283,7 +278,6 @@ export async function getCompanyOrders(companyId){
 
 export async function getCandidateBookmarks(candidateId){
 
-    console.log("inside get candidate bookmarks");
     try {
 
         const { data: bookmarks, error } = await supabase
@@ -308,14 +302,11 @@ export async function getCandidateBookmarks(candidateId){
 
 export async function updateBookmark(jobId, candidateId){
     try {
-        console.log("inside update bookmarks");
         const {data, error} = await supabase
             .from('candidate_bookmarks')
             .insert({job_id: jobId, user_id: candidateId})
             .select();
 
-
-        console.log(data);
         
         if(data){
             return true
@@ -333,8 +324,6 @@ export async function updateBookmark(jobId, candidateId){
 
 export async function deleteBookmark(bookmarkId){
 
-    
-    console.log("inside delete bookmark");
     try {
 
         const response = await supabase
@@ -343,8 +332,6 @@ export async function deleteBookmark(bookmarkId){
             .eq('id', bookmarkId)
             .select();
 
-
-        console.log(response);
 
         
         if(response.status == 200){
@@ -368,8 +355,6 @@ export async function isBookmarkedByUser(userId, jobId){
             .select(`*`)
             .eq('user_id', userId)
             .eq('job_id', jobId);
-
-        //console.log(bookmarks);
 
         if(bookmarks.length != 0){
             return bookmarks[0];

@@ -7,8 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export async function POST (req) {
 
     const { internalCustomerId }  = await req.json();
-    
-    console.log("print internal customer ID", internalCustomerId)
+
 
     // Fetch stripe_customer_id from Supabase
     const { data, error } = await supabase

@@ -12,9 +12,6 @@ export async function POST (req) {
         id
     );
 
-
-    console.log(subscription.status);
-
     
     if(subscription.status == 'canceled'){
 

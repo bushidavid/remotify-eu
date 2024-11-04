@@ -58,7 +58,6 @@ export async function POST (req) {
                     .select("id")
                     .eq("stripe_customer_id", event.data.object.customer)
 
-                console.log(companyId[0]);
 
                 console.log("inserting order data in DB");
 
@@ -244,7 +243,7 @@ export async function POST (req) {
             break;
             
         default:
-          console.log(`Unhandled event type ${event.type}`);
+          console.log(`Unhandled event type: `, event.type);
     }
 
     return NextResponse.json({ message: 'finished' }, { status: 200 });

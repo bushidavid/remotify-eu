@@ -24,8 +24,6 @@ export default function ContactForm() {
 
     const onSubmitForm = async (e) => {
 
-        console.log("submitting");
-
         e.preventDefault();
 
         const emailSent = await sendEmail(form);

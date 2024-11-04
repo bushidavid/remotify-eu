@@ -79,7 +79,6 @@ export default function LoginForm() {
       if(plan != 0){
         const stripeCheckout = async() => {
 
-          console.log("printing new session data: ", session);
 
           const res = await fetch('api/subscribe-payment', {
             method: 'POST',

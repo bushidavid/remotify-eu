@@ -26,19 +26,15 @@ export const Options  = {
               },
 
             async authorize(credentials, req) {
-                console.log("inside authorize");
                 if(!credentials.email || !credentials.password){
                     return null;
                 }
-
-                console.log("log credentials inside authorize: ", credentials)
 
                 const {data: user, error} = await supabase
                     .from('users')
                     .select()
                     .eq('email', credentials.email)
 
-                console.log("logging user inside authorize: ", user[0]);
 
                 if (error || !user) {
                     console.log("User not found or error occurred:", error);
@@ -50,8 +46,6 @@ export const Options  = {
                 if(!passwordMatch){
                     return null;
                 }
-
-                console.log("logging user inside authorize before return: ", user[0]);
                 
                 return user[0];
                 
@@ -98,8 +92,6 @@ export const Options  = {
     // },
     callbacks: {
         async session({ session, token }) {
-
-            console.log("printing token inside session: ", token);
 
             session.user.role = token.role;
             session.user.id = token.id;
