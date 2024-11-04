@@ -11,16 +11,13 @@ export default function SubscriptionCard({ title, reoccurrence, price, cadence, 
 
   const { data: session, status } = useSession();
 
-  console.log(session);
-
-
   const handleSubscribe = async (plan) => {
 
     console.log("inside handle subscribe");
   
     if (session) {
 
-      const res = await fetch('api/subscribe-payment', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/subscribe-payment`, {
         method: 'POST',
           headers: {
               'ContentType': 'application/json'

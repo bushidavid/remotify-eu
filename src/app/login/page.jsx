@@ -2,6 +2,7 @@ import Footer from '../components/footer';
 import SignInProviders from '../components/signin-providers';
 import Link from 'next/link';
 import LoginForm from '../components/login-form';
+import { Suspense } from 'react';
 
 
 
@@ -57,7 +58,9 @@ export default async function Page() {
           <div className='w-6/12 p-4 flex flex-col items-center'>
             <h1 className='row-span-full text-center pt-4  text-xl'>Sign In with Credentials</h1>
             <div className='h-[1px] w-[60%] bg-slate-300 mt-2 mb-6'></div>
-            <LoginForm />
+            <Suspense fallback={<div>Loading...</div>}>
+                <LoginForm />
+            </Suspense>
           </div>
         </div>
         <div className='flex flex-col items-center gap-y-4'>
