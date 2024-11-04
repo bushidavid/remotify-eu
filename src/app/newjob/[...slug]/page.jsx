@@ -23,7 +23,7 @@ export default function Page ({ params }) {
     const { data: session, status } = useSession({
         required: true,
         onUnauthenticated() { 
-            signIn("credentials", { callbackUrl: `/newjob/${params.slug}` });
+            signIn(null, { callbackUrl: `/newjob/${params.slug}`, redirect: false});
         }
     })
 

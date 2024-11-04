@@ -57,27 +57,25 @@ export default function JobScroll({ initialJobs, search, filter }) {
        
         filterJobs();    
         
-    }, [context.title, context.filter])
+    }, [context.title, context.filter, jobs]);
 
     const filterJobs = () => {
-
         let filteredJobs = jobs;
-
-        if(context.title !== ""){
-            filteredJobs = (filteredJobs.filter(job => job.job_title.toLowerCase().includes(context.title.toLowerCase())))
+    
+        if (context.title !== "") {
+            filteredJobs = filteredJobs.filter(job =>
+                job.job_title.toLowerCase().includes(context.title.toLowerCase())
+            );
         }
-
-        if(context.filter.length > 0){
-            filteredJobs = context.filter.map(filter => {
-                let temp = filteredJobs.filter(job => {console.log("printing full time property:", job[filter]); return job[filter] === true});
-                return temp;
-            })
+    
+        if (context.filter.length > 0) {
+            context.filter.forEach(filterKey => {
+                filteredJobs = filteredJobs.filter(job => job[filterKey] === true);
+            });
         }
-
-        let flattenedArray = filteredJobs.flat(Infinity);
-
-        setJobsToDisplay(flattenedArray);
-    }
+    
+        setJobsToDisplay(filteredJobs);
+    };
 
     const featuredJobs = jobsToDisplay?.filter(job => job.featured);
     const notFeaturedJobs = jobsToDisplay?.filter(job => job.featured === false);

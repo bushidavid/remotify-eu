@@ -4,6 +4,7 @@ import SubscriptionFeature from "../components/subscription-feature";
 import { faBell, faAward, faMagnifyingGlass, faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import SubscriptionStats from "../components/subscription-stats";
 import Image from "next/image";
+import Link from "next/link";
 
 
 const getSubscriptions = async () => {
@@ -38,7 +39,7 @@ export default async function Page() {
             { prices ? 
                 (
                 <div className="w-screen flex flex-col items-center relative ">
-                    <div className="h-[1150px] md:h-[350px] flex w-full flex-col items-center bg-remotify-db">
+                    <div id="top" className="h-[1150px] md:h-[350px] flex w-full flex-col items-center bg-remotify-db">
                         <h1 className="w-10/12 md:w-full text-center text-white text-xl md:text-3xl pt-4 md:pt-10 pb-4 ">Get access to our premium database of remote jobs</h1>
                         <h2 className="w-10/12 md:w-full text-center text-slate-300 text-xs md:text-sm mb-10">Our extensive network includes job openings from leading remote companies</h2>
                     </div>
@@ -67,7 +68,7 @@ export default async function Page() {
                     </div>
                     <div className="h-[500px] md:h-[300px] flex w-full flex-col gap-y-4 items-center justify-center bg-white">
                         <h1 className="w-10/12 md:w-full text-center text-xl md:text-3xl pb-4">Ready to Join and Find Your Next <span className="font-bold">Remote</span> adventure?</h1>
-                        <button className='px-20 py-2 bg-orange-500 hover:bg-remotify-db text-white transition duration-1000 shadow-lg hover:shadow-xl border-1 border-slate-200 rounded-xl'>Subscribe Now</button>
+                        <Link href={"#top"} className='px-20 py-2 bg-orange-500 hover:bg-remotify-db text-white transition duration-1000 shadow-lg hover:shadow-xl border-1 border-slate-200 rounded-xl'>Subscribe Now</Link>
                     </div>
                     
                 </div>
