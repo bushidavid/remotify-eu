@@ -143,8 +143,6 @@ export default async function Page() {
                       const diff = end.diff(start, ['days']).toObject();
                       const daysUntilDue = Math.floor(diff.days);
 
-                      console.log(diff);
-
                       return (
                         <tr key={order.id}>
                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">

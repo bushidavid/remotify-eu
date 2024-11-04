@@ -1,95 +1,69 @@
-'use client';
+'use client'
 
+
+import { Input } from '@nextui-org/react'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import RegisterForm from '../components/register-form';
 import Footer from '../components/footer';
-import { Input } from '@nextui-org/react';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import SignInProviders from '../components/signin-providers';
 
 export default function Page() {
 
     const router = useRouter();
 
-    const [registerForm, setRegisterForm] = useState({
+    const [signInForm, setSignInForm] = useState({
       email: "",
       password: "",
+      name: "",
+      role: "admin"
     })
 
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-
     const handleChange = (e) => {
-      setRegisterForm({
-        ...registerForm,
+      setSignInForm({
+        ...signInForm,
         [e.target.name] : e.target.value
       })
 
-      console.log(registerForm)
+      console.log(signInForm);
     }
 
     const handleSubmit = async (e) => {
-      e.preventDefault();
-      setError('');
-      setIsLoading(true);
+        e.preventDefault();
+        const response = await fetch('api/register', {
+            method: 'POST',
+            headers: {
+                'ContentType': 'application/json'
+            },
+            body: JSON.stringify({signInForm})
+        })
 
-      try {
-          const response = await fetch('/api/register', {
-              method: 'POST',
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify(registerForm)
-          });
+        const userInfo = await response.json();
 
-          const data = await response.json();
+        console.log(userInfo);
 
-          if (!response.ok) {
-              throw new Error(data.message || 'An error occurred during registration');
-          }
-
-          console.log("Registration successful");
-          router.push('/signin');
-      } catch (err) {
-          setError(err.message);
-      } finally {
-          setIsLoading(false);
-      }
-  }
+        router.push('/company-signin')
+    }
 
 
-    return (
-      <>
-          <div className="flex min-h-full w-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-500">
-                Create a Company Account
-              </h2>
-            </div>
-
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-              <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit} >
-                <div>
-                  <Input type="email" variant="underlined" label="Your Email" isRequired name="email" placeholder="email@example.com" onChange={handleChange}></Input>
-                  </div>
-                <div>
-                  <div className="flex items-center justify-between">
-                  <Input type="password" variant="underlined" label="Password" isRequired name="password" onChange={handleChange}></Input>
-                  </div>
-                </div>
-
-                <button
-                    type="submit"
-                    className="flex w-full justify-center rounded-md bg-remotify-db hover:bg-remotify-lb hover:text-remotify-db px-3 py-1.5 text-sm font-semibold leading-6 text-white"
-                    disabled={isLoading}
-                >
-                    {isLoading ? 'Signing Up...' : 'Sign Up'}
-                </button>
-              </form>
-
-              
-            </div>
+  return (
+    <>
+      <div className='w-screen h-screen flex flex-col items-center justify-center '>
+        <div className='flex flex-row w-10/12 justify-center border-1 border-slate-300 rounded-xl shadow-2xl'>
+          <div className='w-6/12 p-4 flex flex-col items-center'>
+            <h1 className='row-span-full text-center pt-4 text-xl'>Sign Up with a Provider</h1>
+            <div className='h-[1px] w-[60%] bg-slate-300 mt-2 mb-6'></div>
+            <SignInProviders />
           </div>
-        <Footer />
-      </>
-    )
+          <div className='w-[1px] h-full bg-slate-200'></div>
+          <div className='w-6/12 p-4 flex flex-col items-center'>
+            <h1 className='row-span-full text-center pt-4  text-xl'>Sign Up with Credentials</h1>
+            <div className='h-[1px] w-[60%] bg-slate-300 mt-2 mb-6'></div>
+            <RegisterForm />
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
+  )
 }

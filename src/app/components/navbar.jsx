@@ -9,6 +9,20 @@ import { redirect } from "next/navigation";
 import Router from "next/navigation";
 import { useRouter } from "next/navigation";
 
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuIndicator,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    NavigationMenuViewport,
+  } from "@/components/ui/navigation-menu"
+import { Button } from "@/components/ui/button";
+import CompanyUserMenu from "./company-user-menu";
+  
+
 export default function Navbar() {
 
     const [ open, setOpen ] = useState(false);
@@ -21,23 +35,6 @@ export default function Navbar() {
     })
 
     const router = useRouter();
-
-    //close user menu when clicking outside of it
-    useEffect(() => {
-        function handleClickOutside(event) {
-          if (menuRef.current && !menuRef.current.contains(event.target)) {
-            setProfileMenuOpen(false);
-          }
-          if (categoriesMenuRef.current && !categoriesMenuRef.current.contains(event.target)) {
-            setOpen(false);
-          }
-        }
-      
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
-        };
-      }, []);
 
     
   return (
@@ -111,7 +108,7 @@ export default function Navbar() {
                     </Link> */}
                     <Link
                     href="/featured"
-                    className="font-poppins text-md text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium "
+                    className="font-poppins text-sm text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-regular "
                     >
                         Featured
                     </Link>
@@ -121,7 +118,7 @@ export default function Navbar() {
                 <div>
                     <button
                     type="button"
-                    className="font-poppins text-md relative flex rounded-md hover:bg-gray-700 p-2 focus:outline-none text-gray-300 hover:text-white font-medium"
+                    className="font-poppins text-sm relative flex rounded-md hover:bg-gray-700 p-2 focus:outline-none text-gray-300 hover:text-white font-regular"
                     id="user-menu-button"
                     aria-expanded="false"
                     aria-haspopup="true"
@@ -143,92 +140,107 @@ export default function Navbar() {
                 To: "transform opacity-0 scale-95"
             */}
                 {open && <div
-                    ref={categoriesMenuRef}
-                    className="font-poppins absolute flex flex-col p-4 gap-1 right-0 z-10 mt-2 w-48 max-h-60 overflow-y-auto h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="user-menu-button"
-                    tabIndex={-1}
-                >
-                    {/* Active: "bg-gray-100", Not Active: "" */}
-                    {
-                        Categories.map(category => {
-                            return (
-                                // <Link href={`/jobs/${category.value}`}  className=" px-2 text-remotify-db hover:rounded-lg hover:bg-remotify-lum"></Link>
-                                    <Link className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" href={`/jobs/${category.value}`} key={category.id} onClick={() => setOpen(false)} >{category.value}</Link>
-                            )
-                        })
-                    }
-                </div>
+                        ref={categoriesMenuRef}
+                        className="font-poppins absolute flex flex-col p-4 gap-1 right-0 z-10 mt-2 w-48 max-h-60 overflow-y-auto h-fit origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="user-menu-button"
+                        tabIndex={-1}
+                    >
+                        {/* Active: "bg-gray-100", Not Active: "" */}
+                        {
+                            Categories.map(category => {
+                                return (
+                                    // <Link href={`/jobs/${category.value}`}  className=" px-2 text-remotify-db hover:rounded-lg hover:bg-remotify-lum"></Link>
+                                        <Link className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" href={`/jobs/${category.value}`} key={category.id} onClick={() => setOpen(false)} >{category.value}</Link>
+                                )
+                            })
+                        }
+                    </div>
                 }
                 </div>
             </div>
                 </div>
                 </div>
             </div>
+            <div>
+            {/* <NavigationMenu>
+                <NavigationMenuList>
+                    <NavigationMenuItem>
+                    <NavigationMenuTrigger className='bg-remotify-db text-white '>For Candidates</NavigationMenuTrigger>
+                    <NavigationMenuContent className='bg-remotify-db border-none'>
+                        <ul className="flex w-[100px] gap-3 flex-col p-4 md:w-[100px] md:grid-cols-2 lg:w-[400px] border-none">
+                            <li className="w-full border-none">
+                                <NavigationMenuLink className="text-white text-sm hover:opacity-70"><Link href={'/candidate-register'}>Sign Up</Link></NavigationMenuLink>
+                            </li>
+                            <li className="w-full border-none">
+                                <NavigationMenuLink className="text-white text-sm hover:opacity-70"><Link href={'/candidate-signin'}>Login</Link></NavigationMenuLink>
+                            </li>
+                            <li className="w-full border-none">
+                                <NavigationMenuLink className="text-white text-sm hover:opacity-70"><Link href={'/get-premium'}>Get Premium</Link></NavigationMenuLink>
+                            </li>
+                        </ul>
+
+                    </NavigationMenuContent>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                    <NavigationMenuTrigger className='bg-remotify-db text-white'>For Employers</NavigationMenuTrigger>
+                    <NavigationMenuContent className='bg-remotify-db border-none'>
+                        <ul className="flex w-[100px] gap-3 flex-col p-4 md:w-[100px] md:grid-cols-2 lg:w-[400px] border-none">
+                            <li className="w-full border-none">
+                                <Button className="text-white text-sm hover:text-slate-400 bg-remotify-db" onClick={() => router.push('/register')} >Sign Up</Button>
+                            </li>
+                            <li className="w-full border-none">
+                                <Button className="text-white text-sm hover:text-slate-400 bg-remotify-db" onClick={signIn}>Login</Button>
+                            </li>   
+                        </ul>
+
+                    </NavigationMenuContent>
+                    </NavigationMenuItem>
+                </NavigationMenuList>
+            </NavigationMenu> */}
+                {!session && <Link
+                    href="/login"
+                    className="font-poppins text-sm text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-regular "
+                    >
+                        Login
+                </Link>}
+                <Link
+                    href="/get-premium"
+                    className="font-poppins text-sm text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-regular "
+                    >
+                        Get Premium
+                </Link>
+
+            </div>
             <div className="hidden md:block mx-2">
                 <Link
                     href={'/pricing'}
-                    className="font-poppins bg-remotify-lb text-remotify-db rounded-md p-2 font-semibold"
+                    className="font-poppins text-md bg-remotify-lb text-remotify-db rounded-md p-2 font-semibold"
                 >
                     Post New Job
                 </Link>
             </div>
-                 {session ? (
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    
-            
-
-                    <div class="relative ml-3">
-                      <div>
-                        <button onClick={() => setProfileMenuOpen(prev => !prev)} type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                          <span class="absolute -inset-1.5"></span>
-                          <span class="sr-only">Open user menu</span>
-                          <Image class="h-8 w-8 rounded-full" src="" alt="profile_picture" /> 
-                        </button>
-                      </div>
-            
-
-                       
-                      {profileMenuOpen && <div ref={menuRef} class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                        <button onClick={() => {setProfileMenuOpen(prev => !prev); router.push('/company/dashboard');}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Dashboard</button>
-                        <button onClick={() => {router.push('/company/alljobs'); setProfileMenuOpen(prev => !prev)}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Listings</button>
-                        <button onClick={() => {router.push('/company/orders'); setProfileMenuOpen(prev => !prev)}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Orders</button>
-                        <button onClick={() => {router.push('/company/account'); setProfileMenuOpen(prev => !prev)}} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Account</button>
-                        <button onClick={signOut} href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
-                      </div>}
-                    </div>
-            </div>
-                ) :
-                (
-                    <div className="hidden md:block">
-                        <button onClick={signIn}
-                            className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
-                        >
-                        Sign In
-                        </button>
-                    </div>
-                )
-            }
-            {session ? (
-                    <div className="md:hidden">
-                    <button onClick={signOut}
-                        className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
-                    >
-                    Sign Out
-                    </button>
-                    </div>
-                ) :
-                (
-                    <div className="md:hidden ">
-                        <button onClick={signIn}
-                            className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
-                        >
-                        Sign In
-                        </button>
-                    </div>
-                )
-            }
+                {session && <CompanyUserMenu />}
+                {session ? (
+                        <div className="md:hidden">
+                            <button onClick={signOut}
+                                className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
+                            >
+                            Sign Out
+                            </button>
+                        </div>
+                    ) :
+                    (
+                        <div className="md:hidden ">
+                            <button onClick={signIn}
+                                className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
+                            >
+                            Sign In
+                            </button>
+                        </div>
+                    )
+                }
             </div>
             
         </div>
@@ -245,7 +257,7 @@ export default function Navbar() {
             </Link>
             <Link
                 href={'/pricing'}
-                className="font-poppins bg-remotify-lb text-remotify-db rounded-md p-2 mx-2 font-semibold"
+                className="font-poppins bg-remotify-lb text-remotify-db rounded-md p-2 mx-2 font-regular"
                 >
                 Post New Job
             </Link>

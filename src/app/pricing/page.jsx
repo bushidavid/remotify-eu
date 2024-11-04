@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import PricingCard from '../components/pricing-card';
 import Footer from '../components/footer';
+import Image from 'next/image';
 
 export const metadata = {
     title: 'RemotifyEurope - Pricing',
@@ -33,8 +34,10 @@ export default async function Page() {
 
     try {
         const priceData = await getPrices();
-        prices = priceData.prices;
-        prices.sort((a, b) => a.unit_amount - b.unit_amount);
+        prices = priceData?.prices || [];
+        if (prices.length > 0) {
+            prices.sort((a, b) => a.unit_amount - b.unit_amount);
+        }
     } catch (error) {
         console.log("Error fetching prices: ", error);
 
@@ -48,33 +51,43 @@ export default async function Page() {
 
     
     return (
-        <div className="flex flex-col min-h-screen w-full">
-                
-                <main className="flex-grow">
-                    <div className="font-sans mt-10">
-                        <div className="flex justify-center items-center">
-                            <div className="">
-                                <div className="text-center font-semibold">
-                                    <h1 className="text-5xl">
-                                        <span className="text-remotify-lb tracking-wide">Flexible </span>
-                                        <span className='text-remotify-db'>Plans</span>
-                                    </h1>
-                                    <p className="pt-6 text-xl text-gray-600 font-normal w-full px-8 md:w-full">
-                                        Choose a plan that works best for you and<br/> your team.
-                                    </p>
-                                </div>
-                                <div className="pt-16 flex md:flex-row flex-col">
-                                    <PricingCard id={prices[0]?.id} price={prices[0]?.unit_amount} nickname={prices[0]?.nickname} description={"As simple as it gets"} features={products[0]?.features} />
-                                    <PricingCard id={prices[1]?.id} price={prices[1]?.unit_amount} nickname={prices[1]?.nickname} description={"Because you are a Pro"} features={products[2]?.features}/>
-                                    <PricingCard id={prices[2]?.id} price={prices[2]?.unit_amount} nickname={prices[2]?.nickname} description={"The Best Ever"} features={products[1]?.features}/>
-                                    <PricingCard id={Math.random()} price={"Custom"} nickname={"Custom"} description={"Tailored for You"} features={products[1].features}/>
+        <>
+        { prices ? (
+            <div className="flex flex-col min-h-screen w-full">
+                    
+                    <main className="flex-grow">
+                        <div className="font-sans mt-10">
+                            <div className="flex justify-center items-center">
+                                <div className="">
+                                    <div className="text-center font-semibold">
+                                        <h1 className="text-5xl">
+                                            <span className="text-remotify-lb tracking-wide">Flexible </span>
+                                            <span className='text-remotify-db'>Plans</span>
+                                        </h1>
+                                        <p className="pt-6 text-xl text-gray-600 font-normal w-full px-8 md:w-full">
+                                            Choose a plan that works best for you and<br/> your team.
+                                        </p>
+                                    </div>
+                                    <div className="pt-16 flex md:flex-row flex-col">
+                                        <PricingCard id={prices[0]?.id} price={prices[0]?.unit_amount} nickname={prices[0]?.nickname} description={"As simple as it gets"} features={products[0]?.features} />
+                                        <PricingCard id={prices[1]?.id} price={prices[1]?.unit_amount} nickname={prices[1]?.nickname} description={"Because you are a Pro"} features={products[2]?.features}/>
+                                        <PricingCard id={prices[2]?.id} price={prices[2]?.unit_amount} nickname={prices[2]?.nickname} description={"The Best Ever"} features={products[1]?.features}/>
+                                        <PricingCard id={Math.random()} price={"Custom"} nickname={"Custom"} description={"Tailored for You"} features={products[1].features}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </main>
-                
-                <Footer />
-        </div>
+                    </main>
+                    
+                    <Footer />
+            </div> 
+            ) :
+            (
+            <div className='flex items-center justify-center w-screen'>
+                <Image src={'/loading.svg'} width={300} height={300} alt='loading_svg'></Image>
+            </div>
+            )
+        }
+        </>
     )
 }

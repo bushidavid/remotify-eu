@@ -10,7 +10,6 @@ var currentTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
 
 export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, search = "", filter = ""){
 
-    console.log(search);
 
     const { data, error } = await supabase.rpc('get_jobs_v4', {loadlimit: limit, lastloadedtime: lastLoadedTime, p_category: search, p_search: filter});
 
@@ -104,7 +103,6 @@ async function getCompanyData(companyId) {
         .select('id')
         .eq(companyId)
 
-    console.log(data);
 
     if(error) {
         console.log("error fetching data from DB");
@@ -123,7 +121,6 @@ export async function getCompanyJobs(limit = 24, lastLoadedTime = currentTime, c
         return {};
     }
 
-    console.log(data);
 
     revalidatePath("/");
 
@@ -132,8 +129,6 @@ export async function getCompanyJobs(limit = 24, lastLoadedTime = currentTime, c
 
 export async function getCompanyStats(companyId) {
 
-    console.log("inside server action stats");
-    console.log(companyId);
 
     try {
         const {data: stats, error} = await supabase.rpc('get_company_stats', { companyid: companyId });
@@ -163,21 +158,17 @@ export async function getJobDetails(jobId){
       console.log(error);
       return null;
     }
-
-    
 }
 
 
 // fetch job details from database
 export async function getUserDetails(userId){
     try {
-  
+        
       const {data: user, error} = await supabase
       .from('users')
       .select('*')
       .eq('id', userId);
-
-      console.log("loggin user from backend", user);
     
       
     if(error){
@@ -270,8 +261,7 @@ export async function getCompanyOrders(companyId){
         .from('order')
         .select('*')
         .eq('company_id', companyId);
-  
-        console.log("logging orders from backend", orders);
+
       
         
       if(error){
@@ -282,6 +272,98 @@ export async function getCompanyOrders(companyId){
     
       } catch (error) {
         console.log(error);
+        return null;
+      }
+}
+
+export async function getCandidateBookmarks(candidateId){
+
+    try {
+
+        const { data: bookmarks, error } = await supabase
+            .from('candidate_bookmarks')
+            .select(
+                `
+                *,
+                job:job!id (
+                    *
+                )
+                `
+            )
+            .eq('user_id', candidateId);
+        
+        return bookmarks;
+    
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+}
+
+export async function updateBookmark(jobId, candidateId){
+    try {
+        const {data, error} = await supabase
+            .from('candidate_bookmarks')
+            .insert({job_id: jobId, user_id: candidateId})
+            .select();
+
+        
+        if(data){
+            return true
+        }else{
+            false;
+        }
+
+    
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+}
+
+
+export async function deleteBookmark(bookmarkId){
+
+    try {
+
+        const response = await supabase
+            .from('candidate_bookmarks')
+            .delete()
+            .eq('id', bookmarkId)
+            .select();
+
+
+        
+        if(response.status == 200){
+            return true;
+        }else{
+            false;
+        }
+
+    
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+}
+
+export async function isBookmarkedByUser(userId, jobId){
+    try {
+
+        const { data: bookmarks, error } = await supabase
+            .from('candidate_bookmarks')
+            .select(`*`)
+            .eq('user_id', userId)
+            .eq('job_id', jobId);
+
+        if(bookmarks.length != 0){
+            return bookmarks[0];
+        }else{
+            return false;
+        }
+    
+      } catch (error) {
+        //console.log(error);
         return null;
       }
 }

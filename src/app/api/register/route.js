@@ -6,9 +6,8 @@ export async function POST(req){
 
     const body = await req.json();
 
-    console.log(body)
+    let {name, surname, email, password, userType} = body.data;
 
-    let {email, password} = body;
 
     if(!email || !password) {
         return new NextResponse({message: "Missing email or password"}, {status: 400});
@@ -20,7 +19,6 @@ export async function POST(req){
         .select()
         .eq('email', email)
 
-        console.log(user);
 
         if(user.email == email){
             console.log("existing user found");
@@ -33,13 +31,16 @@ export async function POST(req){
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        
 
         const {error: newUserError} = await supabase
         .from('users')
         .insert({
+            name: name,
+            last_name: surname,
             email: email,
             password: hashedPassword,
-            role: 'company'
+            role: userType
         })
 
         if(newUserError) {

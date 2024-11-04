@@ -21,8 +21,6 @@ export async function PATCH(req, res) {
             id
         } = await req.json();
 
-        console.log("printing jobId:", id);
-
        const {data, error} = await supabase
         .from('job')
         .update({expiration_date: getTodayDate(), expired: true})
@@ -31,8 +29,6 @@ export async function PATCH(req, res) {
         if(error) {
             return NextResponse.json({message: error.message}, {status: error.status})
         }
-
-        console.log("printing data", data);
         
     
         return NextResponse.json({message: 'job closed successfully'}, {status: 200})

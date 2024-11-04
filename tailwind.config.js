@@ -28,7 +28,17 @@ module.exports = {
   			'remotify-lb': '#39D1CC',
   			'remotify-db': '#142C42',
   			complementary: '#422A14',
-  			'remotify-lum': '#d8f0ef'
+  			'remotify-lum': '#d8f0ef',
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
+  			}
   		},
   		gridTemplateRows: {
   			'12': 'repeat(12, minmax(0, 1fr))',

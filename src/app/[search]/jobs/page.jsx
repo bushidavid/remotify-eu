@@ -30,8 +30,6 @@ export default async function Page({ params }) {
 
     const jobs = await getJobs(params.search);
 
-    console.log(jobs);
-
     return (
         <section className='w-screen flex flex-col justify-center items-center'>
         
