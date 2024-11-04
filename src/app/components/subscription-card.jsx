@@ -17,10 +17,10 @@ export default function SubscriptionCard({ title, reoccurrence, price, cadence, 
   
     if (session) {
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/subscribe-payment`, {
+      const res = await fetch(`/api/subscribe-payment`, {
         method: 'POST',
           headers: {
-              'ContentType': 'application/json'
+              'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             priceId: [plan],

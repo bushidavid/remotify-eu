@@ -16,15 +16,20 @@ async function getOrCreateCustomer(email) {
         throw new Error("Error fetching user data: " + error.message);
     }
 
-    let stripeCustomerId = user?.stripe_customer_id;
+
+    let stripeCustomerId = user?.stripe_customer_id ?? null;
+    console.log("Logging stripe_customer_id from user data:", stripeCustomerId);
 
     // Step 2: If no customer ID exists, create a new customer in Stripe
     if (!stripeCustomerId) {
+
+        console.log("Stripe customer doesn't exist. Creting new customer.")
         const customer = await stripe.customers.create({
             email: email,
         });
 
         stripeCustomerId = customer.id;
+        console.log("logging stripe customer id after creation: ", stripeCustomerId)
 
         // Step 3: Save the new Stripe customer ID to the database
         const { error: updateError } = await supabase
