@@ -12,7 +12,6 @@ const today = new Date(Date.now());
 
 export default function InfiniteScrollJobsCompany({ initialJobs, companyId }) {
 
-    console.log(companyId)
 
     const [jobs, setJobs] = useState(initialJobs);
     const [limit, setLimit] = useState(24);

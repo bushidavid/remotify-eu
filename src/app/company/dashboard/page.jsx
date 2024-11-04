@@ -13,7 +13,6 @@ export default async function Page() {
 
   const session = await getServerSession(Options);
 
-
   if(!session){
     redirect('/signin?callbackUrl=/company/dashboard');
   }
@@ -27,7 +26,7 @@ export default async function Page() {
             
             <section className="col-start-2 col-span-10 row-start-1 row-span-full gap-5">
               {
-                companyJobs ? <h1>Nothing to see here yet</h1> : <CompanyDashboard companyJobs={companyJobs.filter(job => !job.expired)} companyId={session.user.id} companyStats={companyStats}/> 
+                !companyJobs ? <h1>Nothing to see here yet</h1> : <CompanyDashboard companyJobs={companyJobs.filter(job => !job.expired)} companyId={session.user.id} companyStats={companyStats}/> 
               }
               
             {/* Job List with jobs posted by the company */}

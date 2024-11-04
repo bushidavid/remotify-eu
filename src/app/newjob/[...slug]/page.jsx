@@ -22,7 +22,9 @@ export default function Page ({ params }) {
     
     const { data: session, status } = useSession({
         required: true,
-        onUnauthenticated() { signIn(Credentials, {callbackUrl: `/newjob/${params.slug}`})}
+        onUnauthenticated() { 
+            signIn("credentials", { callbackUrl: `/newjob/${params.slug}` });
+        }
     })
 
 
@@ -64,6 +66,8 @@ export default function Page ({ params }) {
 
         const data = await response.json();
         
+        console.log("redirecting to stripe: ", data.url);
+
         router.push(data.url);
 
         return;
@@ -140,6 +144,8 @@ export default function Page ({ params }) {
         } catch (err) {
             console.log("printing error message: \n", err.message);
         }
+
+        console.log("going to handle payment now");
 
         handlePayment(newJobId);
     }

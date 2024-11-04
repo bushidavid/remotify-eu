@@ -24,6 +24,8 @@ export async function POST (req) {
 
     switch (event.type) {
         case 'payment_intent.succeeded':
+
+            console.log("printing customer id after payment", event.data.object.customer)
           try {
             const {data, error} = await supabase
                         .from("job")
@@ -49,14 +51,13 @@ export async function POST (req) {
                             .update({ payment_verified: "TRUE" })
                             .eq('id', newJobId)
 
-                console.log("printing customer email and total after payment", event.data.object.customer_email, event.data.object.amount_total, event.data.object.metadata["price"])
+                console.log("printing customer id after payment", event.data.object.customer);
 
                 const {data: companyId, error: getIdError} = await supabase
                     .from("users")
                     .select("id")
-                    .eq("email", event.data.object.customer_email)
+                    .eq("stripe_customer_id", event.data.object.customer)
 
-                console.log(companyId[0]);
 
                 console.log("inserting order data in DB");
 
@@ -82,6 +83,8 @@ export async function POST (req) {
             break;
         case 'payment_intent.created':
             try {
+                console.log("printing customer id ", event.data.object.customer)
+
                 const {data, error} = await supabase
                             .from("job")
                             .update({ payment_verified: "TRUE" })
@@ -100,7 +103,7 @@ export async function POST (req) {
         console.log("inside charge failed");
 
             try {
-                console.log("printing customer email and total after payment", event.data.object.customer_email, event.data.object.amount_total, event.data.object.metadata["price"])
+                console.log("printing customer id", event.data.object.customer)
 
                 const {data: companyId, error: getIdError} = await supabase
                     .from("users")
@@ -136,7 +139,7 @@ export async function POST (req) {
             console.log("inside payment intent failed");
 
                 try {
-                    console.log("printing customer email and total after payment", event.data.object.receipt_email, event.data.object.amount, event.data.object.metadata["price"])
+                    console.log("printing customer id", event.data.object.customer)
 
                     const {data: companyId, error: getIdError} = await supabase
                         .from("users")
@@ -172,7 +175,7 @@ export async function POST (req) {
             console.log("inside payment intent failed");
 
                 try {
-                    console.log("printing customer email and total after payment", event.data.object.customer_email, event.data.object.amount_total, event.data.object.metadata["price"])
+                    console.log("printing customer id", event.data.object.customer)
 
                     const {data: companyId, error: getIdError} = await supabase
                         .from("users")
@@ -203,12 +206,46 @@ export async function POST (req) {
                         return NextResponse.json({ message: err }, { status: 400 });
                 }
             break;
+
+            case 'customer.created':
+
+            console.log("inside customer created");
+
+                try {
+                    console.log("printing customer id", event.data.object.id)
+
+                    const {data: internalCustomerId, error: getIdError} = await supabase
+                        .from("users")
+                        .select("id")
+                        .eq("email", event.data.object.email)
+
+                    console.log(internalCustomerId[0]);
+
+                    console.log("inserting customer stripe ID in DB");
+
+                    const {error: insertCustomerStripeIdError} = await supabase
+                        .from("users")
+                        .update(
+                            {
+                                stripe_customer_id: event.data.object.id
+                            }
+                        )
+                        .eq('email', internalCustomerId[0]);
+
+                    if(getIdError || insertCustomerStripeIdError){
+                        console.log(getIdError, insertCustomerStripeIdError);
+                        return NextResponse.json({ message: getIdError?.message || insertCustomerStripeIdError?.message }, { status: 400 });
+                    }
+                } catch (err) {
+                        console.log(err);
+                        return NextResponse.json({ message: err }, { status: 400 });
+                }
+            break;
             
         default:
-          console.log(`Unhandled event type ${event.type}`);
+          console.log(`Unhandled event type: `, event.type);
     }
 
     return NextResponse.json({ message: 'finished' }, { status: 200 });
-
 }
 

@@ -9,8 +9,6 @@ export async function DELETE(req, res) {
             id
         } = await req.json();
 
-        console.log("printing jobId:", id);
-
        const {error} = await supabase
         .from('job')
         .delete()

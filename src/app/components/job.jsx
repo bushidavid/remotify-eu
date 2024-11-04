@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { InView, useInView } from 'react-intersection-observer';
 import { MdLocationPin } from 'react-icons/md';
 import CountryList from './country-list';
+import Bookmark from './bookmark';
 
 export default function Job({ ...props }) {
 
@@ -67,7 +68,6 @@ export default function Job({ ...props }) {
 
       const json = await result.json();
 
-      console.log(json);
 
       if(!json.ok){
         console.log(`unable to update job views for jobId: ${jobId}`)
@@ -80,60 +80,68 @@ export default function Job({ ...props }) {
 
   return (
     <InView as='div' triggerOnce onChange={(inView, entry) => { if(inView) handleInView(props.id) }} >
-      <Link href={`/job/${props.id}`} className='flex flex-col items-center justify-center mb-2 ' onClick={(e) => handleClick(e, props.id)}>
-        <Card className={`w-11/12 md:w-10/12 flex flex-col items-center justify-center px-2 pb-0.5`}>
-          <CardBody className='flex flex-row items-start justify-between bg-slate-50 rounded-xl mx-2 mt-1.5'>
-            <div className="w-[30%] max-w-[30%] md:w-[15%] md:max-w-[15%] flex flex-col justify-around ">
-                <Image className="rounded-full" src={props.jobLogoUrl ? props.jobLogoUrl : "/Logo.jpg"} alt="company_logo" width={70} height={70}></Image>
-            </div>
-            <div className='flex md:flex-row flex-col md:justify-start md:items-center w-full pl-2'>        
-                <div className='w-full md:w-[40%] md:max-w-[40%]'>
-                    <h1 className="text-base">{props.title}</h1>{/* <h1>{job.job_title}</h1> */}
-                    <h2 className="text-sm text-slate-600">{props.companyName}</h2>
-                    <h3 className="text-xs text-slate-600">
-                      {(() => {
-                        const formatNumber = (number) => {
-                          return new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(number);
-                        };
-
-                        const currencySymbol = props.currency === 'USD' 
-                          ? '$' 
-                          : props.currency === 'EUR' 
-                          ? '€' 
-                          : props.currency === 'GBP' 
-                          ? '£' 
-                          : '';
-
-
-                        if (props.salaryMin && props.salaryMax) {
-                          return `${currencySymbol}${formatNumber(props.salaryMin)} to ${currencySymbol}${formatNumber(props.salaryMax)}`;
-                        } else if (props.salaryMin) {
-                          return `from ${currencySymbol}${formatNumber(props.salaryMin)}`;
-                        } else if (props.salaryMax) {
-                          return `up to ${currencySymbol}${formatNumber(props.salaryMax)}`;
-                        } else {
-                          return ''; // Nothing displayed if neither salaryMin nor salaryMax is provided
-                        }
-                      })()}
-                    </h3>
-
-                </div>
-                <div className='w-full md:min-w-[30%] md:max-w-[30%] flex flex-row items-center gap-1'>
-                  <MdLocationPin />
-                  <CountryList countries={props.country}/>
-                </div>
+      
+        <Card className={`flex flex-col items-center justify-center mb-2`}>
+          <Link href={`/job/${props.id}`} className='w-full flex flex-col items-center justify-center px-2 pb-0.5' onClick={(e) => handleClick(e, props.id)}>
+            <CardBody className='flex flex-row items-start justify-between bg-slate-50 rounded-xl mx-2 mt-1.5'>
+              <div className="w-[30%] max-w-[30%] md:w-[15%] md:max-w-[15%] flex flex-col justify-around ">
+                  <Image className="rounded-full" src={props.jobLogoUrl ? props.jobLogoUrl : "/Logo.jpg"} alt="company_logo" width={70} height={70}></Image>
               </div>
+              <div className='flex md:flex-row flex-col md:justify-start md:items-center w-full pl-2'>        
+                  <div className='w-full md:w-[40%] md:max-w-[40%]'>
+                      <h1 className="text-base">{props.title}</h1>{/* <h1>{job.job_title}</h1> */}
+                      <h2 className="text-sm text-slate-600">{props.companyName}</h2>
+                      <h3 className="text-xs text-slate-600 my-2">
+                        {(() => {
+                          const formatNumber = (number) => {
+                            return new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(number);
+                          };
 
-          </CardBody>
-          <div className=' relative flex flex-row flex-grow w-full my-1'>
-            <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
+                          const currencySymbol = props.currency === 'USD' 
+                            ? '$' 
+                            : props.currency === 'EUR' 
+                            ? '€' 
+                            : props.currency === 'GBP' 
+                            ? '£' 
+                            : '';
 
-            {props.tags?.split(',').map(tag => (
-              <p className={`text-xs font-extralight rounded-full border-1 px-2 pt-0.5 mx-1 my-0.5`} key={tag}>{tag}</p>
-            ))}
+
+                          if (props.salaryMin && props.salaryMax) {
+                            return `${currencySymbol}${formatNumber(props.salaryMin)} to ${currencySymbol}${formatNumber(props.salaryMax)}`;
+                          } else if (props.salaryMin) {
+                            return `from ${currencySymbol}${formatNumber(props.salaryMin)}`;
+                          } else if (props.salaryMax) {
+                            return `up to ${currencySymbol}${formatNumber(props.salaryMax)}`;
+                          } else {
+                            return ''; // Nothing displayed if neither salaryMin nor salaryMax is provided
+                          }
+                        })()}
+                      </h3>
+
+                  </div>
+                  <div className='w-full md:min-w-[30%] md:max-w-[30%] flex flex-row items-center gap-1 my-1'>
+                    <MdLocationPin />
+                    <CountryList countries={props.country}/>
+                  </div>
+                </div>
+
+            </CardBody>
+          </Link>
+          <div className='flex justify-between w-full relative'>
+            <div className='flex flex-row my-1'>
+              <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
+
+              {props.tags?.split(',').map(tag => (
+                <p className={`text-xs font-extralight rounded-full border-1 px-2 pt-0.5 mx-1 my-0.5`} key={tag}>{tag}</p>
+              ))}
+              
+            </div>
+            <div className='flex justify-center items-center mx-3'>
+                <Bookmark jobId={props.id}></Bookmark>
+            </div>
           </div>
+          
         </Card>
-      </Link>
     </InView>
 
     // <div>

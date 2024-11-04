@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 const JobList = ({ jobs, title,  companyId }) => {
 
     return ( 
-        <div className="flex flex-col w-full justify-center items-center motion-reduce">
+        <div className="flex flex-col w-full max-w-7xl justify-center items-center motion-reduce">
             <div className="flex flex-col align-center w-full h-full ">
 
                 { 

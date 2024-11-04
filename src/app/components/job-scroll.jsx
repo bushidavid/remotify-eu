@@ -57,7 +57,7 @@ export default function JobScroll({ initialJobs, search, filter }) {
        
         filterJobs();    
         
-    }, [context.title, context.filter, jobs])
+    }, [context.title, context.filter])
 
     const filterJobs = () => {
 

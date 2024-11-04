@@ -61,17 +61,17 @@ function CompanyJobs({ jobs, deleteModalIsOpen, closeModalIsOpen, setDeleteModal
                 </div>
 
 
-                <div class="inline-flex h-8 rounded-md shadow-sm " role="group">
-                <button onClick={() => router.push(`dashboard/viewjob/${job.id}/`)} type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 ">
+                <div className="inline-flex h-8 rounded-md shadow-sm " role="group">
+                <button onClick={() => router.push(`dashboard/viewjob/${job.id}/`)} type="button" className="px-4 py-0.5 text-xs text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 ">
                         View
                     </button>
-                    <button onClick={() => router.push(`editjob/${job.id}/`)} type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
+                    <button onClick={() => router.push(`editjob/${job.id}/`)} type="button" className="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-r border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
                         Edit
                     </button>
-                    <button onClick={() => handleClose(job)} type="button" class="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
+                    <button onClick={() => handleClose(job)} type="button" className="px-4 py-0.5 text-xs text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700  ">
                         Close
                     </button>
-                    <button onClick={() => handleDelete(job)} type="button" class="px-4 py-0.5 text-xs text-red-800 bg-red-200  rounded-e-lg hover:bg-red-300 hover:text-red-900   ">
+                    <button onClick={() => handleDelete(job)} type="button" className="px-4 py-0.5 text-xs text-red-800 bg-red-200  rounded-e-lg hover:bg-red-300 hover:text-red-900   ">
                         Delete
                     </button>
                 </div>
