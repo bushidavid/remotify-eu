@@ -20,7 +20,7 @@ export default function SubscriptionCard({ title, reoccurrence, price, cadence, 
       const res = await fetch(`/api/subscribe-payment`, {
         method: 'POST',
           headers: {
-              'ContentType': 'application/json'
+              'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             priceId: [plan],
