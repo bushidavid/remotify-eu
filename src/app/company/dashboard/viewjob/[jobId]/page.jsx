@@ -11,7 +11,6 @@ export default async function Page({ params }) {
 
   const job = await getJobDetails(params.jobId);
 
-  console.log(job);
 
   const postedDate = new Date(job.created_at);
   const expirationDate = new Date(job.expiration_date);

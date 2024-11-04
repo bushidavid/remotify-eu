@@ -17,7 +17,6 @@ export async function POST (req) {
         .eq('id', internalCustomerId)
         .single();
 
-    console.log("print retrieved data", data);
 
     if (error || !data) {
         return NextResponse.json({ status: 'error', message: 'Customer not found' });

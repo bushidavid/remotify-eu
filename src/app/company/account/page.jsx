@@ -15,7 +15,6 @@ export default function Page() {
 
   })
 
-  console.log(status);
 
   const [user, setUser] = useState(null);
 

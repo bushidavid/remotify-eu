@@ -21,7 +21,6 @@ export default async function Page() {
 
     const { prices } = await getSubscriptions();
 
-    console.log(prices);
 
     //subscriptions.sort((a, b) => a.unit_amount - b.unit_amount);
 

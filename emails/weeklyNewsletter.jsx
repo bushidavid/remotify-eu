@@ -3,7 +3,6 @@ import * as React from "react";
 
 export default function WeeklyNewsletter({ categories }) {
 
-    console.log("printing categories in Email component", categories);
 
   return (
     <Tailwind

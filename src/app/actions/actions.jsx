@@ -104,7 +104,6 @@ async function getCompanyData(companyId) {
         .select('id')
         .eq(companyId)
 
-    console.log(data);
 
     if(error) {
         console.log("error fetching data from DB");
@@ -123,7 +122,6 @@ export async function getCompanyJobs(limit = 24, lastLoadedTime = currentTime, c
         return {};
     }
 
-    console.log(data);
 
     revalidatePath("/");
 
@@ -268,8 +266,7 @@ export async function getCompanyOrders(companyId){
         .from('order')
         .select('*')
         .eq('company_id', companyId);
-  
-        console.log("logging orders from backend", orders);
+
       
         
       if(error){
