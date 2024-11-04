@@ -8,8 +8,21 @@ import Image from "next/image";
 
 const getSubscriptions = async () => {
 
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-subscriptions`, { next: { revalidate: 3600 } });
-    return res.json();
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-subscriptions`, {
+            next: { revalidate: 3600 },
+        });
+        
+        // Check if response is okay and JSON format
+        if (!res.ok) {
+            throw new Error(`Failed to fetch subscriptions: ${res.statusText}`);
+        }
+        
+        return await res.json();
+    } catch (error) {
+        console.error("Error fetching subscriptions:", error);
+        return null; // or some fallback data if needed
+    }
 }
 
 export default async function Page() {
@@ -19,6 +32,10 @@ export default async function Page() {
     }
 
     const prices = await getSubscriptions();
+
+    if (!prices) {
+        return <p>Error loading subscription data. Please try again later.</p>;
+    }
 
     return (
         <>
