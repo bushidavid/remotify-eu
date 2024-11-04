@@ -61,7 +61,7 @@ export const Options  = {
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === 'development',
     pages: {
-        signIn: '/candidate-login',
+        signIn: '/login',
     },
     session: {
         strategy: "jwt",
@@ -102,6 +102,7 @@ export const Options  = {
             console.log("printing token inside session: ", token);
 
             session.user.role = token.role;
+            session.user.id = token.id;
             console.log("Session Callback - Session:", session);
             return session;
 

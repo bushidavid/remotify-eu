@@ -163,15 +163,13 @@ export async function getJobDetails(jobId){
       console.log(error);
       return null;
     }
-
-    
 }
 
 
 // fetch job details from database
 export async function getUserDetails(userId){
     try {
-  
+        
       const {data: user, error} = await supabase
       .from('users')
       .select('*')
@@ -282,6 +280,108 @@ export async function getCompanyOrders(companyId){
     
       } catch (error) {
         console.log(error);
+        return null;
+      }
+}
+
+export async function getCandidateBookmarks(candidateId){
+
+    console.log("inside get candidate bookmarks");
+    try {
+
+        const { data: bookmarks, error } = await supabase
+            .from('candidate_bookmarks')
+            .select(
+                `
+                *,
+                job:job!id (
+                    *
+                )
+                `
+            )
+            .eq('user_id', candidateId);
+        
+        return bookmarks;
+    
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+}
+
+export async function updateBookmark(jobId, candidateId){
+    try {
+        console.log("inside update bookmarks");
+        const {data, error} = await supabase
+            .from('candidate_bookmarks')
+            .insert({job_id: jobId, user_id: candidateId})
+            .select();
+
+
+        console.log(data);
+        
+        if(data){
+            return true
+        }else{
+            false;
+        }
+
+    
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+}
+
+
+export async function deleteBookmark(bookmarkId){
+
+    
+    console.log("inside delete bookmark");
+    try {
+
+        const response = await supabase
+            .from('candidate_bookmarks')
+            .delete()
+            .eq('id', bookmarkId)
+            .select();
+
+
+        console.log(response);
+
+        
+        if(response.status == 200){
+            return true;
+        }else{
+            false;
+        }
+
+    
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+}
+
+export async function isBookmarkedByUser(userId, jobId){
+    try {
+
+        const { data: bookmarks, error } = await supabase
+            .from('candidate_bookmarks')
+            .select(`*`)
+            .eq('user_id', userId)
+            .eq('job_id', jobId);
+
+        //console.log(bookmarks);
+
+        if(bookmarks.length != 0){
+            return bookmarks[0];
+        }else{
+            return false;
+        }
+    
+      } catch (error) {
+        //console.log(error);
         return null;
       }
 }
