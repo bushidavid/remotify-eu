@@ -65,8 +65,6 @@ export default function Page ({ params }) {
         })
 
         const data = await response.json();
-        
-        console.log("redirecting to stripe: ", data.url);
 
         router.push(data.url);
 

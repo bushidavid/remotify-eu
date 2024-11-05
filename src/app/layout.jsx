@@ -11,7 +11,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata = {
   title: 'RemotifyEurope: The Best Remote Jobs in Europe',
-  description: 'The best remote job board in Europe',
+  description: 'Find the best remote jobs in Europe',
   openGraph: {
     title: 'RemotifyEurope: The Best Remote Jobs in Europe',
     description: 'Find the best remote jobs in Europe',
@@ -24,7 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className='flex flex-col w-screen min-w-screen items-center no-scrollbar min-h-screen font-poppins'>
+      <body className='flex flex-col w-screen items-center no-scrollbar font-poppins'>
         <SessProvider >
           <Navbar />
             <Providers>

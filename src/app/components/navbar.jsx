@@ -6,21 +6,11 @@ import { Categories } from "../../../lib/departments"
 import { useState, useRef, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import Router from "next/navigation";
 import { useRouter } from "next/navigation";
 
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuIndicator,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-    NavigationMenuViewport,
-  } from "@/components/ui/navigation-menu"
-import { Button } from "@/components/ui/button";
 import CompanyUserMenu from "./company-user-menu";
+import CandidateUserMenu from "./candidate-user-menu";
+import NavbarMobileMenu from "./navbar-mobile-menu";
   
 
 export default function Navbar() {
@@ -163,69 +153,39 @@ export default function Navbar() {
                 </div>
                 </div>
             </div>
-            <div>
-            {/* <NavigationMenu>
-                <NavigationMenuList>
-                    <NavigationMenuItem>
-                    <NavigationMenuTrigger className='bg-remotify-db text-white '>For Candidates</NavigationMenuTrigger>
-                    <NavigationMenuContent className='bg-remotify-db border-none'>
-                        <ul className="flex w-[100px] gap-3 flex-col p-4 md:w-[100px] md:grid-cols-2 lg:w-[400px] border-none">
-                            <li className="w-full border-none">
-                                <NavigationMenuLink className="text-white text-sm hover:opacity-70"><Link href={'/candidate-register'}>Sign Up</Link></NavigationMenuLink>
-                            </li>
-                            <li className="w-full border-none">
-                                <NavigationMenuLink className="text-white text-sm hover:opacity-70"><Link href={'/candidate-signin'}>Login</Link></NavigationMenuLink>
-                            </li>
-                            <li className="w-full border-none">
-                                <NavigationMenuLink className="text-white text-sm hover:opacity-70"><Link href={'/get-premium'}>Get Premium</Link></NavigationMenuLink>
-                            </li>
-                        </ul>
-
-                    </NavigationMenuContent>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                    <NavigationMenuTrigger className='bg-remotify-db text-white'>For Employers</NavigationMenuTrigger>
-                    <NavigationMenuContent className='bg-remotify-db border-none'>
-                        <ul className="flex w-[100px] gap-3 flex-col p-4 md:w-[100px] md:grid-cols-2 lg:w-[400px] border-none">
-                            <li className="w-full border-none">
-                                <Button className="text-white text-sm hover:text-slate-400 bg-remotify-db" onClick={() => router.push('/register')} >Sign Up</Button>
-                            </li>
-                            <li className="w-full border-none">
-                                <Button className="text-white text-sm hover:text-slate-400 bg-remotify-db" onClick={signIn}>Login</Button>
-                            </li>   
-                        </ul>
-
-                    </NavigationMenuContent>
-                    </NavigationMenuItem>
-                </NavigationMenuList>
-            </NavigationMenu> */}
-                {!session && <Link
-                    href="/login"
-                    className="font-poppins text-sm text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-regular "
-                    >
-                        Login
-                </Link>}
+            <div className="flex flex-row">
                 <Link
                     href="/get-premium"
-                    className="font-poppins text-sm text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-regular "
-                    >
-                        Get Premium
+                    className="hidden md:block font-poppins text-sm text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-regular"
+                >
+                    Get Premium
                 </Link>
+                {!session && (
+                    <Link
+                        href="/login"
+                        className="hidden md:block font-poppins text-sm text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-regular"
+                    >
+                        Login
+                    </Link>
+                )}
+                    
 
             </div>
             <div className="hidden md:block mx-2">
-                <Link
-                    href={'/pricing'}
-                    className="font-poppins text-md bg-remotify-lb text-remotify-db rounded-md p-2 font-semibold"
-                >
-                    Post New Job
-                </Link>
+                    <Link
+                        href={'/pricing'}
+                        className="font-poppins text-md bg-remotify-lb text-remotify-db rounded-md p-2 font-semibold"
+                    >
+                        Post New Job
+                    </Link>
             </div>
-                {session && <CompanyUserMenu />}
+            {session && (
+                session?.user.role === "company" ? <CompanyUserMenu /> : <CandidateUserMenu />
+            )}
                 {session ? (
                         <div className="md:hidden">
                             <button onClick={signOut}
-                                className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
+                                className="hidden md:block font-poppins bg-remotify-db text-white p-2 text-xs md:text-base font-regular"
                             >
                             Sign Out
                             </button>
@@ -234,9 +194,9 @@ export default function Navbar() {
                     (
                         <div className="md:hidden ">
                             <button onClick={signIn}
-                                className="font-poppins border-1 border-white bg-remotify-db text-white p-2 font-semibold"
+                                className="font-poppins bg-remotify-db text-white p-2 text-xs md:text-base font-regular"
                             >
-                            Sign In
+                            Login
                             </button>
                         </div>
                     )
@@ -245,25 +205,7 @@ export default function Navbar() {
             
         </div>
         {/* Mobile menu, show/hide based on menu state. */}
-        {open && <div className="sm:hidden" id="mobile-menu">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-            {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-            <Link
-                href="/featured"
-                className="font-poppins text-gray-300 block rounded-md px-3 py-2 text-base font-medium"
-                aria-current="page"
-            >
-                Featured
-            </Link>
-            <Link
-                href={'/pricing'}
-                className="font-poppins bg-remotify-lb text-remotify-db rounded-md p-2 mx-2 font-regular"
-                >
-                Post New Job
-            </Link>
-            
-            </div>
-        </div>
+        {open && <NavbarMobileMenu session={session} />
         }
         
     </nav>
