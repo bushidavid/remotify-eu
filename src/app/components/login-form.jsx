@@ -10,7 +10,7 @@ import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Button } from "@/components/ui/button";
@@ -40,6 +40,8 @@ export default function LoginForm() {
     const isFirstRender = useRef(true);
 
     const {data: session, status} = useSession();
+    const [loading, setLoading] = useState(false);
+    const [displayErrorMessage, setDisplayErrorMessage] = useState(false);
     const router = useRouter();
 
     const searchParams = useSearchParams()
@@ -61,60 +63,72 @@ export default function LoginForm() {
       
     const onSubmit = async (data) => {
 
-      signIn('credentials', {
+      setLoading(true);
+
+      const result = await signIn('credentials', {
         ...data,
         redirect: false,
         callbackUrl,
       });
 
+      if (!result.ok) {
+        setDisplayErrorMessage(true); // update the state with the error message
+      } else {
+        setDisplayErrorMessage(false);
+      }
+
+      setLoading(false);
+
     }
 
     useEffect(() => {
+      const subscription = form.watch((value, { name }) => {
+        if (name === "email" || name === "password") {
+          setDisplayErrorMessage(false);
+        }
+      });
+      return () => subscription.unsubscribe();
+    }, [form]);
+  
 
-      if(isFirstRender.current || status !== 'authenticated') {
+    useEffect(() => {
+      if (isFirstRender.current || status !== 'authenticated') {
         isFirstRender.current = false;
         return;
       }
-
-      console.log("logging search: ", search)
-
-      if(search == null){
+    
+      console.log("logging search: ", search);
+    
+      if (search == null) {
         router.push("/");
-      }else if(plan != 0){
-        const stripeCheckout = async() => {
-
-
-          const res = await fetch('api/subscribe-payment', {
+      } else if (plan !== 0) {
+        const stripeCheckout = async () => {
+          const res = await fetch('/api/subscribe-payment', {
             method: 'POST',
-              headers: {
-                  'ContentType': 'application/json'
-              },
-              body: JSON.stringify({
-                priceId: [plan],
-                email: session?.user?.email
-              })
-          })
-
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              priceId: [plan],
+              email: session?.user?.email
+            })
+          });
+    
           const response = await res.json();
-
-          router.push(response.url)
-
-        }
-
+          router.push(response.url);
+        };
+    
         stripeCheckout();
-      }else {
+      } else {
         router.push(callbackUrl); // redirect to callbackUrl if no plan
       }
-
-    }, [status, session, plan, router, callbackUrl])
+    }, [status, session, plan, router, callbackUrl, search]);
   
-
-        
 
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-8/12 space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-10/12 md:w-8/12 md:space-y-6">
                 <FormField
                 control={form.control}
                 name="email"
@@ -141,7 +155,12 @@ export default function LoginForm() {
                     </FormItem>
                 )}
                 />
-                <Button type="submit">Submit</Button>
+                <div className='flex flex-col w-fit gap-y-2 md:mt-10 mt-4 md:my-6'>
+                  <Button type="submit" disabled={loading}>
+                    {loading ? "Loading..." : "Submit"}
+                  </Button>
+                  {displayErrorMessage && <p className='text-red-900 bg-red-100 rounded-lg px-2 py-2 text-xs md:text-sm'>Invalid Email or Password</p>}
+                </div>
             </form>
         </Form>
 );

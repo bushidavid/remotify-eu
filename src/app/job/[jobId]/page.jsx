@@ -20,12 +20,17 @@ export async function generateMetadata({ params, searchParams }, parent) {
   const previousImages = (await parent).openGraph?.images || []
  
   return {
-    title: job.job_title,
+    title: `${job.job_title} - RemotifyEurope`,
     openGraph: {
-      title: job.job_title,
-      description: 'RemotifyEurope',
+      title: `${job.job_title} - RemotifyEurope`,
+      description: 'RemotifyEurope - The Best Remote Jobs in Europe and in European time zones',
       images: [job.logo_url, ...previousImages],
     },
+    twitter: {
+      title: `${job.job_title} - RemotifyEurope`,
+      description: 'Find the best remote jobs in Europe and in European time zones at RemotifyEurope',
+      image: job.logo_url,  // Set Twitter image URL
+    }
   }
 }
 

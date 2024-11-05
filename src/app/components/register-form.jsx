@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Checkbox } from "@/components/ui/checkbox"
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -37,9 +36,9 @@ const FormSchema = z.object({
     confirmPassword: z.string().min(4, {
         message: "Please enter a valid password",
         }),
-    userType: z.string().min(1, {
-        message: "Name is required.",
-        }), 
+    userType: z.enum(["candidate", "company"], {
+        required_error: "User type is required." 
+        }),
 }).superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
       ctx.addIssue({
@@ -52,10 +51,9 @@ const FormSchema = z.object({
   
 export default function RegisterForm() {
 
-    const [ userType, setUserType ] = useState("candidate");
-    const [ errorMessage, setErrorMessage ] = useState("");
     const [ displayErrorMessage, setDisplayErrorMessage ] = useState(false);
     const [ displaySuccessMessage, setDisplaySuccessMessage ] = useState(false);
+    const [ loading, setLoading ] = useState(false);
 
     const router = useRouter();
 
@@ -71,6 +69,8 @@ export default function RegisterForm() {
     });
 
     const onSubmit = async (data) => {
+
+        setLoading(true);
         // toast({
         // title: "You submitted the following values:",
         // description: (
@@ -100,15 +100,38 @@ export default function RegisterForm() {
             }, 5000); // 3000 ms = 3 seconds
         }else{
             setDisplayErrorMessage(true);
+            setLoading(false);
         }
-
-        
-        
     };
+
+    useEffect(() => {
+        const subscription = form.watch(() => setDisplayErrorMessage(false));
+        return () => subscription.unsubscribe();
+      }, [form]);
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-8/12 space-y-6">
+                {/* Role Selection */}
+                <div className="flex items-center space-x-4">
+                    <Checkbox
+                        checked={form.watch("userType") === "candidate"}
+                        onCheckedChange={() => form.setValue("userType", "candidate")}
+                        id="candidate-checkbox"
+                    />
+                    <label htmlFor="candidate-checkbox" className="text-xs md:text-sm font-regular">
+                        Sign up as Candidate
+                    </label>
+                    
+                    <Checkbox
+                        checked={form.watch("userType") === "company"}
+                        onCheckedChange={() => form.setValue("userType", "company")}
+                        id="company-checkbox"
+                    />
+                    <label htmlFor="company-checkbox" className="text-xs md:text-sm font-regular">
+                        Sign up as Company
+                    </label>
+                </div>
                 <div className='flex flex-row gap-x-1 w-full'>
                     <FormField
                     control={form.control}
@@ -176,47 +199,12 @@ export default function RegisterForm() {
                     </FormItem>
                 )}
                 />
-                {/* <FormField
-                control={form.control}
-                className='invisible'
-                name="userType"
-                render={({ field }) => (
-                    <FormItem >
-                    <FormLabel>User Type</FormLabel>
-                    <FormControl>
-                        <Input placeholder="" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Your User Type
-                    </FormDescription>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                /> */}
-                {/* Role Selection */}
-                <div className="flex items-center space-x-4">
-                <Checkbox
-                    checked={userType === "candidate"}
-                    onCheckedChange={() => setUserType("candidate")}
-                    id="candidate-checkbox"
-                />
-                <label htmlFor="candidate-checkbox" className="text-sm font-medium">
-                    Sign up as Candidate
-                </label>
-                
-                <Checkbox
-                    checked={userType === "company"}
-                    onCheckedChange={() => setUserType("company")}
-                    id="company-checkbox"
-                />
-                <label htmlFor="company-checkbox" className="text-sm font-medium">
-                    Sign up as Company
-                </label>
-                </div>
                 <div className="flex flex-col items-center justify-center">
                     {displayErrorMessage && <p className="text-red-700">Error creating user</p>}
                     {displaySuccessMessage && <p className="text-green-700">Registration Successful. Redirecting to Login...</p>}
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" disabled={loading}>
+                        {loading ? "Loading..." : "Submit"}
+                    </Button>
                 </div>
             </form>
         </Form>
