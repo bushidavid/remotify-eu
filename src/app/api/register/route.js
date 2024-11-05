@@ -20,14 +20,14 @@ export async function POST(req){
         .eq('email', email)
 
 
-        if(user.email == email){
-            console.log("existing user found");
-            return new NextResponse(JSON.stringify({message: "User already exists"}), {status: 409})
+        if (user && user.length > 0) {
+            console.log("Existing user found");
+            return NextResponse.json({ message: "User already exists", status: 409, ok: false });
         }
 
         if(error){
             console.log("error while looking for the user", error);
-            return new NextResponse({message: error}, {status: error.status})
+            return NextResponse.json({message: error, status: error.status, ok: false});
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -45,10 +45,10 @@ export async function POST(req){
 
         if(newUserError) {
             console.log("error creating user", newUserError);
-            return new NextResponse({message: newUserError}, {status: newUserError.status})
+            return NextResponse.json({message: newUserError, status: newUserError.status, ok: false});
         }else{
             console.log("user created succesfully");
-            return new NextResponse(JSON.stringify({message: "User created successfully"}), {status: 200})
+            return NextResponse.json({message: "User successfully created", status: 200, ok: true});
         }
         
     } catch (err) {
