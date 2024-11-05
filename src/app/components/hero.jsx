@@ -12,7 +12,7 @@ export default function Hero() {
           <div className="block md:hidden">
                 <Link
                     href={'/contact-us'}
-                    className="font-poppins bg-remotify-lb text-remotify-db rounded-md p-2 font-semibold"
+                    className="font-poppins bg-remotify-lb text-white rounded-md p-2 font-light"
                 >
                     Post New Job
                 </Link>
