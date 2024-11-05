@@ -10,15 +10,20 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 
 export const metadata = {
-  title: 'RemotifyEurope: The Best Remote Jobs in Europe',
-  description: 'Find the best remote jobs in Europe',
+  title: 'RemotifyEurope - The Best Remote Jobs in Europe and in European time zones',
+  description: 'Find the best remote jobs in Europe and in European time zones',
   openGraph: {
-    title: 'RemotifyEurope: The Best Remote Jobs in Europe',
-    description: 'Find the best remote jobs in Europe',
+    title: 'RemotifyEurope - The Best Remote Jobs in Europe and in European time zones',
+    description: 'Find the best remote jobs in Europe and in European Time Zones',
     images: [
-      '/Logo.jpg' // Path to the Open Graph image in your public directory
+      `${process.env.NEXT_PUBLIC_BASE_URL}/logo_opengraph.png` // Path to the Open Graph image in your public directory
     ],
   },
+  twitter: {
+    title: `${job.job_title} - RemotifyEurope`,
+    description: 'Find the best remote jobs in Europe and in European time zones at RemotifyEurope',
+    image: `${process.env.NEXT_PUBLIC_BASE_URL}/logo_opengraph.png`,  // Set Twitter image URL
+  }
 }
 
 export default function RootLayout({ children }) {
