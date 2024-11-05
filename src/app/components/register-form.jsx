@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -51,7 +52,12 @@ const FormSchema = z.object({
   
 export default function RegisterForm() {
 
-    const [userType, setUserType] = useState("candidate");
+    const [ userType, setUserType ] = useState("candidate");
+    const [ errorMessage, setErrorMessage ] = useState("");
+    const [ displayErrorMessage, setDisplayErrorMessage ] = useState(false);
+    const [ displaySuccessMessage, setDisplaySuccessMessage ] = useState(false);
+
+    const router = useRouter();
 
     const form = useForm({
         resolver: zodResolver(FormSchema),
@@ -77,14 +83,26 @@ export default function RegisterForm() {
         const response = await fetch('api/register', {
             method: 'POST',
             headers: {
-                'ContentType': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({data})
         })
 
-        const userInfo = await response.json();
+        const res = await response.json();
 
-        // router.push('/candidate-signin')
+        console.log(res);
+
+        if(res.ok){
+            setDisplaySuccessMessage(true);
+
+            setTimeout(() => {
+                router.push('/login');
+            }, 5000); // 3000 ms = 3 seconds
+        }else{
+            setDisplayErrorMessage(true);
+        }
+
+        
         
     };
 
@@ -195,8 +213,11 @@ export default function RegisterForm() {
                     Sign up as Company
                 </label>
                 </div>
-
-                <Button type="submit">Submit</Button>
+                <div className="flex flex-col items-center justify-center">
+                    {displayErrorMessage && <p className="text-red-700">Error creating user</p>}
+                    {displaySuccessMessage && <p className="text-green-700">Registration Successful. Redirecting to Login...</p>}
+                    <Button type="submit">Submit</Button>
+                </div>
             </form>
         </Form>
 );
