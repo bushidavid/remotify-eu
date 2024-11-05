@@ -7,6 +7,19 @@ import Image from "next/image";
 import Link from "next/link";
 
 
+export const metadata = {
+    title: 'RemotifyEurope - Get Premium',
+    description: 'Find the best remote jobs in Europe',
+    openGraph: {
+      title: 'RemotifyEurope - Get Premium',
+      description: 'Find the best remote jobs in Europe',
+      images: [
+        '/Logo.jpg' // Path to the Open Graph image in your public directory
+      ],
+    },
+  }
+
+
 const getSubscriptions = async () => {
 
     try {

@@ -10,7 +10,7 @@ const JobList = ({ jobs, title,  companyId }) => {
 
     return ( 
         <div className="flex flex-col w-full max-w-7xl justify-center items-center motion-reduce">
-            <div className="flex flex-col align-center w-full h-full ">
+            <div className="flex flex-col w-11/12 h-full ">
 
                 { 
                     jobs.map(job => (

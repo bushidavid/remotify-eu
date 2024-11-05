@@ -52,7 +52,7 @@ export default function CandidateBookmarks({ session }) {
                         <li key={bookmark.job.id} className="flex justify-between items-center gap-x-6 py-5">
                             <div className="flex flex-col min-w-0 gap-x-4">
                                 <div className="min-w-0 flex-auto">
-                                    <Link href={`/company/dashboard/viewjob/${bookmark.job.id}`} className={`text-sm font-semibold leading-6 ${bookmark.job.expired ? "text-gray-400" : "text-gray-900"}`}>{bookmark.job.expired ? bookmark.job.title  + " - Expired" : bookmark.job.title}</Link>
+                                    <Link href={`/job/${bookmark.job.id}`} className={`text-sm font-semibold leading-6 ${bookmark.job.expired ? "text-gray-400" : "text-gray-900"}`}>{bookmark.job.expired ? bookmark.job.title  + " - Expired" : bookmark.job.title}</Link>
                                 </div>
                                 <div className="sm:flex">
                                     <p className="mt-1 text-xs leading-5 text-gray-500">

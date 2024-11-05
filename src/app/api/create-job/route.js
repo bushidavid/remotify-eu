@@ -37,23 +37,6 @@ export async function POST(req, res) {
 
         //console.log("printing logo url from API:", logoUrl);
 
-        console.log("printing out all object \n", jobTitle,
-            jobDepartment,
-            jobDescription,
-            jobCountry,
-            tags,
-            companyName,
-            companyId,
-            compDescription,
-            candidateLevel,
-            worldwide,
-            salaryMin,
-            salaryMax,
-            salaryCur,
-            logoUrl,
-            companyWebsite, 
-            jobLink);
-
         if(worldwide){
             jobCountry = ""
         }
