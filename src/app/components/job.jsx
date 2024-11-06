@@ -36,16 +36,17 @@ export default function Job({ ...props }) {
 
   const router = useRouter();
 
-  const todayFormatted = today.toLocaleString('lu-LU', {
+  const locale = 'en-US'; // Specify a default
+  const todayFormatted = today.toLocaleString(navigator.language || locale, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
-  })
-
-  const formattedDate = date.toLocaleString('lu-LU', {
-    year : "numeric",
-    month: "short",
-    day: "numeric"
+  });
+  
+  const formattedDate = date.toLocaleString(navigator.language || locale, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   });
 
 
@@ -145,11 +146,11 @@ export default function Job({ ...props }) {
           </Link>
           <div className='flex w-full relative'>
             <div className='flex flex-row items-center my-1 relative overflow-hidden'>
-              <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5 z-10'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
+              <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5 z-50 whitespace-nowrap'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
               
             </div>
             <div 
-                className='flex items-center flex-row flex-grow'
+                className='flex items-center flex-row z-0 flex-grow overflow-hidden md:max-w-full'
                 style={{
                   WebkitMaskImage: isMobile
                     ? 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' // Fade out toward the right on mobile
@@ -157,7 +158,7 @@ export default function Job({ ...props }) {
                 }}>
                 <Tags tags={props.tags}/>
             </div>
-            <div className="flex justify-center items-center mx-3 z-10">
+            <div className="flex items-center mx-3 z-50">
                 <Bookmark jobId={props.id}></Bookmark>
             </div>
           </div>
