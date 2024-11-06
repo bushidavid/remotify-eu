@@ -20,8 +20,8 @@ export default function Tags({ tags }) {
 
   return (
     <div
-      className={`relative flex items-center gap-2 w-full flex-grow whitespace-nowrap ${isMobile ? 'animate-marquee' : ''}`}
-    >
+      className={`relative flex items-center z-0 gap-2 min-w-full w-full flex-grow whitespace-nowrap overflow-hidden ${isMobile ? 'animate-marquee' : ''}`}
+    >   
         {tags?.split(',').map(tag => (
         <p className={`text-xs font-extralight rounded-full border-1 px-2 pt-0.5 mx-1 my-0.5`} key={tag}>{tag}</p>
         ))}      
