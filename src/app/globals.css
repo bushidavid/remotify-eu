@@ -45,3 +45,19 @@
 .subscription-container div:nth-child(2) {
     @apply bg-cyan-50; /* Set your desired color */
   }
+
+  /* globals.css */
+
+@keyframes marquee {
+    0% {
+      transform: translateX(100%); /* Start completely off-screen to the right */
+    }
+    100% {
+      transform: translateX(-100%); /* Move completely off-screen to the left */
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 15s linear infinite;
+  }
+  
