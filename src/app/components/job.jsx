@@ -145,12 +145,12 @@ export default function Job({ ...props }) {
             </CardBody>
           </Link>
           <div className='flex w-full relative'>
-            <div className='flex flex-row items-center my-1 relative overflow-hidden'>
+            <div className='flex flex-row items-center my-1 relative'>
               <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5 z-50 whitespace-nowrap'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
               
             </div>
             <div 
-                className='flex items-center flex-row z-0 flex-grow overflow-hidden md:max-w-full'
+                className='flex items-center flex-row z-0 flex-grow overflow-hidden whitespace-nowrap md:max-w-full'
                 style={{
                   WebkitMaskImage: isMobile
                     ? 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' // Fade out toward the right on mobile
