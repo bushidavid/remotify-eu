@@ -9,8 +9,24 @@ import { InView, useInView } from 'react-intersection-observer';
 import { MdLocationPin } from 'react-icons/md';
 import CountryList from './country-list';
 import Bookmark from './bookmark';
+import Tags from './tags';
+import { useState, useEffect } from 'react';
 
 export default function Job({ ...props }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768); // Only animate on mobile view
+    };
+
+    checkIsMobile(); // Initial check
+    window.addEventListener('resize', checkIsMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
 
   const {ref, inView, entry} = useInView({
   });
@@ -127,16 +143,21 @@ export default function Job({ ...props }) {
 
             </CardBody>
           </Link>
-          <div className='flex justify-between w-full relative'>
-            <div className='flex flex-row my-1'>
-              <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
-
-              {props.tags?.split(',').map(tag => (
-                <p className={`text-xs font-extralight rounded-full border-1 px-2 pt-0.5 mx-1 my-0.5`} key={tag}>{tag}</p>
-              ))}
+          <div className='flex w-full relative'>
+            <div className='flex flex-row items-center my-1 relative overflow-hidden'>
+              <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5 z-10'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
               
             </div>
-            <div className='flex justify-center items-center mx-3'>
+            <div 
+                className='flex items-center flex-row flex-grow'
+                style={{
+                  WebkitMaskImage: isMobile
+                    ? 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' // Fade out toward the right on mobile
+                    : 'none',
+                }}>
+                <Tags tags={props.tags}/>
+            </div>
+            <div className="flex justify-center items-center mx-3 z-10">
                 <Bookmark jobId={props.id}></Bookmark>
             </div>
           </div>
