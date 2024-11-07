@@ -5,8 +5,8 @@ import Footer from '../components/footer';
 import Image from 'next/image';
 
 export const metadata = {
-    title: 'RemotifyEurope - Pricing',
-    description: 'The best remote job board in Europe',
+    title: 'RemotifyEurope - Post a Job and Reach Hundreds of Candidates in Europe and in European Time Zones',
+    description: 'Post a Job and Find Hundreds of Candidates in Europe and in European Time Zones',
 }
 
 
@@ -65,10 +65,10 @@ export default async function Page() {
                                             <span className='text-remotify-db'>Plans</span>
                                         </h1>
                                         <p className="pt-6 text-xl text-gray-600 font-normal w-full px-8 md:w-full">
-                                            Choose a plan that works best for you and<br/> your team.
+                                            Choose a plan that works best for you and your team.
                                         </p>
                                     </div>
-                                    <div className="pt-16 flex md:flex-row flex-col">
+                                    <div className="my-10 flex md:flex-row flex-col gap-x-4">
                                         <PricingCard id={prices[0]?.id} price={prices[0]?.unit_amount} nickname={prices[0]?.nickname} description={"As simple as it gets"} features={products[0]?.features} />
                                         <PricingCard id={prices[1]?.id} price={prices[1]?.unit_amount} nickname={prices[1]?.nickname} description={"Because you are a Pro"} features={products[2]?.features}/>
                                         <PricingCard id={prices[2]?.id} price={prices[2]?.unit_amount} nickname={prices[2]?.nickname} description={"The Best Ever"} features={products[1]?.features}/>
