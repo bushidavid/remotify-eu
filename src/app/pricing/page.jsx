@@ -32,6 +32,8 @@ export default async function Page() {
     let prices = [];
     let products = [];
 
+    
+
     try {
         const priceData = await getPrices();
         prices = priceData?.prices || [];
@@ -49,6 +51,17 @@ export default async function Page() {
         console.log("Error fetching features: ", error);
     }
 
+    // Create a map of products by ID for quick lookup
+    const productMap = products.reduce((map, product) => {
+        map[product.id] = product.features;
+        return map;
+    }, {});
+
+    // Map prices with their respective features
+    const priceCards = prices.map(price => ({
+        ...price,
+        features: productMap[price.product] || []
+    }));
     
     return (
         <>
@@ -69,10 +82,23 @@ export default async function Page() {
                                         </p>
                                     </div>
                                     <div className="my-10 flex md:flex-row flex-col gap-x-4">
-                                        <PricingCard id={prices[0]?.id} price={prices[0]?.unit_amount} nickname={prices[0]?.nickname} description={"As simple as it gets"} features={products[0]?.features} />
-                                        <PricingCard id={prices[1]?.id} price={prices[1]?.unit_amount} nickname={prices[1]?.nickname} description={"Because you are a Pro"} features={products[2]?.features}/>
-                                        <PricingCard id={prices[2]?.id} price={prices[2]?.unit_amount} nickname={prices[2]?.nickname} description={"The Best Ever"} features={products[1]?.features}/>
-                                        <PricingCard id={Math.random()} price={"Custom"} nickname={"Custom"} description={"Tailored for You"} features={products[1].features}/>
+                                    {priceCards.map((card, index) => (
+                                            <PricingCard
+                                                key={card.id}
+                                                id={card.id}
+                                                price={card.unit_amount}
+                                                nickname={card.nickname}
+                                                description={index === 0 ? "As simple as it gets" : index === 1 ? "Because you are a Pro" : "The Best Ever"}
+                                                features={card.features}
+                                            />
+                                        ))}
+                                        <PricingCard
+                                            id={Math.random()}
+                                            price={"Custom"}
+                                            nickname={"Custom"}
+                                            description={"Tailored for You"}
+                                            features={productMap[prices[1]?.product] || []}
+                                        />
                                     </div>
                                 </div>
                             </div>
