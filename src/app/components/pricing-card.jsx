@@ -10,7 +10,7 @@ import { BsCurrencyEuro } from "react-icons/bs";
 export default function PricingCard( { price, nickname, id, features, description} ) {   
 
   return (
-    <div className={`w-80 flex flex-col py-4 px-10 ${nickname === 'Enterprise' ? "bg-gray-100 rounded-lg" : ""}`}>
+    <div className={`w-80 flex flex-col py-4 px-10 shadow-xl rounded-xl border-1 border-slate-100    ${nickname === 'Enterprise' ? "bg-teal-50 border-slate-200" : ""}`}>
         <div className="w-full ">
             <div className={`w-fit rounded-lg bg-remotify-lb text-white py-1 px-2 mb-1 text-sm ${nickname == 'Enterprise' ? "" : "invisible"}`}><p>Best Deal</p></div>
             <h1 className="text-black font-semibold text-2xl">{nickname}</h1>
