@@ -52,6 +52,10 @@ export const Options  = {
             }
         }),
     ],
+    adapter: SupabaseAdapter({
+        url: process.env.SUPABASE_URL,
+        secret: process.env.SUPABASE_SERVICE_ROLE_KEY,
+      }),
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === 'development',
     pages: {
@@ -93,48 +97,46 @@ export const Options  = {
     callbacks: {
         async session({ session, token }) {
 
-            session.user.role = token.role;
-            session.user.id = token.id;
+            const signingSecret = process.env.SUPABASE_JWT_SECRET;
+
+            // For Google and LinkedIn providers
+            if (token.provider === "google" || token.provider === "linkedin") {
+                if (signingSecret) {
+                    const payload = {
+                        aud: "authenticated",
+                        exp: Math.floor(new Date(session.expires).getTime() / 1000),
+                        sub: token.id,         // Access user ID from token
+                        email: token.email,     // Access email from token
+                        role: token.role || "authenticated",
+                    };
+                    session.supabaseAccessToken = jwt.sign(payload, signingSecret);
+                }
+            } else if (token.provider === "credentials") {
+                // For credentials provider
+                session.user.role = token.role;
+                session.user.id = token.id;
+            }
+
             console.log("Session Callback - Session:", session);
             return session;
 
-
-        //     const {data: user, error} = await supabase
-        //             .from('users')
-        //             .select()
-        //             .eq('email', token.email)
-            
-
-        //     session.accessToken = token.accessToken;
-        //     session.user.id = token.sub;
-        //     session.user.role = user[0].role;
-            
-        //     return session;
-        //   },
-        //   async signIn({ user, account, profile, email, credentials }) {
-        //     return true
-          },
-        //   async redirect({ url, baseUrl }) {
-        //     return baseUrl
-        //   },
-        async jwt({ token, user, account }) {
-            console.log("JWT Callback - Token before assignment:", token);
-
-            if (user) {
-                // Add role and user id to token
-                token.role = user.role;
-                token.id = user.id;
-                token.image = user.picture
-            }
-
-            if (account) {
-                // Persist OAuth access token to the token
-                token.accessToken = account.access_token;
-            }
-
-            console.log("JWT Callback - Token after assignment:", token);
-            return token;
         },
+
+        async  jwt({ token, user, account }) {
+            if (user) {
+                // Store user data in the token when the user first signs in
+                token.id = user.id;
+                token.email = user.email;
+                token.role = user.role || 'authenticated'; // Default role if not specified
+            }
+        
+            if (account) {
+                // Store provider information for use in session callback
+                token.provider = account.provider;
+            }
+        
+            return token;
+        }   
     },    
 }
 
