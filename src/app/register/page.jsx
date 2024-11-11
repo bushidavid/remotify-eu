@@ -28,7 +28,7 @@ export default function Page() {
           <div className='w-full md:w-6/12 p-4 flex flex-col items-center md:order-1 order-2'>
             <h1 className='row-span-full text-center pt-4 text-xl'>Sign Up with a Provider</h1>
             <div className='h-[1px] w-[60%] bg-slate-300 mt-2 mb-6'></div>
-            <SignInProviders />
+            <SignInProviders callBackUrl={"/"}/>
           </div>
           <div className='w-[1px] h-full bg-slate-200'></div>
           <div className='w-full md:w-6/12 p-4 flex flex-col items-center order-1 md:order-2'>
