@@ -32,9 +32,6 @@ export default async function Home() {
 
   const jobs = await fetchJobs(); 
 
-  console.log("logging google client_id: ", process.env.GOOGLE_CLIENT_ID);
-  console.log("logging google secret:, ", process.env.GOOGLE_CLIENT_SECRET);
-
   return (
       <section className='w-screen flex flex-col justify-center items-center'>
         <Hero />
