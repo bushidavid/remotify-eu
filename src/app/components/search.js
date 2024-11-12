@@ -14,7 +14,7 @@ export default function Search() {
 
   return (
     <>
-        <form className="flex flex-col w-11/12 md:w-8/12 justify-around align-center border border-slate-200 rounded-2xl px-4 py-5 my-5">
+        <form className="flex flex-col w-11/12 max-w-7xl md:w-8/12 justify-around align-center border border-slate-200 rounded-2xl px-4 py-5 my-5">
           <div className="flex flex-grow flex-row w-full">
               <input placeholder="Search for a job" className="border-1 border-remotify-db w-10/12 rounded-lg py-2 px-2 my-2 outline-none" value={context.title} onChange={e => context.setTitle(e.target.value)}></input>
               <CheckboxGroup

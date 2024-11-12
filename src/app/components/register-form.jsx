@@ -65,6 +65,7 @@ export default function RegisterForm() {
             password: "",
             confirmPassword: "",
             userType: "candidate",
+            newsletter: true,
         },
     });
 
@@ -198,6 +199,24 @@ export default function RegisterForm() {
                     <FormMessage />
                     </FormItem>
                 )}
+                />
+                <FormField
+                    control={form.control}
+                    name="newsletter"
+                    render={({ field }) => (
+                        <FormItem className="flex items-center space-x-2">
+                            <FormControl>
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                    id="newsletter-checkbox"
+                                />
+                            </FormControl>
+                            <FormLabel htmlFor="newsletter-checkbox text-xs font-">
+                                Yes! Keep me updated with the latest remote job openings and exclusive tips on landing remote roles!
+                            </FormLabel>
+                        </FormItem>
+                    )}
                 />
                 <div className="flex flex-col items-center justify-center">
                     {displayErrorMessage && <p className="text-red-700">Error creating user</p>}
