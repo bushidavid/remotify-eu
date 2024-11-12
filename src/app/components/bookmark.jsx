@@ -4,18 +4,33 @@ import { FaRegBookmark, FaBookmark} from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
 import { deleteBookmark, isBookmarkedByUser, updateBookmark } from "../actions/actions";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { getSession, setSession } from "next-auth/react";
 
 export default function Bookmark({ jobId }) {
 
-    const {data: session, status } = useSession();
+    const [session, setSession] = useState(null);
 
     const [ isBookmarked, setIsBookmarked ] = useState(false);
     const [ bookmarkId, setBookmarkId ] = useState(null);
+    const userId = useMemo(() => session?.user?.id, [session?.user?.id]);
+
+    // Fetch session only once on mount
+    useEffect(() => {
+        const fetchSession = async () => {
+            const sessionData = await getSession();
+            setSession(sessionData);
+            if (sessionData && sessionData.user && sessionData.user.id) {
+                getIsBookmarkedByUser(sessionData.user.id);  // Only fetch bookmark status if user is logged in
+                console.log("logging from inside bookmark component");
+            }
+        };
+        fetchSession();
+    }, []);
 
     const getIsBookmarkedByUser = useCallback(async () => {
-        if (session?.user?.id) {
-            const res = await isBookmarkedByUser(session.user.id, jobId);
+        if (userId) {
+            const res = await isBookmarkedByUser(userId, jobId);
             if (res) {
                 setIsBookmarked(true);
                 setBookmarkId(res.id);
@@ -24,15 +39,15 @@ export default function Bookmark({ jobId }) {
                 setBookmarkId(null);
             }
         }
-    }, [session?.user?.id, jobId]);
+    }, [userId, jobId]);
 
-    useEffect(() => {
-        if (status === "authenticated") {
-            getIsBookmarkedByUser();
-            console.log("logging from inside bookmarked component");
-        }
+    // useEffect(() => {
+    //     if (status === "authenticated" && userId) {
+    //         getIsBookmarkedByUser();
+    //         console.log("logging from inside bookmarked component");
+    //     }
         
-    }, [status, getIsBookmarkedByUser])
+    // }, [status, userId, getIsBookmarkedByUser])
 
 
 
