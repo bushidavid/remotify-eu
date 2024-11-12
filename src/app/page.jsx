@@ -3,6 +3,7 @@ import { fetchJobs } from './actions/actions';
 import JobScroll from './components/job-scroll';
 import Search from './components/search';
 import Footer from './components/footer';
+import Subscribe from './components/subscribe';
 
 
 
@@ -30,14 +31,21 @@ import Footer from './components/footer';
 
 export default async function Home() {
 
-  const jobs = await fetchJobs(); 
+    const jobs = await fetchJobs(); 
 
-  return (
-      <section className='w-screen flex flex-col justify-center items-center'>
-        <Hero />
-        <Search />
-        <JobScroll initialJobs={jobs} />
-        <Footer />
-      </section>
-  )
+    return (
+        <section className='w-screen flex flex-col justify-center items-center'>
+          <Hero />
+            <Search />
+              <div className='w-full flex justify-center'>
+                  
+                    <JobScroll initialJobs={jobs} />
+                  
+                  
+                    <Subscribe />
+                  
+              </div>
+            <Footer />
+        </section>
+    )
 }
