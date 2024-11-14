@@ -37,7 +37,7 @@ export default function SelectUserRole() {
 
         document.cookie = `userType=${data.userType}; path=/; max-age=300`;
 
-        await signIn(provider, { callbackUrl: '/'});
+        await signIn(provider, { callbackUrl: '/', userType: data.userType});
     };
 
 
@@ -73,9 +73,9 @@ export default function SelectUserRole() {
 
                     {/* OAuth Sign-in Buttons */}
                     <div className="space-y-2">
-                        <button type="button" className="flex flex-row w-full text-xs md:text-sm md:w-96 justify-center items-center gap-x-2 md:gap-x-4 mt-2 md:mt-10 bg-white shadow-md hover:shadow-xl transition-shadow border-1 border-slate-200 px-10 py-4 rounded-md" onClick={handleSubmit((data) => onSubmit(data, "google"))}>
+                        <button type="button" className="flex flex-row w-full text-xs md:w-96 justify-center items-center gap-x-2 md:gap-x-4 mt-2 md:mt-10 bg-white shadow-md hover:shadow-xl transition-shadow border-1 border-slate-200 px-10 py-4 rounded-md" onClick={handleSubmit((data) => onSubmit(data, "google"))}>
                             <FcGoogle size={30}/>
-                            Sign Up with Google
+                            Sign In with Google
                         </button>
                         {/* <Button type="button" onClick={handleSubmit((data) => onSubmit(data, "linkedin"))}>
                             Sign in with LinkedIn
