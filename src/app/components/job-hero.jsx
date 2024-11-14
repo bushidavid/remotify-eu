@@ -23,14 +23,14 @@ export default function JobHero({job, postedDate}) {
               {/*<h2 className='px-3 md:border-r-1 border-slate-300'><FontAwesomeIcon icon={faCalendarDays} /> 31/12/2023 {job?.expiration_date}</h2> */}
               <div className="flex flex-row items-center gap-x-1"><MdCalendarMonth /><p className=''>{(postedDate === todayFormatted) ? "Posted today" : `Posted on ${postedDate}`}</p></div>
               
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center md:border-l-1 md:pl-2">
                 <MdLocationPin />
                 <CountryList countries={job.countries} />
                 
                 {/* <p className='px-1 md:border-r-1 border-slate-300'> {job.worldwide ? 'Worldwide' : job.countries}</p> */}
               </div>
               <div className="flex flex-row items-center md:border-l-1 pl-2 gap-x-1"><FaPersonCane /><p className='px-1 md:border-r-1  border-slate-300'>{job.experience}  </p></div>
-              <div className="flex flex-row items-center gap-x-1"><IoMdBriefcase /><p className='px-1'>{job.category}</p></div>
+              <div className="flex flex-row items-center gap-x-1 md:pl-1"><IoMdBriefcase /><p className='px-1'>{job.category}</p></div>
             </div>
         </div>
     </div>
