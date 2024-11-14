@@ -44,13 +44,13 @@ export default async function Page({ params }) {
 
 
   const locale = 'en-US'; // Specify a default
-  const expirationFormatted = expirationDate.toLocaleString(navigator.language || locale, {
+  const expirationFormatted = expirationDate.toLocaleString(locale, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
   });
   
-  const formattedDate = date.toLocaleString(navigator.language || locale, {
+  const formattedDate = date.toLocaleString(locale, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
