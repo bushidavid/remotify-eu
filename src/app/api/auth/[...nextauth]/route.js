@@ -6,8 +6,9 @@ import LinkedInProvider from "next-auth/providers/linkedin"
 import CredentialsProvider from "next-auth/providers/credentials";
 import supabase from "../../../../../lib/config/supabaseClient";
 import bcrypt from 'bcrypt';
+import { parse } from 'cookie';
 
-export const Options  = {
+export const Options  =  {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
@@ -94,11 +95,11 @@ export const Options  = {
     //     // },
 
     // },
+    
     callbacks: {
         async session({ session, token }) {
-
             const signingSecret = process.env.SUPABASE_JWT_SECRET;
-
+        
             // For Google and LinkedIn providers
             if (token.provider === "google" || token.provider === "linkedin") {
                 if (signingSecret) {
@@ -106,7 +107,7 @@ export const Options  = {
                         aud: "authenticated",
                         exp: Math.floor(new Date(session.expires).getTime() / 1000),
                         sub: token.id,         // Access user ID from token
-                        email: token.email,     // Access email from token
+                        email: token.email,    // Access email from token
                         role: token.role || "authenticated",
                     };
                     session.supabaseAccessToken = jwt.sign(payload, signingSecret);
@@ -116,28 +117,51 @@ export const Options  = {
                 session.user.role = token.role;
                 session.user.id = token.id;
             }
-
-            console.log("Session Callback - Session:", session);
+        
             return session;
-
         },
 
         async  jwt({ token, user, account }) {
+
+            console.log("inside jwt");
+            console.log("logging user: ", user);
+            console.log("logging account: ", account);
             if (user) {
                 // Store user data in the token when the user first signs in
                 token.id = user.id;
                 token.email = user.email;
-                token.role = user.role || 'authenticated'; // Default role if not specified
+                token.role = user.role || null; // Default role if not specified
             }
-        
-            if (account) {
-                // Store provider information for use in session callback
-                token.provider = account.provider;
-            }
+    
         
             return token;
-        }   
-    },    
+        },
+    },
+    events: {
+        async createUser({ user }) {
+
+            const userTypeCookie = req.cookies._parsed.get('userType');
+            const userType = userTypeCookie ? userTypeCookie.value : null;
+
+            if (userType) {
+                try {
+                    const { error } = await supabase
+                        .from('users')
+                        .update({ role: userType })
+                        .eq('id', user.id);
+
+                    if (error) {
+                        console.log("Error updating user role", error);
+                        return false;
+                    }
+
+                } catch (error) {
+                    console.log(error);
+                    return false;
+                }
+            }
+        }
+    }
 }
 
 const handler = NextAuth(Options);
