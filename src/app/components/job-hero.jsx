@@ -8,7 +8,7 @@ export default function JobHero({job, postedDate}) {
   const today = new Date(Date.now());
 
   const locale = 'en-US'; // Specify a default
-  const todayFormatted = today.toLocaleString(navigator.language || locale, {
+  const todayFormatted = today.toLocaleString(locale, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
