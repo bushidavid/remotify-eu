@@ -37,13 +37,13 @@ export default function Job({ ...props }) {
   const router = useRouter();
 
   const locale = 'en-US'; // Specify a default
-  const todayFormatted = today.toLocaleString(navigator.language || locale, {
+  const todayFormatted = today.toLocaleString(locale, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
   });
   
-  const formattedDate = date.toLocaleString(navigator.language || locale, {
+  const formattedDate = date.toLocaleString(locale, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
