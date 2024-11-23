@@ -158,8 +158,8 @@ export default function Job({ ...props }) {
                 }}>
                 <Tags tags={props.tags}/>
             </div>
-            <div className="flex items-center mx-3 z-50">
-                <Bookmark jobId={props.id}></Bookmark>
+            <div className="flex items-center mx-3 z-50 text-xs font-extralight">
+                <p>{props.category}</p>
             </div>
           </div>
           
