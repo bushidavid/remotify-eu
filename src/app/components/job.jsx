@@ -11,6 +11,8 @@ import CountryList from './country-list';
 import Bookmark from './bookmark';
 import Tags from './tags';
 import { useState, useEffect } from 'react';
+import { IoBriefcaseOutline } from "react-icons/io5";
+
 
 export default function Job({ ...props }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -158,8 +160,8 @@ export default function Job({ ...props }) {
                 }}>
                 <Tags tags={props.tags}/>
             </div>
-            <div className="flex items-center mx-3 z-50 text-xs font-extralight">
-                <p>{props.category}</p>
+            <div className="flex items-center mx-3 text-xs font-extralight gap-x-1">
+              <IoBriefcaseOutline style={{opacity: '0.8'}}/><p>{props.category}</p>
             </div>
           </div>
           
