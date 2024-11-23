@@ -174,7 +174,7 @@ export default function Navbar() {
             <div className="hidden md:block mx-2">
                     <Link
                         href={'/pricing'}
-                        className="font-poppins text-md bg-remotify-lb text-remotify-db rounded-md p-2 font-semibold"
+                        className="font-poppins text-md bg-remotify-lb text-remotify-db rounded-md p-2 font-normal"
                     >
                         Post New Job
                     </Link>
