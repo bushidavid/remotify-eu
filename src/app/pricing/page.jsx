@@ -12,13 +12,13 @@ export const metadata = {
 
 const getPrices = async () => {
 
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-products`, { next: { revalidate: 0 } });
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-products`, { next: { revalidate: 0, cache: 'no-store' } });
     return res.json();
 }
 
 const getFeatures = async () => {
 
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-features`, { next: { revalidate: 0 } })
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-features`, { next: { revalidate: 0, cache: 'no-store' } })
     return res.json();
 
 }
