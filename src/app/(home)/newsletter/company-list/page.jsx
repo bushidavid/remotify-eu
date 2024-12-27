@@ -5,7 +5,7 @@ import SubscribeForm from "@/app/components/subscribe-form";
 export default function Page() {
   return (
     <>
-        <div className="flex flex-col justify-center items-center w-full h-full">
+        <div className="flex flex-col justify-center items-center w-full h-full mt-20">
             <SubscribeForm />
             <Footer />
         </div>
