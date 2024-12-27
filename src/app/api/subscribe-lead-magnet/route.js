@@ -58,24 +58,21 @@ export async function PUT( req ) {
         },
     }
 
+    const response = await fetch(url, options);
+    let json = {};
+
+    if (response.ok) {
+        const text = await response.text();  // Get response as text
+        json = text ? JSON.parse(text) : {};  // Parse if not empty
+    } else {
+        throw new Error(`Failed to add contact. Status: ${response.status}`);
+    }
+
     try {
         
-        const response = await fetch(url, options);
-        let json = {};
-
-        if (response.ok) {
-            const text = await response.text();  // Get response as text
-            json = text ? JSON.parse(text) : {};  // Parse if not empty
-        } else {
-            throw new Error(`Failed to add contact. Status: ${response.status}`);
-        }
-
-        sendgridClient
-        .send(message)
-        .then(() => console.log('Mail sent successfully'))
-        .catch(error => {
-          console.error(error);
-        });
+        await sendgridClient.send(message);
+        console.log("Mail sent successfully");
+        
 
         return NextResponse.json({
                 message: "Your email has been successfully added to the mailing list. Welcome 👋",
@@ -83,6 +80,7 @@ export async function PUT( req ) {
                 ok: true,
                 jobId: json.job_id || null  // Handle undefined job_id
             });
+        
     } catch (error) {
         console.log(error);
         return NextResponse.json({message: "Oups, there was a problem with your subscription, please try again or contact us", status: 500, ok: false})
