@@ -81,7 +81,7 @@ export default function SubscribeForm() {
             <div className='lg:flex flex-col w-11/12 md:w-6/12 h-fit my-20 rounded-xl shadow-xl bg-white border-[2px] border-remotify-lb items-center justify-center'>
                 <div className='lg:flex flex-col p-4 my-4 mx-2 md:mx-10 pb-0 items-center'>
                     <div className='flex flex-row items-center justify-around'>
-                        <h1 className='text-slate-900 text-xl md:text-3xl font-bold text-center'>150+ Companies hiring remotely in Europe and Worldwide</h1>
+                        <h1 className='text-slate-900 text-xl md:text-3xl font-bold text-center'>170+ Companies hiring remotely in Europe and Worldwide</h1>
                     </div>
                     <p className='text-slate-500 w-full py-8 text-center'>Simply fill in the form below and we’ll send you the list of companies.</p>
                 </div>
