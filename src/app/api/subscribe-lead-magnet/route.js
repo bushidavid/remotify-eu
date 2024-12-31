@@ -54,7 +54,7 @@ export async function PUT( req ) {
         "template_id":"d-eac8b29347314834bb934679a1aad682",
         "dynamic_template_data": {
             "name": String(name),
-            "file_link": "https://remotifyeurope.com",
+            "file_link": "https://docs.google.com/spreadsheets/d/1KgePlqGmNdOVW32Yu3MT5IlVHTjLZLCBWXT7GfxDNF8/edit?gid=0#gid=0",
         },
     }
 
@@ -83,7 +83,7 @@ export async function PUT( req ) {
         
     } catch (error) {
         console.log(error);
-        return NextResponse.json({message: "Oups, there was a problem with your subscription, please try again or contact us", status: 500, ok: false})
+        return NextResponse.json({message: `Problem sending email to: ${email}`, status: 500, ok: false})
     }
     
   }
