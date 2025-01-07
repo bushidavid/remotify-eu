@@ -2,6 +2,7 @@ import bcrypt, { hash } from 'bcrypt';
 import { NextResponse } from 'next/server';
 import supabase from '../../../../lib/config/supabaseClient';
 import { sendgridClient } from '../../../../lib/email';
+import { BeehiivClient } from "@beehiiv/sdk";
 
 export async function POST(req){
 
@@ -14,6 +15,20 @@ export async function POST(req){
     }
 
     if(newsletter){
+
+        const client = new BeehiivClient({ token: process.env.BEEHIIV_API_KEY });
+    
+        const subscription = await client.subscriptions.create("pub_13473294-d75b-4c1d-82f8-b57f928be263", {
+            email: email,
+            reactivateExisting: false,
+            sendWelcomeEmail: true,
+            utmSource: "RemotifyEurope",
+            utmMedium: "organic",
+            utmCampaign: "Newsletter PopUp",
+            referringSite: "www.remotifyeurope.com",
+        });
+
+        console.log("subscription to beehiiv created: ", subscription);
 
         const url = `https://api.sendgrid.com/v3/marketing/contacts`;
   

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-
+import { BeehiivClient } from "@beehiiv/sdk";
 import { sendgridClient } from "../../../../lib/email";
 
 export async function PUT( req ) {
@@ -13,6 +13,27 @@ export async function PUT( req ) {
     console.log("lastName :", lastName);
 
     const url = `https://api.sendgrid.com/v3/marketing/contacts`;
+
+    const client = new BeehiivClient({ token: process.env.BEEHIIV_API_KEY });
+
+    const subscription = await client.subscriptions.create("pub_13473294-d75b-4c1d-82f8-b57f928be263", {
+        email: email,
+        reactivateExisting: false,
+        sendWelcomeEmail: true,
+        utmSource: "RemotifyEurope",
+        utmMedium: "organic",
+        utmCampaign: "CV Guide",
+        referringSite: "www.remotifyeurope.com",
+        customFields: [{
+                name: "First Name",
+                value: name
+            }, {
+                name: "Last Name",
+                value: lastName
+            }],
+    });
+
+    console.log("subscription to beehiiv created: ", subscription);
     
   
     const data = {
