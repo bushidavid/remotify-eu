@@ -19,7 +19,7 @@ export default function PricingCard( { price, nickname, id, features, descriptio
                 <p className="mb-2 mt-10 text-3xl">Contact us for:</p>
                 ) : (
                 <p className="mb-2 mt-10 text-3xl text-slate-700">
-                    € {Math.floor(price / 100)}
+                    € {Math.floor(price / 100) + ','}
                     <span
                         className="text-sm"
                         style={{ verticalAlign: 'top', fontSize: '0.7em', position: 'relative', top: '0.2em' }}
