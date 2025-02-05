@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+
 
 export default function CompanyImageDropdown({companyId}) {
   return (
@@ -12,7 +12,6 @@ export default function CompanyImageDropdown({companyId}) {
                 <Link href={`/company/${companyId}/jobs`} >Jobs</Link>
                 <Link href="/api/auth/signout" onClick={e => {
                         e.preventDefault();
-                        signOut();
                     }}>Sign Out</Link>
                 
         </div>

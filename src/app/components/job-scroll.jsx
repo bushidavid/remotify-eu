@@ -14,15 +14,56 @@ const revalidate = 0;
 
 const today = new Date(Date.now());
 
-export default function JobScroll({ initialJobs, search, filter }) {
+export default function JobScroll({ initialJobs }) {
 
-    const context = useContext(FilterContext);
+    const {
+        filterTag,
+        setFilterTag,
+        filterCountry,
+        setFilterCountry,
+        filterCategory,
+        setFilterCategory,
+        filterExperience,
+        setFilterExperience,
+        filterJobType,
+        title
+      } = useContext(FilterContext);
 
     const [jobs, setJobs] = useState(initialJobs);
     const [jobsToDisplay, setJobsToDisplay] = useState([]);
     const [limit, setLimit] = useState(24);
     const [empty, setEmpty] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingJobs, setIsLoadingJobs] = useState(false);
+    const [lastLoadedTime, setLastLoadedTime] = useState();
+
+
+    const fetchFilteredJobs = async () => {
+        setIsLoadingJobs(true);
+        setEmpty(false);
+
+        try {
+            const newJobs = await fetchJobs(
+                limit,
+                today.toISOString(), // Reset timestamp for filters
+                filterCategory,
+                title,
+                filterCountry,
+                filterExperience,
+                filterTag,
+                filterJobType
+            );
+
+            setJobs(newJobs); // Replace the job list with new filtered results
+            setJobsToDisplay(newJobs); // Update displayed jobs
+            setLastLoadedTime(today.toISOString()); // Reset pagination timestamp
+            if (newJobs?.length === 0) setEmpty(true);
+        } catch (error) {
+            console.error("Error fetching filtered jobs:", error);
+        } finally {
+            setIsLoadingJobs(false);
+        }
+    };
 
 
     const loadMoreJobs = async () => {
@@ -32,16 +73,30 @@ export default function JobScroll({ initialJobs, search, filter }) {
             ? new Date(jobs[jobs.length - 1].created_at).toISOString() 
             : today.toISOString();
     
-        // console.log("Fetching jobs from last loaded time:", timeOfLastJob);
+        console.log("Fetching jobs from last loaded time:", timeOfLastJob);
+        console.log("time of last job belongs to job:" , jobs[jobs.length - 1]);
     
         const newLimit = limit + 24;
+        //setLimit(newLimit);
         try {
-            const newJobs = await fetchJobs(newLimit, timeOfLastJob, search || "", filter);
-            // console.log("Fetched jobs:", newJobs);
-    
-            if (newJobs?.length) {
-                setLimit(newLimit);
-                setJobs((prev) => [...prev, ...newJobs]);
+            const newJobs = await fetchJobs(
+                newLimit,
+                timeOfLastJob, // Use the last loaded timestamp for pagination
+                filterCategory,
+                title,
+                filterCountry,
+                filterExperience,
+                filterTag,
+                filterJobType
+            );
+
+            if (newJobs?.length > 0) {
+                setJobs((prev) => [...prev, ...newJobs]); // Append new jobs
+                setJobsToDisplay((prev) => [...prev, ...newJobs]); // Update displayed jobs
+
+                // Update lastLoadedTime to the most recent job's created_at
+                const latestJobTime = newJobs[newJobs.length - 1].created_at;
+                setLastLoadedTime(new Date(latestJobTime).toISOString());
                 setIsLoading(false);
             } else {
                 setEmpty(true);
@@ -55,27 +110,9 @@ export default function JobScroll({ initialJobs, search, filter }) {
 
     useEffect(() => {
        
-        filterJobs();    
+        fetchFilteredJobs();
         
-    }, [context.title, context.filter, jobs]);
-
-    const filterJobs = () => {
-        let filteredJobs = jobs;
-    
-        if (context.title !== "") {
-            filteredJobs = filteredJobs.filter(job =>
-                job.job_title.toLowerCase().includes(context.title.toLowerCase())
-            );
-        }
-    
-        if (context.filter.length > 0) {
-            context.filter.forEach(filterKey => {
-                filteredJobs = filteredJobs.filter(job => job[filterKey] === true);
-            });
-        }
-    
-        setJobsToDisplay(filteredJobs);
-    };
+    }, [title, filterTag, filterCountry, filterCategory, filterExperience, filterJobType]);
 
     const featuredJobs = jobsToDisplay?.filter(job => job.featured);
     const notFeaturedJobs = jobsToDisplay?.filter(job => job.featured === false);
@@ -94,9 +131,14 @@ export default function JobScroll({ initialJobs, search, filter }) {
                 { empty && <p className="text-red-400">no more jobs to show</p> }
             </section> 
            ) : (
-            <div className='flex items-center justify-center w-screen'>
-                <Image src={'/loading.svg'} width={300} height={300} alt='loading_svg'></Image>
-            </div>
+            isLoadingJobs ? 
+                (<div className='flex items-center justify-center w-screen'>
+                    <Image src={'/loading.svg'} width={300} height={300} alt='loading_svg'></Image>
+                </div>)
+                :
+                (<div className='flex items-center justify-center w-screen'>
+                    <p>No Jobs Found</p>
+                </div>)
            )
         
     )

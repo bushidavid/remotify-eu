@@ -1,9 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import supabase from "../../../lib/config/supabaseClient";
 import {CheckboxGroup, Checkbox} from "@nextui-org/react";
-import { useEffect } from "react";
 import { FilterContext } from "../context/store";
 import { useContext } from 'react';
 

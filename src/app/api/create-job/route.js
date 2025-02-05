@@ -56,7 +56,7 @@ export async function POST(req, res) {
             logo_url: logoUrl,
             expiration_date: today.toISOString().toLocaleString('de-DE'),
             company_website: companyWebsite,
-            job_link: jobLink,
+            job_link: jobLink + "?utm_source=remotifyeurope&utm_medium=job-board",
             payment_verified: false
         };
         

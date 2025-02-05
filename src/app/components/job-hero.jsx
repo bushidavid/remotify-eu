@@ -25,7 +25,7 @@ export default function JobHero({job, postedDate}) {
               
               <div className="flex flex-row items-center md:border-l-1 md:pl-2">
                 <MdLocationPin />
-                <CountryList countries={job.countries} />
+                <CountryList countries={job.countries?.split(', ')} />
                 
                 {/* <p className='px-1 md:border-r-1 border-slate-300'> {job.worldwide ? 'Worldwide' : job.countries}</p> */}
               </div>

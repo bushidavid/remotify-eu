@@ -11,7 +11,6 @@ import TipTap from "@/app/components/tiptap/tiptap";
 import {Countries} from "../../../lib/countries";
 import supabase from "../../../lib/config/supabaseClient";
 import { Tags } from "../../../lib/tags";
-import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import MultiSelect from "./multi-select";
 

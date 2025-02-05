@@ -1,7 +1,7 @@
 'use client';
 
 import StatsTile from "./stats-tile";
-import { useSession } from "next-auth/react";
+
 import { redirect } from "next/navigation";
 import InfiniteScrollJobsCompany from "./infinite-scroll-jobs-company";
 import CompanyJobs from "./company-jobs";
@@ -12,19 +12,13 @@ import Modal from "./modal";
 
 export default function CompanyDashboard({ companyJobs, companyId, companyStats}) {
 
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated(){
-      redirect('/signin')
-    }
-  })
 
-  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-  const [closeModalIsOpen, setCloseModalIsOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [closeModalIsOpen, setCloseModalIsOpen] = useState(false);
 
-  return (
-    <>
-      {session && 
+    return (
+      <>
+        
         <div className="flex flex-col w-full">
           {deleteModalIsOpen && <Modal deleteModalIsOpen={deleteModalIsOpen} closeModalIsOpen={closeModalIsOpen} />}
           <div className=" w-full flex flex-row" >
@@ -43,7 +37,7 @@ export default function CompanyDashboard({ companyJobs, companyId, companyStats}
           <CompanyJobs jobs={companyJobs} deleteModalIsOpen={deleteModalIsOpen} closeModalIsOpen={closeModalIsOpen} setDeleteModalIsOpen={setDeleteModalIsOpen} setCloseModalIsOpen={setCloseModalIsOpen} />
           <div className="flex flex-grow justify-end"><Link href={'alljobs'} className="text-sm hover:underline">View All Jobs {'->'}</Link></div>
         </div>
-      }
-    </>
-  )
+        
+      </>
+    )
 }

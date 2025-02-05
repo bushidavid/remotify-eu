@@ -1,11 +1,5 @@
 "use client";
 
-import { FreeSoloPopover, Input } from '@nextui-org/react'
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-
-import supabase from '../../../lib/config/supabaseClient';
-
 const fromTimestampToDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
 
@@ -19,9 +13,9 @@ const fromTimestampToDate = (timestamp) => {
     return formattedDate;
 }
 
-export default function CandidateSubscription({ session, subscription }) {
+export default function CandidateSubscription({ user, subscription }) {
 
-    const plan = subscription.subscription.subscriptions.data[0];
+    const plan = subscription?.subscription?.subscriptions?.data[0] || null;
 
     const handleCancelSubscription = async () => {
 
@@ -53,7 +47,8 @@ export default function CandidateSubscription({ session, subscription }) {
       <>
           
           
-          <div className='flex flex-col w-full justify-center items-center my-10'>
+        { plan ? 
+          (<div className='flex flex-col w-full justify-center items-center my-10'>
               <div className='flex flex-row w-8/12 max-w-7xl flex-grow justify-between items-center border-b-1 border-gray-200 pb-2'>
                 <div><h1 className='text-2xl'>Subscription Details</h1></div>
               
@@ -93,8 +88,14 @@ export default function CandidateSubscription({ session, subscription }) {
                 <button onClick={handleCancelSubscription} className='px-6 py-2 border-1 border-slate-200 shadow-md hover:shadow-lg rounded-lg text-slate-400'>Cancel Subscription</button>
               </div>
 
-          </div>
-          
+          </div>) : (
+
+            <div>You currently don&apos;t have any active subscriptions</div>
+
+          )
+
+
+        }
           
         </>
     )

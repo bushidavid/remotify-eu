@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { BeehiivClient } from "@beehiiv/sdk";
-
 import { sendgridClient } from "../../../../lib/email";
 
 export async function PUT( req ) {

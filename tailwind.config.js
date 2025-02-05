@@ -13,8 +13,12 @@ module.exports = {
   	extend: {
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-  			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+  			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+			'profile-fade': "bg-gradient-to-tr from-amber-50 via-gray-100 to-teal-100",
   		},
+		maskImage: {
+			'fade-bottom': 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))',
+		},
   		borderWidth: {
   			'0': '0',
   			'1': '1px',
@@ -55,12 +59,34 @@ module.exports = {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-		typography: {
-			alignSuper: {
-				verticalAlign: 'super',
-				fontSize: '0.75em', // Optional to tweak size
-			},
-		},
+  		typography: {
+  			alignSuper: {
+  				verticalAlign: 'super',
+  				fontSize: '0.75em'
+  			}
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
+  		}
   	}
   },
   plugins: [

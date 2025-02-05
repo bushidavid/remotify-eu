@@ -2,15 +2,17 @@
 
 import React from 'react'
 import { useEffect, useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { signOut } from 'next-auth/react';
+import { createClient } from '../../../lib/utils/supabase/client';
 
-export default function CandidateUserMenu() {
+export default function CandidateUserMenu({ setUser }) {
 
     const [ profileMenuOpen, setProfileMenuOpen ] = useState(false);
     const menuRef = useRef(null);
     const buttonRef = useRef(null);
+
+    const supabase = createClient();
 
     const router = useRouter();
 
@@ -31,6 +33,35 @@ export default function CandidateUserMenu() {
         };
       }, []);
 
+    const handleSignOut = async () => {        
+        try {
+            const { error } = await supabase.auth.signOut();
+            
+            if(error) throw error;
+
+        } catch (error) {
+            console.log("Error during sign out: ", error);
+        }
+    }
+
+    // useEffect(() => {
+    //     const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
+    //         console.log("listening to supabase event:", event);
+
+    //         if (event === 'INITIAL_SESSION') {
+    //             setUser(session.user);
+    //           } else if (event === 'SIGNED_IN') {
+    //             setUser(session.user);
+    //           } else if (event === 'SIGNED_OUT') {
+    //             setUser(null);
+    //           } 
+    //     });
+    
+    //     // Cleanup listener
+    //     return () => {
+    //         listener.subscription.unsubscribe();
+    //     };
+    // }, []);
 
   return (
     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -46,7 +77,7 @@ export default function CandidateUserMenu() {
             <button onClick={() => {setProfileMenuOpen(false); router.push('/candidate/dashboard/profile');}} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">My Profile</button>
             <button onClick={() => {setProfileMenuOpen(false); router.push('/candidate/dashboard/subscription'); }} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Subscription</button>
             <button onClick={() => {setProfileMenuOpen(false); router.push('/candidate/dashboard/bookmarks'); }} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">My Bookmarks</button>
-            <button onClick={signOut} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
+            <button onClick={handleSignOut} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
         </div>}
         </div>
     </div>

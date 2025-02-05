@@ -6,12 +6,13 @@ import { Label } from "@/components/ui/label"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+
+import { login } from '../actions/actions';
+
 
 import { Button } from "@/components/ui/button";
 import {
@@ -39,9 +40,9 @@ export default function LoginForm() {
 
     const isFirstRender = useRef(true);
 
-    const {data: session, status} = useSession();
     const [loading, setLoading] = useState(false);
     const [displayErrorMessage, setDisplayErrorMessage] = useState(false);
+    const [displaySuccessMessage, setDisplaySuccessMessage] = useState(false);
     const router = useRouter();
 
     const searchParams = useSearchParams()
@@ -59,25 +60,33 @@ export default function LoginForm() {
             email: "",
             password: "",
         },
-    });    
+    });  
+    
+    const signInWithEmail = async (data) => {
+
+        const logged = await login(data);
+
+        console.log("logged: ", logged);
+
+        return logged;
+        
+    }
       
     const onSubmit = async (data) => {
 
       setLoading(true);
 
-      const result = await signIn('credentials', {
-        ...data,
-        redirect: false,
-        callbackUrl,
-      });
+      const result = await signInWithEmail(data);
 
-      if (!result.ok) {
+      if (!result) {
         setDisplayErrorMessage(true); // update the state with the error message
       } else {
-        setDisplayErrorMessage(false);
+        setDisplaySuccessMessage(true);
       }
 
       setLoading(false);
+
+      router.push('/candidate/dashboard/profile');
 
     }
 
@@ -110,7 +119,7 @@ export default function LoginForm() {
             },
             body: JSON.stringify({
               priceId: [plan],
-              email: session?.user?.email
+              // email: session?.user?.email
             })
           });
     
@@ -122,7 +131,7 @@ export default function LoginForm() {
       } else {
         router.push(callbackUrl); // redirect to callbackUrl if no plan
       }
-    }, [status, session, plan, router, callbackUrl, search]);
+    }, [plan, router, callbackUrl, search]);
   
 
 
@@ -160,6 +169,7 @@ export default function LoginForm() {
                     {loading ? "Loading..." : "Submit"}
                   </Button>
                   {displayErrorMessage && <p className='text-red-900 bg-red-100 rounded-lg px-2 py-2 text-xs md:text-sm'>Invalid Email or Password</p>}
+                  {displaySuccessMessage && <p className="text-green-700">Logging you in...</p>}
                 </div>
             </form>
         </Form>

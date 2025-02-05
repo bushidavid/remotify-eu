@@ -13,7 +13,7 @@ const options = {
     "day": "numeric"
 }
 
-export default function CandidateBookmarks({ session }) {
+export default function CandidateBookmarks({ user }) {
 
     const router = useRouter();
 
@@ -31,13 +31,13 @@ export default function CandidateBookmarks({ session }) {
     }
 
     const getCandidateBookmarkedJobs = async () => {
-        const candidateBookmarkedJobs = await getCandidateBookmarks(session?.user?.id);
+        const candidateBookmarkedJobs = await getCandidateBookmarks(user?.id);
         setBookmarks(candidateBookmarkedJobs);
     }
 
     useEffect(() => {
         getCandidateBookmarkedJobs();
-    }, [session?.user?.id]);
+    }, [user?.id]);
 
     
 

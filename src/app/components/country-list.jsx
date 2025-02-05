@@ -13,7 +13,10 @@ export default function CountryList({ countries }) {
         return <p className="text-sm">Worldwide</p>;
     }
 
-    let fullCountryList = countries.split(', ');
+    console.log("loggin countries", countries);
+    console.log(typeof(countries));
+
+    let fullCountryList = countries;
 
     let displayedCountries = '';
     let fullList = '';
@@ -21,9 +24,9 @@ export default function CountryList({ countries }) {
     // Get the first 3 countries and join them with a comma
     if(fullCountryList.length > 3){
         displayedCountries = fullCountryList.slice(0,3).join(', ');
-        fullList = fullCountryList.join(', ');
+        fullList = fullCountryList.slice().join(', ');
     } else {
-        displayedCountries = countries;
+        displayedCountries = fullCountryList.join(', ');
     }
     
     return (
