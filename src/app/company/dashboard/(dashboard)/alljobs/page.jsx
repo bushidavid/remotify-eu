@@ -2,7 +2,7 @@ import { getCompanyJobs } from '@/app/actions/actions'
 import React from 'react'
 import { redirect } from "next/navigation";
 import Link from 'next/link';
-import { createClient } from '../../../../lib/utils/supabase/server';
+import { createClient } from '../../../../../../lib/utils/supabase/server';
 
 const options = {
     "year" : "numeric",

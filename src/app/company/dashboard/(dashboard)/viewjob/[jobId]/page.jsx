@@ -1,7 +1,7 @@
 import JobHero from '@/app/components/job-hero';
 import JobDetails from '@/app/components/job-details';
 import Image from 'next/image';
-import supabase from '../../../../../../lib/config/supabaseClient';
+import supabase from '../../../../../../../lib/config/supabaseClient';
 import Link from 'next/link';
 import { FaLink } from "react-icons/fa6";
 

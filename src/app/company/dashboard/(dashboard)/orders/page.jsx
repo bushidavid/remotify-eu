@@ -1,7 +1,7 @@
 import React from 'react';
 import { getCompanyOrders } from '@/app/actions/actions';
 import { DateTime } from 'luxon';
-import { createClient } from '../../../../lib/utils/supabase/server';
+import { createClient } from '../../../../../../lib/utils/supabase/server';
 
 const getPrices = async () => {
 
