@@ -1,5 +1,5 @@
 import supabase from '../../../../lib/config/supabaseClient';
-import { openai } from '../../utils/openai';
+import { openai } from '../../../../lib/utils/openai/openai';
 import { upsertEmbedding } from '../../../../lib/utils/pinecone/upsertEmbeddings';
 
 export default async function handler(req, res) {

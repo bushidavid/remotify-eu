@@ -1,6 +1,6 @@
 import JobList from '@/app/components/job-list';
 import React from 'react';
-import supabase from '../../../../lib/config/supabaseClient';
+import supabase from '../../../../../lib/config/supabaseClient';
 import Image from 'next/image';
 import InfiniteScrollJobs from '@/app/components/job-scroll';
 import { fetchJobs } from '@/app/actions/actions';

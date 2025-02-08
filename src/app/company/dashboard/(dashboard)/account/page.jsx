@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react'
 import { Input, Select, SelectItem } from '@nextui-org/react'
-import { Countries } from '../../../../lib/countries';
-import { createClient } from '../../../../lib/utils/supabase/client';
+import { Countries } from '../../../../../../lib/countries';
+import { createClient } from '../../../../../../lib/utils/supabase/client';
 import Image from 'next/image';
 
 export default function Page() {
