@@ -7,7 +7,7 @@ import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style';
 import MenuBar from './menu-bar';
 
-import '../../style.css'
+import '../../(home)/style.css'
 
 const TipTap = ({ setDescription, content, setEdit, edit}) => {
 

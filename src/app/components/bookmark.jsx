@@ -1,11 +1,8 @@
 "use client"
 
 import { FaRegBookmark, FaBookmark} from "react-icons/fa";
-import { useSession } from "next-auth/react";
-import { signIn } from "next-auth/react";
 import { deleteBookmark, isBookmarkedByUser, updateBookmark } from "../actions/actions";
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { getSession, setSession } from "next-auth/react";
 
 export default function Bookmark({ jobId }) {
 

@@ -138,7 +138,7 @@ export default function Job({ ...props }) {
                       </h3>
 
                   </div>
-                  <div className='w-full md:min-w-[30%] md:max-w-[30%] flex flex-row items-center gap-1 my-1'>
+                  <div className='w-full md:min-w-[30%] md:max-w-[30% ] flex flex-row items-center gap-1 my-1'>
                     <MdLocationPin />
                     <CountryList countries={props.country}/>
                   </div>
@@ -148,7 +148,7 @@ export default function Job({ ...props }) {
           </Link>
           <div className='flex w-full relative'>
             <div className='flex flex-row items-center my-1 relative'>
-              <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5 z-50 whitespace-nowrap'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
+              <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5 z-30 whitespace-nowrap'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
               
             </div>
             <div 
@@ -160,9 +160,7 @@ export default function Job({ ...props }) {
                 }}>
                 <Tags tags={props.tags}/>
             </div>
-            <div className="flex items-center mx-3 text-xs font-extralight gap-x-1">
-              <IoBriefcaseOutline style={{opacity: '0.8'}}/><p>{props.category}</p>
-            </div>
+            
           </div>
           
         </Card>

@@ -4,17 +4,30 @@ import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 import supabase from "../../../lib/config/supabaseClient";
+import { redirect } from "next/navigation";
+
+import { createClient } from "../../../lib/utils/supabase/server";
 
 var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
 var currentTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
 
-export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, search = "", filter = ""){
+export async function fetchJobs(limit = 24, lastLoadedTime = currentTime, category = [], title = "", countries = [], experience = [], tags = [], type = []){
 
 
-    const { data, error } = await supabase.rpc('get_jobs_v4', {loadlimit: limit, lastloadedtime: lastLoadedTime, p_category: search, p_search: filter});
+    const { data, error } = await supabase.rpc('get_jobs_v5', {
+        loadlimit: limit,
+        lastloadedtime: lastLoadedTime,
+        p_category: category.length ? category : null, // Pass `null` if empty
+        p_search: title,
+        p_location: countries.length ? countries : null, // Pass `null` if empty
+        p_experience: experience.length ? experience : null, // Pass `null` if empty
+        p_tags: tags.length ? tags : null, // Pass `null` if empty
+        p_type: type.length ? type : null, // Pass `null` if empty
+    });
+    
 
     if(error){
-        console.log(error);
+        console.log("error fetching jobs: ", error);
     }
 
     const result = data.map((job) => {
@@ -112,6 +125,8 @@ async function getCompanyData(companyId) {
 }
 
 export async function getCompanyJobs(limit = 24, lastLoadedTime = currentTime, companyId) {
+
+    console.log("printing company id: ", companyId);
     
     const {data, error} = await supabase.rpc('get_company_jobs_v1', {loadlimit: limit, lastloadedtime: lastLoadedTime, p_companyid: companyId})
 
@@ -163,6 +178,9 @@ export async function getJobDetails(jobId){
 
 // fetch job details from database
 export async function getUserDetails(userId){
+
+    console.log("logging user Id", userId);
+
     try {
         
       const {data: user, error} = await supabase
@@ -262,8 +280,6 @@ export async function getCompanyOrders(companyId){
         .select('*')
         .eq('company_id', companyId);
 
-      
-        
       if(error){
           console.log(error);
       }
@@ -366,4 +382,48 @@ export async function isBookmarkedByUser(userId, jobId){
         //console.log(error);
         return null;
       }
+}
+
+
+export async function login(formData) {
+
+    const supabase_auth = await createClient()
+
+    // type-casting here for convenience
+    // in practice, you should validate your inputs
+    const data = {
+        email: formData.email,
+        password: formData.password,
+    }
+
+    const { error } = await supabase_auth.auth.signInWithPassword(data)
+
+    if (error) {
+        return false;
+    }
+
+    revalidatePath('/', 'layout');
+    return true;
+
+}
+
+export async function signup(formData) {
+
+    const supabase_auth = await createClient()
+
+    // type-casting here for convenience
+    // in practice, you should validate your inputs
+    const data = {
+        email: formData.get('email'),
+        password: formData.get('password'),
+    }
+
+    const { error } = await supabase_auth.auth.signUp(data)
+
+    if (error) {
+        redirect('/error')
+    }
+
+    revalidatePath('/', 'layout')
+    redirect('/')
 }

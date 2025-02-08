@@ -55,7 +55,7 @@ function CompanyJobs({ jobs, deleteModalIsOpen, closeModalIsOpen, setDeleteModal
                     </div>
                     <div className="sm:flex">
                         <p className="mt-1 text-xs leading-5 text-gray-500">
-                            Posted {new Date(job.created_at).toLocaleString(undefined, options)}
+                            Posted {new Date(job.created_at).toLocaleString('en-US', options)}
                         </p>
                     </div>
                 </div>

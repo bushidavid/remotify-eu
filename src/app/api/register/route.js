@@ -4,6 +4,7 @@ import supabase from '../../../../lib/config/supabaseClient';
 import { sendgridClient } from '../../../../lib/email';
 import { BeehiivClient } from "@beehiiv/sdk";
 
+
 export async function POST(req){
 
     const body = await req.json();
