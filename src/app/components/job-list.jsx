@@ -1,10 +1,7 @@
 'use client';
 
-import { FilterContext } from '../context/store';
-import Job from './job';
-import { useContext } from 'react';
-import { useInView } from 'react-intersection-observer';
 
+import Job from './job';
 
 const JobList = ({ jobs, title,  companyId }) => {
 
@@ -20,16 +17,17 @@ const JobList = ({ jobs, title,  companyId }) => {
                             title={job.job_title}  
                             worldwide={job.worldwide} 
                             expiration={job.expiration_date} 
-                            country={job.countries} 
+                            country={job.country_names} 
                             salaryMin={job.salary_range_min} 
                             salaryMax={job.salary_range_max} 
                             currency={job.currency} 
-                            experience={job.experience} 
+                            experience={job.exp_names} 
                             featured={job.featured}
                             companyName={job.company_name}
-                            tags={job.tags}
+                            tags={job.tag_names}
                             created_at={job.created_at}
                             companyId={companyId}
+                            category={job.category}
                         />
                     ))
                     

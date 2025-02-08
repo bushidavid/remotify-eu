@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import supabase from "../../../lib/config/supabaseClient";
 
 
 const FormSchema = z.object({
@@ -61,6 +62,7 @@ export default function RegisterForm() {
         resolver: zodResolver(FormSchema),
         defaultValues: {
             name: "",
+            surname: "",
             email: "",
             password: "",
             confirmPassword: "",
@@ -68,6 +70,48 @@ export default function RegisterForm() {
             newsletter: true,
         },
     });
+
+    
+
+    const signUpNewUser = async (data) => {
+
+        //add newsletter functionality
+        if(data.newsletter){
+            const result = await fetch('/api/subscribe', {
+                method: 'PUT',
+                body: JSON.stringify({'email' : data.email }),
+                headers: {
+                    "content-type": "application/json",
+                },
+            })
+        }   
+
+        //create new user with supabase auth
+
+        
+
+        try {
+            const { data: user, error } = await supabase.auth.signUp(
+                {
+                  email: data.email,
+                  password: data.password,
+                  options: {
+                    data: {
+                      name: data.name,
+                      last_name: data.surname,
+                      role: data.userType,
+                    }
+                  }
+                }
+            )
+
+            if(error) throw error;
+            return user;
+        } catch (error) {
+            console.log("Error creating new user", error);
+            return false;
+        }
+    }
 
     const onSubmit = async (data) => {
 
@@ -81,28 +125,41 @@ export default function RegisterForm() {
         // ),
         // });
 
-        const response = await fetch('api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({data})
-        })
+        const result = await signUpNewUser(data);
 
-        const res = await response.json();
-
-        console.log(res);
-
-        if(res.ok){
+        if(!result){
+            setDisplayErrorMessage(true);
+            setLoading(false);
+        }else{
             setDisplaySuccessMessage(true);
 
             setTimeout(() => {
                 router.push('/login');
             }, 5000); // 3000 ms = 3 seconds
-        }else{
-            setDisplayErrorMessage(true);
-            setLoading(false);
         }
+
+        // const response = await fetch('api/register', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({data})
+        // })
+
+        // const res = await response.json();
+
+        // console.log(res);
+
+        // if(res.ok){
+        //     setDisplaySuccessMessage(true);
+
+        //     setTimeout(() => {
+        //         router.push('/login');
+        //     }, 5000); // 3000 ms = 3 seconds
+        // }else{
+        //     setDisplayErrorMessage(true);
+        //     setLoading(false);
+        // }
     };
 
     useEffect(() => {

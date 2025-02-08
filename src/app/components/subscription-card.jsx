@@ -1,15 +1,12 @@
 "use client";
 
-import { signIn } from 'next-auth/react';
 import React from 'react';
 import { redirect, useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+
 
 export default function SubscriptionCard({ title, reoccurrence, price, cadence, comment, className, id}) {
 
   const router = useRouter();
-
-  const { data: session, status } = useSession();
 
   const handleSubscribe = async (plan) => {
 
