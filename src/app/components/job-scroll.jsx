@@ -122,7 +122,7 @@ export default function JobScroll({ initialJobs }) {
 
          jobsToDisplay?.length > 0 ? 
             ( 
-            <section className='w-full flex flex-col max-w-5xl justify-center items-center'>
+            <section className='w-full flex flex-col max-w-5xl justify-center items-center mt-2'>
                 <JobList key={Math.random()} jobs={featuredJobs} />
                 <JobList key={Math.random()} jobs={notFeaturedJobs} />
                 { isLoading ? (<Image alt={'loading'} src={'/loading.svg'} width={100} height={100} />)

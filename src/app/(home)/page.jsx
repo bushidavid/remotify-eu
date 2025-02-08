@@ -3,6 +3,7 @@ import { fetchJobs } from '../actions/actions';
 import JobScroll from '../components/job-scroll';
 import Footer from '../components/footer';
 import Subscribe from '../components/subscribe';
+import AdvancedSearch from '../components/advanced-search-sidebar';
 
 
 
@@ -36,11 +37,9 @@ export default async function Home() {
         <section className='w-full flex flex-col justify-center items-center'>
           <Hero />
               <div className='w-full flex justify-center'>
-                  
+                    <AdvancedSearch />
                     <JobScroll initialJobs={jobs} />
-                  
-                  
-                    <Subscribe />
+                    
                   
               </div>
             <Footer />
