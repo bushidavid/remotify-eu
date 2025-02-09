@@ -1,7 +1,6 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 
-const revalidate = 0; 
 
 export async function GET() {
 
