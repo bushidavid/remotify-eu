@@ -37,8 +37,8 @@ export default async function RootLayout({ children }) {
             <Navbar user={user} />
 
                 <ContextProvider >
-                <SubscribeModal />
-                  { children }
+                    <SubscribeModal />
+                      { children }
                   
                 </ContextProvider>
 

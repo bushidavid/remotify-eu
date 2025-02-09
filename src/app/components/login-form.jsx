@@ -80,11 +80,10 @@ export default function LoginForm() {
 
       if (!result) {
         setDisplayErrorMessage(true); // update the state with the error message
+        setLoading(false);
       } else {
         setDisplaySuccessMessage(true);
       }
-
-      setLoading(false);
 
       router.push('/candidate/dashboard/profile');
 
