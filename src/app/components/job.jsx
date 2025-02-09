@@ -146,7 +146,7 @@ export default function Job({ ...props }) {
 
             </CardBody>
           </Link>
-          <div className='flex w-full relative'>
+          <div className='flex w-full relative items-center'>
             <div className='flex flex-row items-center my-1 relative'>
               <p className='text-xs font-extralight px-2 pt-0.5 mx-1 my-0.5 z-30 whitespace-nowrap'>{(formattedDate === todayFormatted) ? "today" : formattedDate}</p>
               
@@ -160,7 +160,9 @@ export default function Job({ ...props }) {
                 }}>
                 <Tags tags={props.tags}/>
             </div>
-            
+            <div className='mx-2'>
+              <Bookmark jobId={props.id} />
+            </div>
           </div>
           
         </Card>

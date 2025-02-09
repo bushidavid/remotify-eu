@@ -41,8 +41,7 @@ export default function Navbar( ) {
 
         const fetchUser = async () => {
             const user = await retrieveUser();
-            
-            console.log("logging user navbar:", user)
+        
 
             setUser(user || null);
         }       

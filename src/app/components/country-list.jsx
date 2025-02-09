@@ -13,9 +13,6 @@ export default function CountryList({ countries }) {
         return <p className="text-sm">Worldwide</p>;
     }
 
-    console.log("loggin countries", countries);
-    console.log(typeof(countries));
-
     let fullCountryList = countries;
 
     let displayedCountries = '';

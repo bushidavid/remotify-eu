@@ -117,43 +117,30 @@ export default function JobScroll({ initialJobs }) {
     const featuredJobs = jobsToDisplay?.filter(job => job.featured);
     const notFeaturedJobs = jobsToDisplay?.filter(job => job.featured === false);
 
+    if(isLoadingJobs){
+        return (
+            <div className='w-full flex flex-col max-w-5xl justify-center items-center mt-2'>
+                <Image src={'/loading.svg'} width={300} height={300} alt='loading_svg'></Image>
+            </div>
+        )
+    }
 
-    return (
-
-        isLoadingJobs ?  
-            ( 
-
-                (<div className='w-full flex flex-col max-w-5xl justify-center items-center mt-2'>
-                    <Image src={'/loading.svg'} width={300} height={300} alt='loading_svg'></Image>
-                </div>)
-                // <section className='w-full flex flex-col max-w-5xl justify-center items-center mt-2'>
-                //     <JobList key={Math.random()} jobs={featuredJobs} />
-                //     <JobList key={Math.random()} jobs={notFeaturedJobs} />
-                //     { isLoading ? (<Image alt={'loading'} src={'/loading.svg'} width={100} height={100} />)
-                //         : (<button className="bg-remotify-db text-white hover:bg-[#2ab3af] px-6 py-2 rounded-md my-4" onClick={loadMoreJobs}>Load More</button>) 
-                //     }
-                //     { empty && <p className="text-red-400">no more jobs to show</p> }
-                // </section> 
-           ) : (
-            jobsToDisplay?.length > 0 ? 
-                (
-                
-                    <section className='w-full flex flex-col max-w-5xl justify-center items-center mt-2'>
-                        <JobList key={Math.random()} jobs={featuredJobs} />
-                        <JobList key={Math.random()} jobs={notFeaturedJobs} />
-                        { isLoading ? (<Image alt={'loading'} src={'/loading.svg'} width={100} height={100} />)
-                            : (<button className="bg-remotify-db text-white hover:bg-[#2ab3af] px-6 py-2 rounded-md my-4" onClick={loadMoreJobs}>Load More</button>) 
-                        }
-                        { empty && <p className="text-red-400">no more jobs to show</p> }
-                    </section> 
-                )
-                    :
-                (
-                    <div className='w-full flex flex-col max-w-5xl justify-center items-center mt-2'>
-                        <p>No Jobs Found</p>
-                    </div>
-                )
-           )
-        
-    )
+    if(jobsToDisplay?.length > 0){
+        return (
+            <section className='w-full flex flex-col max-w-5xl justify-center items-center mt-2'>
+                <JobList key={Math.random()} jobs={featuredJobs} />
+                <JobList key={Math.random()} jobs={notFeaturedJobs} />
+                { isLoading ? (<Image alt={'loading'} src={'/loading.svg'} width={100} height={100} />)
+                    : (<button className="bg-remotify-db text-white hover:bg-[#2ab3af] px-6 py-2 rounded-md my-4" onClick={loadMoreJobs}>Load More</button>) 
+                }
+                { empty && <p className="text-red-400">no more jobs to show</p> }
+            </section> 
+        )
+    }else{
+        return (
+            <div className='w-full flex flex-col max-w-5xl justify-center items-center mt-2'>
+                <p>No Jobs Found</p>
+            </div>
+        )
+    }
 }

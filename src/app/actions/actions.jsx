@@ -317,6 +317,9 @@ export async function getCandidateBookmarks(candidateId){
 }
 
 export async function updateBookmark(jobId, candidateId){
+
+    console.log("updated bookmark for user, " + candidateId + " and for job id: " + jobId);
+
     try {
         const {data, error} = await supabase
             .from('candidate_bookmarks')
@@ -339,6 +342,8 @@ export async function updateBookmark(jobId, candidateId){
 
 
 export async function deleteBookmark(bookmarkId){
+
+    console.log("deleting bookmark");
 
     try {
 
@@ -364,6 +369,10 @@ export async function deleteBookmark(bookmarkId){
 }
 
 export async function isBookmarkedByUser(userId, jobId){
+
+    console.log("get is bookmarked by user");
+
+
     try {
 
         const { data: bookmarks, error } = await supabase
