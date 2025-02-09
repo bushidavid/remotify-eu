@@ -24,7 +24,7 @@ const getSubscriptions = async () => {
 
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-subscriptions`, {
-            next: { revalidate: 0 },
+            next: { revalidate: 0, cache: 'no-store' },
         });
         
         // Check if response is okay and JSON format

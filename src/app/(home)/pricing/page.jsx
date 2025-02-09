@@ -36,7 +36,10 @@ export default async function Page() {
 
     try {
         const priceData = await getPrices();
+        console.log("logging priceData: ", priceData);
+
         prices = priceData?.prices || [];
+        // console.log("logging fetched prices: ", prices);
         if (prices.length > 0) {
             prices.sort((a, b) => a.unit_amount - b.unit_amount);
         }
@@ -46,7 +49,8 @@ export default async function Page() {
     }
 
     try {
-        products = await getFeatures();
+        products = await getFeatures(); 
+        console.log("logging features: ", products);
     } catch (error) {
         console.log("Error fetching features: ", error);
     }
