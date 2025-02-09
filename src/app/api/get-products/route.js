@@ -11,12 +11,14 @@ export async function GET() {
 
     try {
         obj = await stripe.prices.list({
-            limit: 6,
+            limit: 8,
             active: true,
         });
     } catch (error) {
         console.log("Error fetching prices from stripe: ", error);
     }
+
+    console.log("prices before filtering: ", obj)
     
 
     // Merge prices and subscription into one object
