@@ -43,14 +43,18 @@ export default function AdvancedSearch() {
                 {/* <CardHeader className="text-center">
                     <CardTitle className="font-light">Advanced Search</CardTitle>
                 </CardHeader> */}
-                <Accordion type="multiple" collapsible className='w-full px-4 flex flex-col'>
+                <Accordion defaultValue={["item-1", "item-2"]} type="multiple" collapsible className='w-full px-4 flex flex-col'>
                     <AccordionItem value="item-1">
-                        <AccordionTrigger className="font-light text-sm">Job Type</AccordionTrigger>
+                        
+                        <AccordionTrigger 
+                            className="font-light text-sm">Job Type</AccordionTrigger>
                             <AccordionContent cl className="flex flex-col gap-y-2">
                                 <div className="flex flex-row gap-x-2 items-center border-none">
                                     <Checkbox 
-                                        id="full_time" 
+                                        id="full_time"
+                                        checked={filterJobType.includes("full_time")} 
                                         onCheckedChange={(checked) => {
+                                            console.log("fulltime is checked? -> ", checked);
                                             if (checked) {
                                                 setFilterJobType([...filterJobType, "full_time"]); // Add to array
                                             } else {
@@ -68,7 +72,8 @@ export default function AdvancedSearch() {
                                     </div>
                                 </div>
                                 <div className="flex flex-row gap-x-2 items-center border-none">
-                                    <Checkbox id="part_time" 
+                                    <Checkbox id="part_time"
+                                        checked={filterJobType.includes("part_time")}
                                         onCheckedChange={(checked) => {
                                             if (checked) {
                                                 setFilterJobType([...filterJobType, "part_time"]); // Add to array
@@ -88,6 +93,7 @@ export default function AdvancedSearch() {
                                 </div>
                                 <div className="flex flex-row gap-x-2 items-center border-none">
                                     <Checkbox id="contract" 
+                                        checked={filterJobType.includes("contract")}
                                         onCheckedChange={(checked) => {
                                             if (checked) {
                                                 setFilterJobType([...filterJobType, "contract"]); // Add to array
@@ -106,8 +112,10 @@ export default function AdvancedSearch() {
                                     </div>
                                 </div>
                                 <div className="flex flex-row gap-x-2 items-center border-none">
-                                    <Checkbox id="freelance" 
+                                    <Checkbox id="freelance"
+                                        checked={filterJobType.includes("freelance")}
                                         onCheckedChange={(checked) => {
+                                            console.log("freelance is checked? -> ", checked);
                                             if (checked) {
                                                 setFilterJobType([...filterJobType, "freelance"]); // Add to array
                                             } else {
@@ -159,11 +167,12 @@ export default function AdvancedSearch() {
                         <Separator className="mt-4 mb-2" />
                     </div>
 
-                    <AccordionItem value="item-3">
+                    <AccordionItem value="item-2">
                         <AccordionTrigger className="font-light text-sm">Experience Level</AccordionTrigger>
                             <AccordionContent cl className="flex flex-col gap-y-2">
                                 <div className="flex flex-row gap-x-2 items-center border-none">
-                                    <Checkbox id="Junior" 
+                                    <Checkbox id="Junior"
+                                        checked={filterExperience.includes("Junior")} 
                                         onCheckedChange={(checked) => {
                                             if (checked) {
                                                 setFilterExperience([...filterExperience, "Junior"]); // Add to array
@@ -182,7 +191,8 @@ export default function AdvancedSearch() {
                                     </div>
                                 </div>
                                 <div className="flex flex-row gap-x-2 items-center border-none">
-                                    <Checkbox id="Junior/Mid" 
+                                    <Checkbox id="Junior/Mid"
+                                        checked={filterExperience.includes("Junior/Mid")} 
                                          onCheckedChange={(checked) => {
                                             if (checked) {
                                                 setFilterExperience([...filterExperience, "Junior/Mid"]); // Add to array
@@ -201,7 +211,8 @@ export default function AdvancedSearch() {
                                     </div>
                                 </div>
                                 <div className="flex flex-row gap-x-2 items-center border-none">
-                                    <Checkbox id="Middle" 
+                                    <Checkbox id="Middle"
+                                        checked={filterExperience.includes("Middle")}  
                                          onCheckedChange={(checked) => {
                                             if (checked) {
                                                 setFilterExperience([...filterExperience, "Middle"]); // Add to array
@@ -220,7 +231,8 @@ export default function AdvancedSearch() {
                                     </div>
                                 </div>
                                 <div className="flex flex-row gap-x-2 items-center border-none">
-                                    <Checkbox id="Mid/Senior" 
+                                    <Checkbox id="Mid/Senior"
+                                         checked={filterExperience.includes("Mid/Senior")} 
                                          onCheckedChange={(checked) => {
                                             if (checked) {
                                                 setFilterExperience([...filterExperience, "Mid/Senior"]); // Add to array
@@ -239,7 +251,8 @@ export default function AdvancedSearch() {
                                     </div>
                                 </div>
                                 <div className="flex flex-row gap-x-2 items-center border-none">
-                                    <Checkbox id="Senior" 
+                                    <Checkbox id="Senior"
+                                         checked={filterExperience.includes("Senior")}
                                          onCheckedChange={(checked) => {
                                             if (checked) {
                                                 setFilterExperience([...filterExperience, "Senior"]); // Add to array

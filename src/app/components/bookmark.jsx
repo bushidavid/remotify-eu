@@ -3,6 +3,8 @@
 import { FaRegBookmark, FaBookmark} from "react-icons/fa";
 import { deleteBookmark, isBookmarkedByUser, updateBookmark } from "../actions/actions";
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { createClient } from "../../../lib/utils/supabase/client";
+import Link from "next/link";
 
 export default function Bookmark({ jobId }) {
 
@@ -10,24 +12,30 @@ export default function Bookmark({ jobId }) {
 
     const [ isBookmarked, setIsBookmarked ] = useState(false);
     const [ bookmarkId, setBookmarkId ] = useState(null);
-    const userId = useMemo(() => session?.user?.id, [session?.user?.id]);
 
     // Fetch session only once on mount
     useEffect(() => {
+
+        const supabase = createClient();
+
         const fetchSession = async () => {
-            const sessionData = await getSession();
-            setSession(sessionData);
-            if (sessionData && sessionData.user && sessionData.user.id) {
-                getIsBookmarkedByUser(sessionData.user.id);  // Only fetch bookmark status if user is logged in
-                console.log("logging from inside bookmark component");
+            const { data, error } = await supabase.auth.getUser();
+
+            if (error) {
+                console.log("Couldn't retrieve user: ", error);
+                return null;
             }
+
+            setSession(data.user);
+
         };
+
         fetchSession();
     }, []);
 
     const getIsBookmarkedByUser = useCallback(async () => {
-        if (userId) {
-            const res = await isBookmarkedByUser(userId, jobId);
+        if (session?.id) {
+            const res = await isBookmarkedByUser(session.id, jobId);
             if (res) {
                 setIsBookmarked(true);
                 setBookmarkId(res.id);
@@ -36,7 +44,13 @@ export default function Bookmark({ jobId }) {
                 setBookmarkId(null);
             }
         }
-    }, [userId, jobId]);
+    }, [session?.id, jobId]);
+
+    useEffect(() => {
+        if (session?.id) {
+            getIsBookmarkedByUser();
+        }
+    }, [session, getIsBookmarkedByUser]);
 
     // useEffect(() => {
     //     if (status === "authenticated" && userId) {
@@ -83,10 +97,10 @@ export default function Bookmark({ jobId }) {
                     isBookmarked ? (
                         <button onClick={() => {deleteBookmarkFromDB(bookmarkId)}}><FaBookmark style={{ opacity: "50%", scale: "1.1" }} /></button> 
                     ) : (
-                        <button onClick={() => {setBookmark(jobId, session?.user?.id)}}><FaRegBookmark style={{ opacity: "50%", scale: "1.1" }} /></button>
+                        <button onClick={() => {setBookmark(jobId, session?.id)}}><FaRegBookmark style={{ opacity: "50%", scale: "1.1" }} /></button>
                     )
                 ) : (
-                    <button onClick={signIn}><FaRegBookmark style={{ opacity: "50%", scale: "1.1" }} /></button>
+                    <Link href={'/login'}><FaRegBookmark style={{ opacity: "50%", scale: "1.1" }} /></Link>
                 )
             }
         </div>

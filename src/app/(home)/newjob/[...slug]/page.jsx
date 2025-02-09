@@ -18,6 +18,8 @@ import { createClient } from "../../../../../lib/utils/supabase/client";
 
 export default function Page ({ params }) {
 
+    const supabase = createClient();
+
     const router = useRouter();
 
     const id = params.slug;
