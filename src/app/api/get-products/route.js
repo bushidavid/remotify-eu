@@ -22,7 +22,7 @@ export async function GET() {
     // Merge prices and subscription into one object
     const prices = obj.data.filter(price => !price.recurring)
 
-    console.log("logging prices from API route");
+    console.log("logging prices from API route", prices);
 
     return NextResponse.json({prices: prices});
 }
